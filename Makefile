@@ -11,9 +11,9 @@ push:
 build:
 	export USER_ID=$UID
 	docker build -t "smueller18/base:python3-alpine" ./base/python3-alpine
-	docker build -t "smueller18/python3-kafka:alpine" ./python3-kafka/alpine
-	docker build -t "smueller18/python3-kafka:flask" ./python3-kafka/flask
-	docker build -t "smueller18/python3-kafka:psycopg2" ./python3-kafka/psycopg2
+	docker build -t "smueller18/python3-kafka:alpine" ./base/python3-kafka/alpine
+	docker build -t "smueller18/python3-kafka:flask" ./base/python3-kafka/flask
+	docker build -t "smueller18/python3-kafka:psycopg2" ./base/python3-kafka/psycopg2
 	docker-compose build
 
 clean: ## remove all unnecessary volumes and the created network
