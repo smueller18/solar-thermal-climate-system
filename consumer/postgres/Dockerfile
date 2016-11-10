@@ -2,8 +2,8 @@ FROM smueller18/python3-kafka:psycopg2
 
 MAINTAINER smueller18
 
-COPY src /consumer/postgres
+COPY src /opt/postgres
 
-WORKDIR /consumer/postgres
+WORKDIR /opt/postgres
 
 CMD ["python", "database_writer.py"]

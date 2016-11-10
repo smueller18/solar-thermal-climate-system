@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 
-import argparse
 import datetime
 import io
-import json
+import signal
 import logging
 import os
 import threading
-
 import avro.io
 import psycopg2
 from pykafka import KafkaClient
@@ -18,32 +16,42 @@ __author__ = "Stephan Müller"
 __license__ = "MIT"
 
 
-# todo add description
-parser = argparse.ArgumentParser(description='')
+POSTGRES_HOST = os.getenv("POSTGRES_HOST", "postgres")
+POSTGRES_PORT = int(os.getenv("POSTGRES_PORT", 5432))
+POSTGRES_DB = os.getenv("POSTGRES_DB", "postgres")
+POSTGRES_USER = os.getenv("POSTGRES_USER_CONSUMER", "postgres")
+POSTGRES_PW = os.getenv("POSTGRES_PW_CONSUMER", "postgres")
+KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "kafka:9092")
+KAFKA_SCHEMA = os.getenv("KAFKA_SCHEMA", "/opt/config/kafka.avsc")
+CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "postgres")
+AUTO_COMMIT_INTERVAL = int(os.getenv("AUTO_COMMIT_INTERVAL", 60000))
+LOGGING_LEVEL = os.getenv("LOGGING_LEVEL", "INFO")
+LOGGING_FORMAT = os.getenv("LOGGING_FORMAT", "%(message)s")
 
-parser.add_argument('-c', type=str, default="../config/config.json", help="config file")
 
-args = parser.parse_args()
-config_file = args.c
-
-config = json.loads(open(config_file, "rb").read().decode())
-
-logging.basicConfig(format=config["logging"]["format"])
+logging.basicConfig(format=LOGGING_FORMAT)
 logger = logging.getLogger('database_writer')
-logger.setLevel(logging.getLevelName(config["logging"]["level"]))
+logger.setLevel(logging.getLevelName(LOGGING_LEVEL))
 
 
-kafka_message_schema_file = config["kafka"]["message_schema_file"]
-if not os.path.isabs(kafka_message_schema_file):
-    kafka_message_schema_file = os.path.dirname(os.path.abspath(config_file)) + "/" + kafka_message_schema_file
-kafka_message_schema = avro.schema.Parse(open(kafka_message_schema_file, "rb").read().decode())
+# only way to handle SocketDisconnectedError exceptions and exit program by killing task with interrupt signal
+# because os.exit() is not possible due to threading of pykafka
+class ListenFilter(logging.Filter):
+    def filter(self, record):
+        if record.getMessage().startswith("Encountered SocketDisconnectedError"):
+            logger.error("Lost connection to Kafka")
+            os.kill(os.getpid(), signal.SIGINT)
+
+        return True
+
+logging.getLogger('pykafka.broker').addFilter(ListenFilter())
+logging.getLogger('pykafka.cluster').addFilter(ListenFilter())
+
+kafka_message_schema = avro.schema.Parse(open(KAFKA_SCHEMA, "rb").read().decode())
 
 try:
-    postgress_connector = PostgresConnector(host=config["database"]["host"],
-                                            port=config["database"]["port"],
-                                            database=config["database"]["name"],
-                                            user=config["kafka-sink-postgres"]["database"]["user"],
-                                            password=config["kafka-sink-postgres"]["database"]["password"])
+    postgress_connector = PostgresConnector(host=POSTGRES_HOST, port=POSTGRES_PORT, database=POSTGRES_DB,
+                                            user=POSTGRES_USER, password=POSTGRES_PW)
 except Exception as e:
     logger.error("Could not establish database connection: " + str(e))
     exit(1)
@@ -58,19 +66,19 @@ def decode_message(message):
 
 def loop_inserter(consumer):
     topic = consumer.topic.name.decode()
-    # create or update table schema if necessary
     logger.debug("Waiting for first message of topic '" + topic + "'...")
 
     parsed_first_message_correctly = False
     while not parsed_first_message_correctly:
         try:
+            # create or update table schema if necessary
             first_message = decode_message(consumer.consume())
             logger.debug("Received first message of topic '" + topic + "'")
             if not postgress_connector.table_exists(topic):
                 postgress_connector.create_table(table_name=topic, data=first_message["data"])
                 logger.info("Created table for topic '" + topic + "'")
 
-            elif config["kafka-sink-postgres"]["database"]["update_colums_on_startup"]:
+            else:
                 number_of_added_columns = postgress_connector.update_columns(table_name=topic, data=first_message["data"])
                 logger.info("Added " + str(number_of_added_columns) + " columns in table for topic '" + topic + "'")
 
@@ -83,7 +91,6 @@ def loop_inserter(consumer):
         except (AssertionError, IndexError, avro.io.SchemaResolutionException):
             logger.warn("Could not parse first message of topic '" + topic + "'")
 
-    # insertion loop
     logger.info("Starting insertion loop for topic '" + topic + "'...")
     for message in consumer:
         try:
@@ -98,22 +105,25 @@ def loop_inserter(consumer):
             logger.warn("Could not parse message with offset " + str(message.offset) + " of topic '" + topic + "'")
 
 
-if __name__ == '__main__':
+consumer_threads = list()
 
-    consumer_threads = list()
+managed_topics = list()
 
-    client = KafkaClient(hosts=config["kafka"]["hosts"])
+client = KafkaClient(hosts=KAFKA_HOSTS)
+for consumer_topic in client.topics:
+    if consumer_topic not in managed_topics:
 
-    for consumer_topic in config["kafka-sink-postgres"]["consumer"]["topics"]:
-
-        simple_consumer = client.topics[str.encode(consumer_topic)].get_simple_consumer(
-            consumer_group=str.encode(config["kafka-sink-postgres"]["consumer"]["consumer_group"]),
+        simple_consumer = client.topics[consumer_topic].get_simple_consumer(
+            consumer_group=str.encode(CONSUMER_GROUP),
             auto_commit_enable=True,
-            auto_commit_interval_ms=config["kafka-sink-postgres"]["consumer"]["auto_commit_interval"],
-            use_rdkafka=config["kafka-sink-postgres"]["consumer"]["use_rdkafka"])
+            auto_commit_interval_ms=AUTO_COMMIT_INTERVAL,
+            use_rdkafka=True)
 
         consumer_threads.append(threading.Thread(target=loop_inserter, args=(simple_consumer,)))
+        logger.debug("Starting consumer thread #" + str(len(consumer_threads) - 1))
+        consumer_threads[-1].start()
 
-    for i in range(0, len(consumer_threads)):
-        logger.debug("Starting consumer thread #" + str(i))
-        consumer_threads[i].start()
+        managed_topics.append(consumer_topic)
+
+for consumer_thread in consumer_threads:
+    consumer_thread.join()

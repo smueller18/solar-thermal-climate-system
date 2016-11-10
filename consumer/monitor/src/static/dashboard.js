@@ -94,10 +94,7 @@ function updateSensorValues() {
             Object.keys(sensorValues).forEach(function (sensorId) {
 				if (sensorValueNodes[sensorId] != undefined) {
 					var sensorValue = sensorValues[sensorId];
-
-					sensorValue += Math.random();
-
-                    var newSensorValue;
+          var newSensorValue;
 					switch (typeof(sensorValue)) {
 						case "number":
 							// integer
@@ -149,7 +146,3 @@ window.onload = function () {
             }
         });
 };
-
-
-
-

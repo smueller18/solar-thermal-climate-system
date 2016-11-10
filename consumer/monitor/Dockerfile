@@ -2,8 +2,10 @@ FROM smueller18/python3-kafka:flask
 
 MAINTAINER smueller18
 
-COPY src /consumer/monitor
+COPY src /opt/monitor
 
-WORKDIR /consumer/monitor
+EXPOSE 5000
+
+WORKDIR /opt/monitor
 
 CMD ["python", "app.py"]

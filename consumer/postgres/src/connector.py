@@ -19,25 +19,24 @@ class PostgresConnector:
     def __init__(self, host, port, database, user, password):
         try:
             self.con = psycopg2.connect(host=host, port=port, database=database, user=user, password=password)
-            self.cur = self.con.cursor()
-            # self.cur = self.con.cursor(cursor_factory=psycopg2.extras.DictCursor)
         except Exception as e:
             raise e
 
     def table_exists(self, table_name):
-        sql = self.cur.mogrify("""SELECT TRUE
-                  FROM information_schema.tables
-                  WHERE table_name=%s""", (table_name,))
-        self.cur.execute(sql)
+        cur = self.con.cursor()
+        sql = cur.mogrify("""SELECT 1
+                              FROM information_schema.tables
+                              WHERE table_name=%s;""", (table_name,))
+        cur.execute(sql)
 
-        result = self.cur.fetchall()
+        result = cur.fetchall()
         if len(result) == 1:
             return True
         return False
 
     def create_table(self, table_name, data):
 
-        # todo table_name = re.sub('[^A-Za-z0-9]+', '', table_name)
+        cur = self.con.cursor()
 
         column_names = list()
         column_sql = ""
@@ -57,7 +56,7 @@ class PostgresConnector:
                 );""" % (table_name, column_sql)
 
         try:
-            self.cur.execute(sql)
+            cur.execute(sql)
             self.con.commit()
 
         except psycopg2.DatabaseError as de:
@@ -65,13 +64,14 @@ class PostgresConnector:
 
     def update_columns(self, table_name, data):
 
+        cur = self.con.cursor()
         # todo table_name = re.sub('[^A-Za-z0-9]+', '', table_name)
-        sql = self.cur.mogrify("""SELECT column_name
-                  FROM information_schema.columns
-                  WHERE table_name=%s""", [table_name])
-        self.cur.execute(sql)
+        sql = cur.mogrify("""SELECT column_name
+                                            FROM information_schema.columns
+                                            WHERE table_name=%s;""", [table_name])
+        cur.execute(sql)
 
-        table_columns = self.cur.fetchall()[1:]
+        table_columns = cur.fetchall()[1:]
 
         column_names_to_add = list()
         for key in data:
@@ -89,7 +89,7 @@ class PostgresConnector:
             sql = "ALTER TABLE %s ADD COLUMN %s %s;" % (table_name, column_name, data_type)
 
             try:
-                self.cur.execute(sql)
+                cur.execute(sql)
 
             except psycopg2.DatabaseError as e:
                 logger.error(e.pgcode + " " + e.pgerror.replace("\n", " "))
@@ -99,7 +99,8 @@ class PostgresConnector:
         return len(column_names_to_add)
 
     def insert_values(self, table_name, data):
-        # todo table_name = re.sub('[^A-Za-z0-9]+', '', table_name)
+
+        cur = self.con.cursor()
         # empty string list item that there will be a comma after column timestamp
         columns = [""]
         values = list()
@@ -109,11 +110,11 @@ class PostgresConnector:
 
         params = [data["timestamp"]]
         params.extend(values)
-        sql = self.cur.mogrify("INSERT INTO " + table_name + " (timestamp" + ', '.join(columns) + ")"
-                               " VALUES (to_timestamp(%s)" + ', %s' * len(values) + ");", params)
+        sql = cur.mogrify("INSERT INTO " + table_name + " (timestamp" + ', '.join(columns) + ")"
+                          " VALUES (to_timestamp(%s)" + ', %s' * len(values) + ");", params)
 
         try:
-            self.cur.execute(sql)
+            cur.execute(sql)
             self.con.commit()
 
         except psycopg2.OperationalError as e:
