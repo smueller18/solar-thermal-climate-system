@@ -7,6 +7,8 @@ RUN apk add --no-cache --virtual .build-deps \
           python3-dev \
           musl-dev \
           curl \
+
+    # install pykafka
     && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main/ \
             libressl2.4-libcrypto \
    		      libressl2.4-libssl \
@@ -14,10 +16,21 @@ RUN apk add --no-cache --virtual .build-deps \
             librdkafka \
     && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --virtual .build-deps-testing \
             librdkafka-dev \
-    && pip install avro_python3 \
     && pip install pykafka \
+
+    # install avro
+    && pip install avro_python3 \
+
+    # install psycopg2
+    && apk add --no-cache	libpq \
+    && pip install psycopg2 \
+
+    # install flask
+    && pip install flask \
+
+    # delete build dependencies
     && apk del .build-deps \
     && apk del .build-deps-testing \
-    && rm -rf /var/cache/apk/*
 
-COPY kafka.avsc /opt/config/kafka.avsc
+    #TODO is this command needed?
+    && rm -rf /var/cache/apk/*
