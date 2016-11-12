@@ -2,7 +2,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="author" content="Stephan Müller">
-    <link rel="icon" href="favicon.ico">
+    <!--link rel="icon" href="favicon.ico"-->
 
     <title>W-STCS-SERVICES</title>
 
@@ -13,10 +13,36 @@
             margin-top: 2em;
         }
         .btn {
-            max-width: 100%;
+            width: 100%;
         }
         .btn img {
             margin-bottom: 1em;
+        }
+        .btn h4, .btn span {
+            white-space: pre-wrap;
+        }
+
+        /* Sticky footer styles
+        -------------------------------------------------- */
+        html {
+            position: relative;
+            min-height: 100%;
+        }
+        body {
+            /* Margin bottom by footer height */
+            margin-bottom: 60px;
+        }
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            /* Set the fixed height of the footer here */
+            height: 60px;
+            background-color: #f5f5f5;
+        }
+        .footer p {
+            margin-top: 14px;
+            margin-bottom: 1rem;
         }
     </style>
 
@@ -28,41 +54,47 @@
     <div class="row">
         <div class="col-xs-6 col-md-4 col-lg-3">
             <a class="btn btn-secondary" href="/dockerui/">
-                <img src="img/docker.png" class="img-responsive img-fluid">
-                <h4>Docker UI<br />&nbsp;</h4>
-                <span class="text-muted">Requires authorization</span>
+                <img src="img/docker.svg" class="img-responsive img-fluid">
+                <h4>Docker UI</h4>
+                <span class="text-muted">Container Management</span>
             </a>
         </div>
         <div class="col-xs-6 col-md-4 col-lg-3">
-            <a class="btn btn-secondary" href="/pgadmin/browse/">
-                <img src="img/postgresql.png" class="img-responsive img-fluid">
-                <h4>pgAdmin<br />&nbsp;</h4>
+            <a class="btn btn-secondary" href="/pgadmin/browser/">
+                <img src="img/postgresql.svg" class="img-responsive img-fluid" style="width: 81%">
+                <h4>pgAdmin</h4>
                 <span class="text-muted">Database</span>
             </a>
         </div>
         <div class="col-xs-6 col-md-4 col-lg-3">
             <a class="btn btn-secondary" href="/monitor-technical/">
-                <img src="img/sun.jpg" class="img-responsive img-fluid">
-                <h4>Plant Visualization</h4>
+                <img src="img/plant-visualization.svg" class="img-responsive img-fluid">
+                <h4>Monitor</h4>
                 <span class="text-muted">Technical version</span>
             </a>
         </div>
         <div class="col-xs-6 col-md-4 col-lg-3">
             <a class="btn btn-secondary" href="/chillii-controller/">
-                <img src="img/remote-control.svg" class="img-responsive img-fluid">
+                <img src="" class="img-responsive img-fluid">
                 <h4>Chillii System Controller</h4>
-                <span class="text-muted">Remote control</span>
+                <span class="text-muted">Remote Control</span>
             </a>
         </div>
         <div class="col-xs-6 col-md-4 col-lg-3">
             <a class="btn btn-secondary" href="/consumer-cache-rest/">
-                <img src="img/remote-control.svg" class="img-responsive img-fluid">
+                <img src="" class="img-responsive img-fluid">
                 <h4>Aktuelle Chillii Sensordaten</h4>
                 <span class="text-muted">REST Interface</span>
             </a>
         </div>
     </div>
 </div>
+
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted">&copy; Stephan Müller - Hochschule Karlsruhe</p>
+    </div>
+</footer>
 
 <script src="js/tether.min.js"></script>
 <script src="js/jquery-3.1.1.slim.min.js"></script>
