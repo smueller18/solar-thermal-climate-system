@@ -1,12 +1,12 @@
-/**
- * Created by Stephan on 12.10.2016.
- */
 
- // update interval in secconds
 var UPDATE_INTERVAL = 1;
-const SENSOR_DESCRIPTION_URL = "/sensor_description.json";
-const SENSOR_VALUES_URL = "/sensor_values.json";
 const NAMESPACE_SVG = "http://www.w3.org/2000/svg";
+const SENSOR_DESCRIPTION_URL = "/sensor_description.json";
+var SENSOR_VALUES_URL;
+// if constants are not defined in config.js
+if(typeof SENSOR_VALUES_URL === "undefined") {
+    SENSOR_VALUES_URL = "http://localhost:5001/sensor_values.json";
+}
 
 var getJSON = function (url, callback) {
     var xhr = new XMLHttpRequest();
@@ -130,11 +130,6 @@ function updateSensorValues() {
 var sensorValueNodes = {};
 
 window.onload = function () {
-
-    document.getElementById("update-interval").oninput = function () {
-        UPDATE_INTERVAL = document.getElementById("update-interval").value;
-        document.getElementById("update-interval-value").innerHTML = UPDATE_INTERVAL;
-    };
 
     getJSON(SENSOR_DESCRIPTION_URL,
         function (err, data) {

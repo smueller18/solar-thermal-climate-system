@@ -2,18 +2,8 @@
 
 default: help
 
-push:
-	docker push smueller18/base:python3-alpine
-	docker push smueller18/python3-kafka:alpine
-	docker push smueller18/python3-kafka:flask
-	docker push smueller18/python3-kafka:psycopg2
-
 build:
-	export USER_ID=$UID
-	docker build -t "smueller18/base:python3-alpine" ./base/python3-alpine
-	docker build -t "smueller18/python3-kafka:alpine" ./base/python3-kafka/alpine
-	docker build -t "smueller18/python3-kafka:flask" ./base/python3-kafka/flask
-	docker build -t "smueller18/python3-kafka:psycopg2" ./base/python3-kafka/psycopg2
+
 	docker-compose build
 
 clean: ## remove all unnecessary volumes and the created network

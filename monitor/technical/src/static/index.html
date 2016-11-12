@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Monitor Technical</title>
+
+    <style>
+        body {
+            font-family: Segoe UI,Tahoma, Helvetica;
+        }
+
+        #last-update-time{
+            margin-right: 40px;
+        }
+    </style>
+
+</head>
+<body>
+<div>
+    <span>Time of sensor values: </span><span id="last-update-time">None</span>
+</div>
+<object data="img/plant-visualization.svg" type="image/svg+xml" id="plant-visualization" style="object-fit: cover;"></object>
+
+<script src="js/date-de-DE.js"></script>
+<script src="js/config.js"></script>
+<script src="js/dashboard.js"></script>
+
+</body>
+</html>

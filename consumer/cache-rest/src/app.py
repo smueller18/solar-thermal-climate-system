@@ -17,14 +17,14 @@ from flask import Flask
 __author__ = "Stephan Müller"
 __license__ = "MIT"
 
-PORT = int(os.getenv("PORT", 5000))
+PORT = int(os.getenv("PORT", 5001))
 KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "kafka:9092")
-KAFKA_SCHEMA = os.getenv("KAFKA_SCHEMA", "/opt/config/kafka.avsc")
+KAFKA_SCHEMA = os.getenv("KAFKA_SCHEMA", "/avro/schema/kafka.timestamp-data.avsc")
 TOPIC = os.getenv("TOPIC", "chillii")
-CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "monitor")
+CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "cache-rest")
 AUTO_COMMIT_INTERVAL = int(os.getenv("AUTO_COMMIT_INTERVAL", 60000))
 LOGGING_LEVEL = os.getenv("LOGGING_LEVEL", "INFO")
-LOGGING_FORMAT = os.getenv("LOGGING_FORMAT", "%(message)s")
+LOGGING_FORMAT = os.getenv("LOGGING_FORMAT", "%(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s")
 
 
 logging.basicConfig(format=LOGGING_FORMAT)
@@ -51,7 +51,7 @@ kafka_message_schema = avro.schema.Parse(open(KAFKA_SCHEMA, "rb").read().decode(
 client = KafkaClient(hosts=KAFKA_HOSTS)
 topic = client.topics[str.encode(TOPIC)]
 
-latest_sensor_values_json = dict()
+latest_sensor_values_json = "{}"
 
 
 def kafka_consumer():
@@ -77,27 +77,16 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def root():
-    return app.send_static_file('index.html')
-
-
-@app.route('/sensor_values.json')
-def route_latest_sensor_values():
+def index():
     return latest_sensor_values_json
 
-
-@app.route('/sensor_description.json')
-def route_sensor_description():
-    return app.send_static_file('sensor_description.json')
-
-
-@app.route('/<path:path>')
-def static_proxy(path):
-    return app.send_static_file(path)
+# @app.route('/latest_sensor_values.json')
+# def route_latest_sensor_values():
+#     return latest_sensor_values_json
 
 
 def run():
-    logger.info("Starting webserver at port " + str(PORT))
+    logger.info("Starting cache-rest at port " + str(PORT))
     app.run(host="0.0.0.0", port=PORT)
 
 

@@ -1,17 +1,48 @@
 version: '2.1'
 services:
 
+  nginx:
+    container_name: nginx
+    build: ./nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+      - "2021:2021"
+      - "5432:5432"
+      - "9092:9092"
+    env_file:
+      - ${CONFIG_FOLDER-./../config}/global.env
+      - ${CONFIG_FOLDER-./../config}/nginx/config.env
+    environment:
+      USER_NAME: nginx
+    volumes:
+      - ./nginx/html:/etc/nginx/html
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/http.template.conf:/etc/nginx/http.template.conf
+      - ${CONFIG_FOLDER-./../config}/nginx/conf.d:/etc/nginx/conf.d
+      - ${CONFIG_FOLDER-./../config}/nginx/htpasswd:/etc/nginx/htpasswd
+      - ${CONFIG_FOLDER-./../config}/nginx/certs/server.crt:/etc/nginx/certs/server.crt
+      - ${CONFIG_FOLDER-./../config}/nginx/certs/server.key:/etc/nginx/certs/server.key
+
+  dockerui:
+    container_name: dockerui
+    image: uifd/ui-for-docker:0.12.0-beta
+    restart: always
+    privileged: true
+    env_file:
+      - ${CONFIG_FOLDER-./../config}/global.env
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
   zookeeper:
     container_name: zookeeper
     image: biggis/zookeeper:3.4.6
     restart: always
     hostname: zookeeper
-    ports:
-      - "${ZOOKEEPER_PORT:-2181}:2181"
-    networks:
-      - stcs
+    env_file:
+      - ${CONFIG_FOLDER-./../config}/global.env
     environment:
-      USER_ID: ${USER_ID:-1000}
       USER_NAME: zookeeper
     volumes:
       - zookeeper-data:/tmp/zookeeper/data
@@ -23,13 +54,9 @@ services:
     hostname: kafka
     depends_on:
       - zookeeper
-    ports:
-      - "${KAFKA_PORT:-9092}:9092"
-    networks:
-      - stcs
+    env_file:
+      - ${CONFIG_FOLDER-./../config}/global.env
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: ${DOCKER_HOST_IP}
-      USER_ID: ${USER_ID:-1000}
       USER_NAME: kafka
     volumes:
       - kafka-data:/tmp/kafka/data
@@ -39,16 +66,11 @@ services:
     image: biggis/postgres:9.6-alpine
     restart: always
     hostname: postgres
-    ports:
-      - "${POSTGRES_PORT:-5432}:5432"
-    networks:
-      - stcs
+    env_file:
+      - ${CONFIG_FOLDER-./../config}/global.env
+      - ${CONFIG_FOLDER-./../config}/postgres/config.env
     environment:
-      USER_ID: ${USER_ID:-1000}
       USER_NAME: postgres
-      POSTGRES_DB: ${POSTGRES_DB:-postgres}
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PW: ${POSTGRES_PW:-postgres}
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - postgres-data:/var/lib/postgresql/data/pgdata
@@ -58,12 +80,14 @@ services:
     image: fenglc/pgadmin4:1.1
     restart: always
     hostname: pgadmin4
-    networks:
-      - stcs
+    # TODO remove in future release
+    ports:
+      - "5050:5050"
+    env_file:
+      - ${CONFIG_FOLDER-./../config}/global.env
     environment:
-      USER_ID: ${USER_ID:-1000}
       USER_NAME: pgadmin
-      PORT: ${PGADMIN_PORT:-5050}
+      PORT: 5050
     volumes:
       - pgadmin-data:/root/.pgadmin
 
@@ -73,54 +97,46 @@ services:
     image: smueller18/consumer:postgres
     restart: always
     hostname: consumer-postgres
-    depends_on:
-      - kafka
-      - postgres
-    networks:
-      - stcs
+    env_file:
+      - ${CONFIG_FOLDER-./../config}/global.env
+      - ${CONFIG_FOLDER-./../config}/consumer/postgres/config.env
     environment:
-      USER_ID: ${USER_ID:-1000}
-      USER_NAME: postgres
-      POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
-      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
-      POSTGRES_DB: ${POSTGRES_DB:-postgres}
-      POSTGRES_USER: ${POSTGRES_USER_CONSUMER:-postgres}
-      POSTGRES_PW: ${POSTGRES_PW_CONSUMER:-postgres}
-      KAFKA_HOSTS: "kafka:${KAFKA_PORT:-9092}"
-      KAFKA_SCHEMA: "/opt/config/kafka.avsc"
-      CONSUMER_GROUP: ${CONSUMER_GROUP:-postgres}
-      AUTO_COMMIT_INTERVAL: ${AUTO_COMMIT_INTERVAL:-60000}
-      LOGGING_LEVEL: ${LOGGING_LEVEL:-INFO}
-      LOGGING_FORMAT: ${LOGGING_FORMAT:-%(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s}
+      USER_NAME: consumer-postgres
+    volumes:
+      - ./avro/schema/kafka.timestamp-data.avsc:/avro/schema/kafka.timestamp-data.avsc
 
-  consumer-monitor:
-    container_name: consumer-monitor
-    build: ./consumer/monitor
-    image: smueller18/consumer:monitor
+  consumer-cache-rest:
+    container_name: consumer-cache-rest
+    build: ./consumer/cache-rest
+    image: smueller18/consumer:cache-rest
     restart: always
-    hostname: consumer-monitor
-    depends_on:
-      - kafka
-    networks:
-      - stcs
+    hostname: consumer-cache-rest
+    env_file:
+      - ${CONFIG_FOLDER-./../config}/global.env
+      - ${CONFIG_FOLDER-./../config}/consumer/cache-rest/config.env
     environment:
-      USER_ID: ${USER_ID:-1000}
-      USER_NAME: monitor
-      PORT: ${MONITOR_PORT:-5000}
-      KAFKA_HOSTS: "kafka:${KAFKA_PORT:-9092}"
-      KAFKA_SCHEMA: "/opt/config/kafka.avsc"
-      TOPIC: ${MONITOR_TOPIC:-chillii}
-      CONSUMER_GROUP: ${CONSUMER_GROUP:-monitor}
-      AUTO_COMMIT_INTERVAL: ${AUTO_COMMIT_INTERVAL:-60000}
-      LOGGING_LEVEL: ${LOGGING_LEVEL:-INFO}
-      LOGGING_FORMAT: ${LOGGING_FORMAT:-%(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s}
+      USER_NAME: consumer-cache-rest
+    volumes:
+      - ./avro/schema/kafka.timestamp-data.avsc:/avro/schema/kafka.timestamp-data.avsc
+
+  monitor-technical:
+    container_name: monitor-technical
+    build: ./monitor/technical
+    image: smueller18/monitor:technical
+    restart: always
+    hostname: monitor-technical
+    env_file:
+      - ${CONFIG_FOLDER-./../config}/global.env
+      - ${CONFIG_FOLDER-./../config}/monitor/technical/config.env
+    environment:
+      USER_NAME: monitor-technical
+    volumes:
+      - ${CONFIG_FOLDER-./../config}/producer/chillii/sensor_description.json:/opt/monitor-technical/static/sensor_description.json
+      - ${CONFIG_FOLDER-./../config}/monitor/technical/config.template.js:/home/monitor-technical/config.template.js
+      - ./avro/schema/kafka.timestamp-data.avsc:/avro/schema/kafka.timestamp-data.avsc
 
 volumes:
   zookeeper-data:
   kafka-data:
   postgres-data:
   pgadmin-data:
-
-networks:
-  stcs:
-    external: true

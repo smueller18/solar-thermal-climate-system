@@ -22,11 +22,11 @@ POSTGRES_DB = os.getenv("POSTGRES_DB", "postgres")
 POSTGRES_USER = os.getenv("POSTGRES_USER_CONSUMER", "postgres")
 POSTGRES_PW = os.getenv("POSTGRES_PW_CONSUMER", "postgres")
 KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "kafka:9092")
-KAFKA_SCHEMA = os.getenv("KAFKA_SCHEMA", "/opt/config/kafka.avsc")
+KAFKA_SCHEMA = os.getenv("KAFKA_SCHEMA", "/avro/schema/kafka.timestamp-data.avsc")
 CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "postgres")
 AUTO_COMMIT_INTERVAL = int(os.getenv("AUTO_COMMIT_INTERVAL", 60000))
 LOGGING_LEVEL = os.getenv("LOGGING_LEVEL", "INFO")
-LOGGING_FORMAT = os.getenv("LOGGING_FORMAT", "%(message)s")
+LOGGING_FORMAT = os.getenv("LOGGING_FORMAT", "%(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s")
 
 
 logging.basicConfig(format=LOGGING_FORMAT)
@@ -66,14 +66,14 @@ def decode_message(message):
 
 def loop_inserter(consumer):
     topic = consumer.topic.name.decode()
-    logger.debug("Waiting for first message of topic '" + topic + "'...")
+    logger.info("Waiting for first message of topic '" + topic + "'...")
 
     parsed_first_message_correctly = False
     while not parsed_first_message_correctly:
         try:
             # create or update table schema if necessary
             first_message = decode_message(consumer.consume())
-            logger.debug("Received first message of topic '" + topic + "'")
+            logger.info("Received first message of topic '" + topic + "'")
             if not postgress_connector.table_exists(topic):
                 postgress_connector.create_table(table_name=topic, data=first_message["data"])
                 logger.info("Created table for topic '" + topic + "'")

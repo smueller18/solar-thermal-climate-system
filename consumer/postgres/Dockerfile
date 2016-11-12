@@ -1,4 +1,4 @@
-FROM smueller18/python3-kafka:psycopg2
+FROM smueller18/base:python3-kafka
 
 MAINTAINER smueller18
 

@@ -14,7 +14,7 @@ echo "Starting with UID : $USER_ID"
 addgroup -S -g $USER_ID $USER
 adduser -h /home/$USER -u $USER_ID -s /bin/sh -G $USER -S $USER
 mkdir -p /home/$USER
-chown -R $USER:$USER /home/$USER /opt /tmp /storage
+chown -R $USER:$USER /home/$USER /opt /tmp /storage /etc/nginx /var/log/nginx
 export HOME=/home/$USER
 
 exec gosu $USER "$@"
