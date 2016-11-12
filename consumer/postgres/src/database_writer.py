@@ -95,7 +95,7 @@ def loop_inserter(consumer):
     for message in consumer:
         try:
             decoded_message = decode_message(message)
-            logger.info("Received message from topic '" + topic + "' with offset " + str(message.offset) + " and timestamp " +
+            logger.debug("Received message from topic '" + topic + "' with offset " + str(message.offset) + " and timestamp " +
                         datetime.datetime.fromtimestamp(decoded_message["timestamp"]).strftime('%Y-%m-%d %H:%M:%S.%f'))
             try:
                 postgress_connector.insert_values(table_name=topic, data=decoded_message)

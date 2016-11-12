@@ -56,6 +56,7 @@ services:
       - zookeeper
     env_file:
       - ${CONFIG_FOLDER-./../config}/global.env
+      - ${CONFIG_FOLDER-./../config}/kafka/config.env
     environment:
       USER_NAME: kafka
     volumes:
