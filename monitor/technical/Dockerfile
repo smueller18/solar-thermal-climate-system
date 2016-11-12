@@ -16,6 +16,7 @@ RUN apk add --no-cache --virtual .build-deps \
 
 COPY src /opt/monitor-technical
 COPY start.sh /start.sh
+RUN chmod +x /start.sh
 
 EXPOSE 5000
 

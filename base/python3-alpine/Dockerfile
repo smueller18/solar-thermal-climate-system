@@ -30,6 +30,7 @@ RUN apk add --no-cache --virtual .build-deps gcc \
 RUN mkdir /storage /opt
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /zsr/local/bin/entrypoint.sh
 
 WORKDIR /home
 
