@@ -2,11 +2,8 @@
 var UPDATE_INTERVAL = 1;
 const NAMESPACE_SVG = "http://www.w3.org/2000/svg";
 const SENSOR_DESCRIPTION_URL = "sensor_description.json";
-
-// if constants are not defined in config.js
-if(typeof SENSOR_VALUES_URL === "undefined") {
-    SENSOR_VALUES_URL = "http://localhost:5001/sensor_values.json";
-}
+// to be defined in config/config.js
+// const SENSOR_VALUES_URL = "..."
 
 var getJSON = function (url, callback) {
     var xhr = new XMLHttpRequest();

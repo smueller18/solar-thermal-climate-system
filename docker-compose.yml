@@ -17,13 +17,21 @@ services:
     environment:
       USER_NAME: nginx
     volumes:
+      # index page
       - ./nginx/html:/etc/nginx/html
+      # nginx config files
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/http.template.conf:/etc/nginx/http.template.conf
+      - ./nginx/http.conf:/etc/nginx/http.conf
       - ${CONFIG_FOLDER-./../config}/nginx/conf.d:/etc/nginx/conf.d
+      # password files
       - ${CONFIG_FOLDER-./../config}/nginx/htpasswd:/etc/nginx/htpasswd
+      # certificates
       - ${CONFIG_FOLDER-./../config}/nginx/certs/server.crt:/etc/nginx/certs/server.crt
       - ${CONFIG_FOLDER-./../config}/nginx/certs/server.key:/etc/nginx/certs/server.key
+      # monitor
+      - ./monitor:/var/www/monitor
+      - ${CONFIG_FOLDER-./../config}/monitor/technical/sensor_description.json:/var/www/monitor/technical/sensor_description.json
+      - ${CONFIG_FOLDER-./../config}/monitor/technical/js/config.js:/var/www/monitor/technical/js/config.js
 
   dockerui:
     container_name: dockerui
@@ -33,7 +41,7 @@ services:
     env_file:
       - ${CONFIG_FOLDER-./../config}/global.env
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
+      - /var/run/docker.sock:/var/run/docker.sock
 
   zookeeper:
     container_name: zookeeper
@@ -120,22 +128,7 @@ services:
     volumes:
       - ./avro/schema/kafka.timestamp-data.avsc:/avro/schema/kafka.timestamp-data.avsc
 
-  monitor-technical:
-    container_name: monitor-technical
-    build: ./monitor/technical
-    image: smueller18/monitor:technical
-    restart: always
-    hostname: monitor-technical
-    env_file:
-      - ${CONFIG_FOLDER-./../config}/global.env
-      - ${CONFIG_FOLDER-./../config}/monitor/technical/config.env
-    environment:
-      USER_NAME: monitor-technical
-    volumes:
-      - ${CONFIG_FOLDER-./../config}/producer/chillii/sensor_description.json:/opt/monitor-technical/static/sensor_description.json
-      - ${CONFIG_FOLDER-./../config}/monitor/technical/config.template.js:/home/monitor-technical/config.template.js
-      - ./avro/schema/kafka.timestamp-data.avsc:/avro/schema/kafka.timestamp-data.avsc
-
+      
 volumes:
   zookeeper-data:
   kafka-data:
