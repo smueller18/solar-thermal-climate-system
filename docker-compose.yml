@@ -3,7 +3,7 @@ services:
 
   nginx:
     container_name: nginx
-    build: ./nginx
+    image: nginx
     restart: always
     ports:
       - "80:80"
@@ -11,6 +11,7 @@ services:
       - "2021:2021"
       - "5432:5432"
       - "9092:9092"
+    command: /bin/sh -c "nginx -g 'daemon off;'"
     env_file:
       - ${CONFIG_FOLDER-./../config}/global.env
       - ${CONFIG_FOLDER-./../config}/nginx/config.env
@@ -128,7 +129,7 @@ services:
     volumes:
       - ./avro/schema/kafka.timestamp-data.avsc:/avro/schema/kafka.timestamp-data.avsc
 
-      
+
 volumes:
   zookeeper-data:
   kafka-data:
