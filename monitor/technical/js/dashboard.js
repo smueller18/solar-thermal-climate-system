@@ -73,11 +73,11 @@ function initializeSensorValueNodes(sensorValues) {
 
             sensorIdNode.parentNode.appendChild(sensorValueNode);
 
-            sensorValueNodes[sensorId] = sensorValueNode;
+            sensorValueTextNodes[sensorId] = sensorValue;
         }
     });
 
-    return sensorValueNodes;
+    return sensorValueTextNodes;
 }
 
 function updateSensorValues() {
@@ -89,7 +89,7 @@ function updateSensorValues() {
             var timestamp = data["timestamp"];
 
             Object.keys(sensorValues).forEach(function (sensorId) {
-				if (sensorValueNodes[sensorId] != undefined) {
+				if (sensorValueTextNodes[sensorId] != undefined) {
 					var sensorValue = sensorValues[sensorId];
           var newSensorValue;
 					switch (typeof(sensorValue)) {
@@ -111,8 +111,8 @@ function updateSensorValues() {
 							newSensorValue = sensorValue.toString();
 							break;
 					}
-                    var oldSensorValue = sensorValueNodes[sensorId].textContent;
-                    sensorValueNodes[sensorId].textContent = newSensorValue;
+                    var oldSensorValue = sensorValueTextNodes[sensorId].textContent;
+                    sensorValueTextNodes[sensorId].textContent = newSensorValue;
 				}
             });
             var datetime = new Date(timestamp * 1000);
@@ -124,7 +124,7 @@ function updateSensorValues() {
 
 
 // required by function updateSensorValues()
-var sensorValueNodes = {};
+var sensorValueTextNodes = {};
 
 window.onload = function () {
 
@@ -133,7 +133,7 @@ window.onload = function () {
             if (err != null) {
                 console.log("Something went wrong: " + err);
             } else {
-                sensorValueNodes = initializeSensorValueNodes(data);
+                sensorValueTextNodes = initializeSensorValueNodes(data);
                 updateSensorValues();
             }
         });
