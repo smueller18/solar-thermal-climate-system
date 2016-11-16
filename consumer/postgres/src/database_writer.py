@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
-import datetime
-import io
-import signal
-import logging
 import os
+import logging
+import signal
+import io
+import datetime
 import threading
 import avro.io
 import psycopg2

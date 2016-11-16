@@ -5,13 +5,20 @@ import logging
 import psycopg2
 import psycopg2.extras
 
-from datatypes import data_types
-
 __author__ = "Stephan Müller"
 __license__ = "MIT"
 
 
 logger = logging.getLogger(__name__)
+
+
+_data_types = {
+    bytes: "bytea",
+    float: "real",
+    int: "bigint",
+    bool: "bool",
+    str: "text"
+}
 
 
 class PostgresConnector:
@@ -44,9 +51,9 @@ class PostgresConnector:
             column_names.append(key)
 
             try:
-                data_type = data_types[type(data[key])]
+                data_type = _data_types[type(data[key])]
             except KeyError:
-                data_type = data_types[str]
+                data_type = _data_types[str]
 
             column_sql += ", " + key + " " + data_type
 
@@ -82,9 +89,9 @@ class PostgresConnector:
         for column_name in column_names_to_add:
 
             try:
-                data_type = data_types[type(data[column_name])]
+                data_type = _data_types[type(data[column_name])]
             except KeyError:
-                data_type = data_types[str]
+                data_type = _data_types[str]
 
             sql = "ALTER TABLE %s ADD COLUMN %s %s;" % (table_name, column_name, data_type)
 

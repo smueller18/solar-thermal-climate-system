@@ -4,14 +4,14 @@
 # destroy old consumer thread and start new one
 
 import os
-import datetime
-import signal
 import logging
-import threading
-from pykafka import KafkaClient
-import avro.io
+import signal
 import io
+import datetime
+import threading
 import json
+import avro.io
+from pykafka import KafkaClient
 from flask import Flask
 
 __author__ = "Stephan Müller"
