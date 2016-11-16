@@ -30,15 +30,15 @@ $ python3 app.py
 ```
 Here is a list of all variables which can be set by environment variables.
 
-variable | default | type | info
---- | --- | ---
-PORT | 5001 | int | port of REST server
-KAFKA_HOSTS | kafka:9092 | string
-KAFKA_SCHEMA | /avro/schema/kafka.timestamp-data.avsc | string
-CONSUMER_GROUP | postgres | string
-AUTO_COMMIT_INTERVAL | 60000 | int | milliseconds
-LOGGING_LEVEL | INFO | string | one of CRITICAL, ERROR, WARNING, INFO, DEBUG
-LOGGING_FORMAT | %(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s | allowed attributes see [here](https://docs.python.org/3.6/library/logging.html#logrecord-attributes)
+| variable | default | type | info |
+| --- | --- | --- | --- |
+| PORT | 5001 | int | port of REST server |
+| KAFKA_HOSTS | kafka:9092 | string |   |
+| KAFKA_SCHEMA | /avro/schema/kafka.timestamp-data.avsc | string |   |
+| CONSUMER_GROUP | postgres | string |   |
+| AUTO_COMMIT_INTERVAL | 60000 | int | milliseconds |
+| LOGGING_LEVEL | INFO | string | one of CRITICAL, ERROR, WARNING, INFO, DEBUG |
+| LOGGING_FORMAT | %(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s | string | allowed attributes see [here](https://docs.python.org/3.6/library/logging.html#logrecord-attributes) |
 
 ## Exception handling
 If connection to broker is lost, `collector.py` will be terminated.
