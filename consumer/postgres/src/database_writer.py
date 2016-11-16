@@ -47,7 +47,7 @@ class ListenFilter(logging.Filter):
 logging.getLogger('pykafka.broker').addFilter(ListenFilter())
 logging.getLogger('pykafka.cluster').addFilter(ListenFilter())
 
-kafka_message_schema = avro.schema.Parse(open(KAFKA_SCHEMA, "rb").read().decode())
+kafka_message_schema = avro.schema.Parse(open(KAFKA_SCHEMA, "r"))
 
 try:
     postgress_connector = PostgresConnector(host=POSTGRES_HOST, port=POSTGRES_PORT, database=POSTGRES_DB,

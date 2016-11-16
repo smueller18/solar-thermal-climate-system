@@ -46,7 +46,7 @@ logging.getLogger('pykafka.broker').addFilter(ListenFilter())
 logging.getLogger('pykafka.cluster').addFilter(ListenFilter())
 
 
-kafka_message_schema = avro.schema.Parse(open(KAFKA_SCHEMA, "rb").read().decode())
+kafka_message_schema = avro.schema.Parse(open(KAFKA_SCHEMA, "r"))
 
 client = KafkaClient(hosts=KAFKA_HOSTS)
 topic = client.topics[str.encode(TOPIC)]
