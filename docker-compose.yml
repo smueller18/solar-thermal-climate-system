@@ -8,6 +8,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      - "444":"444"
       - "2021:2021"
       - "5432:5432"
       - "9092:9092"
@@ -90,9 +91,6 @@ services:
     image: fenglc/pgadmin4:1.1
     restart: always
     hostname: pgadmin4
-    # TODO remove in future release
-    ports:
-      - "5050:5050"
     env_file:
       - ${CONFIG_FOLDER-./../config}/global.env
     environment:

@@ -46,6 +46,12 @@
         }
     </style>
 
+    <script>
+        function getPgAdminUrl()  {
+          return 'https://' + window.location.hostname + ':444'
+        }
+    </script>
+
 </head>
 
 <body>
@@ -60,7 +66,7 @@
             </a>
         </div>
         <div class="col-xs-6 col-md-4 col-lg-3">
-            <a class="btn btn-secondary" href="/pgadmin/browser/">
+            <a class="btn btn-secondary" href="javascrip:window.location='https://' + window.location.hostname + ':444'">
                 <img src="img/postgresql.svg" class="img-responsive img-fluid" style="width: 81%">
                 <h4>pgAdmin</h4>
                 <span class="text-muted">Database</span>
