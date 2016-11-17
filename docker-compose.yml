@@ -34,6 +34,12 @@ services:
       - ./monitor:/var/www/monitor
       - ${CONFIG_FOLDER-./../config}/monitor/technical/sensor_description.json:/var/www/monitor/technical/sensor_description.json
       - ${CONFIG_FOLDER-./../config}/monitor/technical/js/config.js:/var/www/monitor/technical/js/config.js
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
 
   dockerui:
     container_name: dockerui
@@ -44,6 +50,11 @@ services:
       - ${CONFIG_FOLDER-./../config}/global.env
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
 
   zookeeper:
     container_name: zookeeper
@@ -56,6 +67,11 @@ services:
       USER_NAME: zookeeper
     volumes:
       - zookeeper-data:/tmp/zookeeper/data
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
 
   kafka:
     container_name: kafka
@@ -71,6 +87,11 @@ services:
       USER_NAME: kafka
     volumes:
       - kafka-data:/tmp/kafka/data
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
 
   postgres:
     container_name: postgres
@@ -85,6 +106,11 @@ services:
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - postgres-data:/var/lib/postgresql/data/pgdata
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
 
   pgadmin:
     container_name: pgadmin
@@ -98,6 +124,11 @@ services:
       PORT: 5050
     volumes:
       - pgadmin-data:/root/.pgadmin
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
 
   consumer-postgres:
     container_name: consumer-postgres
@@ -112,6 +143,11 @@ services:
       USER_NAME: consumer-postgres
     volumes:
       - ./avro/schema/kafka.timestamp-data.avsc:/avro/schema/kafka.timestamp-data.avsc
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
 
   consumer-cache-rest:
     container_name: consumer-cache-rest
@@ -126,6 +162,11 @@ services:
       USER_NAME: consumer-cache-rest
     volumes:
       - ./avro/schema/kafka.timestamp-data.avsc:/avro/schema/kafka.timestamp-data.avsc
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
 
 
 volumes:
