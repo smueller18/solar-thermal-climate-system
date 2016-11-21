@@ -9,9 +9,7 @@ services:
       - "80:80"
       - "443:443"
       - "444:444"
-      - "2021:2021"
       - "5432:5432"
-      - "9092:9092"
     command: /bin/sh -c "nginx -g 'daemon off;'"
     env_file:
       - ${CONFIG_FOLDER-./../config}/global.env
@@ -61,6 +59,8 @@ services:
     image: biggis/zookeeper:3.4.6
     restart: always
     hostname: zookeeper
+    ports:
+      - "2181:2181"
     env_file:
       - ${CONFIG_FOLDER-./../config}/global.env
     environment:
@@ -78,6 +78,8 @@ services:
     image: biggis/kafka:0.9.0.0
     restart: always
     hostname: kafka
+    ports:
+      - "9092:9092"
     depends_on:
       - zookeeper
     env_file:
@@ -98,6 +100,8 @@ services:
     image: biggis/postgres:9.6-alpine
     restart: always
     hostname: postgres
+    ports:
+      - "5432:5432"
     env_file:
       - ${CONFIG_FOLDER-./../config}/global.env
       - ${CONFIG_FOLDER-./../config}/postgres/config.env
