@@ -9,7 +9,6 @@ services:
       - "80:80"
       - "443:443"
       - "444:444"
-      - "5432:5432"
     command: /bin/sh -c "nginx -g 'daemon off;'"
     env_file:
       - ${CONFIG_FOLDER-./../config}/global.env
