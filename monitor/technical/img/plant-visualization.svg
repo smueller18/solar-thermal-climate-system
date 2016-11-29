@@ -3,11 +3,11 @@
 <!-- Generiert durch Microsoft Visio 11.0, SVG Export, v1.0 stcs_monitor.svg Page-1 -->
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
 		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="11.6929in" height="8.26772in"
-		viewBox="0 0 841.89 595.276" xml:space="preserve" color-interpolation-filters="sRGB" class="st22">
+		viewBox="0 0 841.89 595.276" xml:space="preserve" color-interpolation-filters="sRGB" class="st23">
 	<v:documentProperties v:langID="1031" v:metric="true" v:viewMarkup="false">
 		<v:userDefs>
 			<v:ud v:nameU="PETagFormats"
-					v:val="VT4(&#60;SolutionXML&#62;&#60;Tag_Formats xmlns=&#39;urn:schemas-microsoft-com:office:visio:process_engineering:tag_formats&#39; Version=&#39;10.0&#39;&#62;&#60;Tag_Defns xmlns=&#39;&#39;&#62;&#60;Fmt name=&#39;Geräte&#39;&#62;&#60;Expression&#62;E-[#]&#60;/Expression&#62;&#60;Format&#62;0&#60;/Format&#62;&#60;Included&#62;-1&#60;/Included&#62;&#60;Start&#62;1&#60;/Start&#62;&#60;Interval&#62;1&#60;/Interval&#62;&#60;LastUsedValue&#62;20&#60;/LastUsedValue&#62;&#60;/Fmt&#62;&#60;Fmt name=&#39;Instrument&#39;&#62;&#60;Expression&#62;I-[#]&#60;/Expression&#62;&#60;Format&#62;0&#60;/Format&#62;&#60;Included&#62;-1&#60;/Included&#62;&#60;Start&#62;1&#60;/Start&#62;&#60;Interval&#62;1&#60;/Interval&#62;&#60;LastUsedValue&#62;25&#60;/LastUsedValue&#62;&#60;/Fmt&#62;&#60;Fmt name=&#39;Pipeline&#39;&#62;&#60;Expression&#62;P-[#]&#60;/Expression&#62;&#60;Format&#62;0&#60;/Format&#62;&#60;Included&#62;-1&#60;/Included&#62;&#60;Start&#62;1&#60;/Start&#62;&#60;Interval&#62;1&#60;/Interval&#62;&#60;LastUsedValue&#62;65&#60;/LastUsedValue&#62;&#60;/Fmt&#62;&#60;Fmt name=&#39;Rohrleitung&#39;&#62;&#60;Expression&#62;P-[#]&#60;/Expression&#62;&#60;Format&#62;0&#60;/Format&#62;&#60;Included&#62;-1&#60;/Included&#62;&#60;Start&#62;1&#60;/Start&#62;&#60;Interval&#62;1&#60;/Interval&#62;&#60;LastUsedValue&#62;23&#60;/LastUsedValue&#62;&#60;/Fmt&#62;&#60;Fmt name=&#39;Ventil&#39;&#62;&#60;Expression&#62;V-[#]&#60;/Expression&#62;&#60;Format&#62;0&#60;/Format&#62;&#60;Included&#62;-1&#60;/Included&#62;&#60;Start&#62;1&#60;/Start&#62;&#60;Interval&#62;1&#60;/Interval&#62;&#60;LastUsedValue&#62;22&#60;/LastUsedValue&#62;&#60;/Fmt&#62;&#60;/Tag_Defns&#62;&#60;Change_Log xmlns=&#39;&#39;&#62;&#60;New_Items/&#62;&#60;Modified_Items/&#62;&#60;Deleted_Items/&#62;&#60;Renamed_Items/&#62;&#60;/Change_Log&#62;&#60;/Tag_Formats&#62;&#60;/SolutionXML&#62;)"><SolutionXML><Tag_Formats xmlns='urn:schemas-microsoft-com:office:visio:process_engineering:tag_formats' Version='10.0'><Tag_Defns xmlns=''><Fmt name='Geräte'><Expression>E-[#]</Expression><Format>0</Format><Included>-1</Included><Start>1</Start><Interval>1</Interval><LastUsedValue>20</LastUsedValue></Fmt><Fmt name='Instrument'><Expression>I-[#]</Expression><Format>0</Format><Included>-1</Included><Start>1</Start><Interval>1</Interval><LastUsedValue>25</LastUsedValue></Fmt><Fmt name='Pipeline'><Expression>P-[#]</Expression><Format>0</Format><Included>-1</Included><Start>1</Start><Interval>1</Interval><LastUsedValue>65</LastUsedValue></Fmt><Fmt name='Rohrleitung'><Expression>P-[#]</Expression><Format>0</Format><Included>-1</Included><Start>1</Start><Interval>1</Interval><LastUsedValue>23</LastUsedValue></Fmt><Fmt name='Ventil'><Expression>V-[#]</Expression><Format>0</Format><Included>-1</Included><Start>1</Start><Interval>1</Interval><LastUsedValue>22</LastUsedValue></Fmt></Tag_Defns><Change_Log xmlns=''><New_Items/><Modified_Items/><Deleted_Items/><Renamed_Items/></Change_Log></Tag_Formats></SolutionXML>			</v:ud>
+					v:val="VT4(&#60;SolutionXML&#62;&#60;Tag_Formats xmlns=&#39;urn:schemas-microsoft-com:office:visio:process_engineering:tag_formats&#39; Version=&#39;10.0&#39;&#62;&#60;Tag_Defns xmlns=&#39;&#39;&#62;&#60;Fmt name=&#39;Geräte&#39;&#62;&#60;Expression&#62;E-[#]&#60;/Expression&#62;&#60;Format&#62;0&#60;/Format&#62;&#60;Included&#62;-1&#60;/Included&#62;&#60;Start&#62;1&#60;/Start&#62;&#60;Interval&#62;1&#60;/Interval&#62;&#60;LastUsedValue&#62;20&#60;/LastUsedValue&#62;&#60;/Fmt&#62;&#60;Fmt name=&#39;Instrument&#39;&#62;&#60;Expression&#62;I-[#]&#60;/Expression&#62;&#60;Format&#62;0&#60;/Format&#62;&#60;Included&#62;-1&#60;/Included&#62;&#60;Start&#62;1&#60;/Start&#62;&#60;Interval&#62;1&#60;/Interval&#62;&#60;LastUsedValue&#62;25&#60;/LastUsedValue&#62;&#60;/Fmt&#62;&#60;Fmt name=&#39;Pipeline&#39;&#62;&#60;Expression&#62;P-[#]&#60;/Expression&#62;&#60;Format&#62;0&#60;/Format&#62;&#60;Included&#62;-1&#60;/Included&#62;&#60;Start&#62;1&#60;/Start&#62;&#60;Interval&#62;1&#60;/Interval&#62;&#60;LastUsedValue&#62;65&#60;/LastUsedValue&#62;&#60;/Fmt&#62;&#60;Fmt name=&#39;Rohrleitung&#39;&#62;&#60;Expression&#62;P-[#]&#60;/Expression&#62;&#60;Format&#62;0&#60;/Format&#62;&#60;Included&#62;-1&#60;/Included&#62;&#60;Start&#62;1&#60;/Start&#62;&#60;Interval&#62;1&#60;/Interval&#62;&#60;LastUsedValue&#62;25&#60;/LastUsedValue&#62;&#60;/Fmt&#62;&#60;Fmt name=&#39;Ventil&#39;&#62;&#60;Expression&#62;V-[#]&#60;/Expression&#62;&#60;Format&#62;0&#60;/Format&#62;&#60;Included&#62;-1&#60;/Included&#62;&#60;Start&#62;1&#60;/Start&#62;&#60;Interval&#62;1&#60;/Interval&#62;&#60;LastUsedValue&#62;24&#60;/LastUsedValue&#62;&#60;/Fmt&#62;&#60;/Tag_Defns&#62;&#60;Change_Log xmlns=&#39;&#39;&#62;&#60;New_Items/&#62;&#60;Modified_Items/&#62;&#60;Deleted_Items/&#62;&#60;Renamed_Items/&#62;&#60;/Change_Log&#62;&#60;/Tag_Formats&#62;&#60;/SolutionXML&#62;)"><SolutionXML><Tag_Formats xmlns='urn:schemas-microsoft-com:office:visio:process_engineering:tag_formats' Version='10.0'><Tag_Defns xmlns=''><Fmt name='Geräte'><Expression>E-[#]</Expression><Format>0</Format><Included>-1</Included><Start>1</Start><Interval>1</Interval><LastUsedValue>20</LastUsedValue></Fmt><Fmt name='Instrument'><Expression>I-[#]</Expression><Format>0</Format><Included>-1</Included><Start>1</Start><Interval>1</Interval><LastUsedValue>25</LastUsedValue></Fmt><Fmt name='Pipeline'><Expression>P-[#]</Expression><Format>0</Format><Included>-1</Included><Start>1</Start><Interval>1</Interval><LastUsedValue>65</LastUsedValue></Fmt><Fmt name='Rohrleitung'><Expression>P-[#]</Expression><Format>0</Format><Included>-1</Included><Start>1</Start><Interval>1</Interval><LastUsedValue>25</LastUsedValue></Fmt><Fmt name='Ventil'><Expression>V-[#]</Expression><Format>0</Format><Included>-1</Included><Start>1</Start><Interval>1</Interval><LastUsedValue>24</LastUsedValue></Fmt></Tag_Defns><Change_Log xmlns=''><New_Items/><Modified_Items/><Deleted_Items/><Renamed_Items/></Change_Log></Tag_Formats></SolutionXML>			</v:ud>
 			<v:ud v:nameU="PEUserOptions" v:val="VT0(15):26"/>
 			<v:ud v:nameU="PEJunctionMaster" v:val="VT4(Verbindung)"/>
 			<v:ud v:nameU="msvNoAutoConnect" v:val="VT0(1):26"/>
@@ -38,7 +38,8 @@
 		.st19 {stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.72}
 		.st20 {fill:#000000;font-family:Calibri;font-size:0.499992em}
 		.st21 {stroke:#000000;stroke-linecap:butt;stroke-width:1.5}
-		.st22 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+		.st22 {fill:#ffff66;stroke:#ffff00;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.24}
+		.st23 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
 	]]>
 	</style>
 
@@ -1245,7 +1246,7 @@
 			<v:textRect cx="142.639" cy="579.547" width="96" height="14.4037"/>
 			<path d="M0 588.19 L85.04 588.19" class="st6"/>
 		</g>
-		<g id="shape22-199" v:mID="22" v:groupContext="shape" v:layerMember="1" transform="translate(709.228,-241.512)">
+		<g id="shape22-199" v:mID="22" v:groupContext="shape" v:layerMember="1" transform="translate(709.228,-255.685)">
 			<title>Dynamischer Verbinder.22</title>
 			<v:custProps>
 				<v:cp v:nameU="Description" v:lbl="Beschreibung" v:type="0" v:sortKey="0" v:langID="1031"/>
@@ -1273,8 +1274,8 @@
 				<v:ud v:nameU="UnitSize" v:val="VT0(0.11811023622047):24"/>
 			</v:userDefs>
 			<v:textBlock v:margins="rect(0,0,0,0)" v:tabSpace="42.5197"/>
-			<v:textRect cx="-22.337" cy="579.547" width="96" height="14.4037"/>
-			<path d="M0 588.19 L-79.94 588.19" class="st6"/>
+			<v:textRect cx="-22.337" cy="593.72" width="96" height="14.4037"/>
+			<path d="M0 602.36 L-79.94 602.36" class="st6"/>
 		</g>
 		<g id="shape49-202" v:mID="49" v:groupContext="shape" v:layerMember="1" transform="translate(724.959,-103.732)">
 			<title>Dynamischer Verbinder.49</title>
@@ -1305,7 +1306,7 @@
 			</v:userDefs>
 			<v:textBlock v:margins="rect(0,0,0,0)" v:tabSpace="42.5197"/>
 			<v:textRect cx="115.003" cy="586.633" width="96" height="14.4037"/>
-			<path d="M0 595.28 L57.4 595.28 L57.4 552.46" class="st6"/>
+			<path d="M0 595.28 L57.4 595.28 L57.4 518.44" class="st6"/>
 		</g>
 		<g id="shape25-205" v:mID="25" v:groupContext="shape" v:layerMember="2" transform="translate(707.951,-95.2283)">
 			<title>Mischventil.25</title>
@@ -2398,7 +2399,7 @@
 				<v:ud v:nameU="UnitSize" v:val="VT0(0.11811023622047):24"/>
 			</v:userDefs>
 			<v:textBlock v:margins="rect(0,0,0,0)" v:tabSpace="42.5197"/>
-			<v:textRect cx="64.6866" cy="586.633" width="96" height="14.4037"/>
+			<v:textRect cx="64.6866" cy="548.721" width="96" height="14.4037"/>
 			<path d="M7.09 595.28 L7.09 557.36" class="st6"/>
 		</g>
 		<g id="shape6-509" v:mID="6" v:groupContext="shape" v:layerMember="1" transform="translate(304.724,-323.717)">
@@ -2451,8 +2452,8 @@
 				<v:ud v:nameU="UnitSize" v:val="VT0(0.11811023622047):24"/>
 			</v:userDefs>
 			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="62.8157" cy="579.067" width="48" height="15.2035"/>
-			<path d="M0 588.19 L34.02 588.19" class="st19"/>
+			<v:textRect cx="54.3118" cy="579.067" width="48" height="15.2035"/>
+			<path d="M0 588.19 L25.51 588.19" class="st19"/>
 		</g>
 		<g id="shape13-516" v:mID="13" v:groupContext="shape" v:layerMember="1" transform="translate(357.165,-318.047)">
 			<title>Hauptleitung.13</title>
@@ -2543,104 +2544,7 @@
 			</v:userDefs>
 			<path d="M0 588.19 L17.01 588.19" class="st19"/>
 		</g>
-		<g id="shape72-529" v:mID="72" v:groupContext="shape" v:layerMember="1" transform="translate(785.197,-163.559)">
-			<title>Dynamischer Verbinder.72</title>
-			<v:custProps>
-				<v:cp v:nameU="Description" v:lbl="Beschreibung" v:type="0" v:sortKey="0" v:langID="1031"/>
-				<v:cp v:nameU="LineSize" v:lbl="Leitungsgröße" v:type="0" v:sortKey="1" v:langID="1031"/>
-				<v:cp v:nameU="Schedule" v:lbl="Zeitplan" v:type="0" v:sortKey="2" v:langID="1031"/>
-				<v:cp v:nameU="Material" v:lbl="Material" v:type="0" v:sortKey="3" v:langID="1031"/>
-				<v:cp v:nameU="DesignPressure" v:lbl="Entwurfsdruck" v:type="0" v:sortKey="4" v:langID="1031"/>
-				<v:cp v:nameU="DesignTemperature" v:lbl="Entwurfstemperatur" v:type="0" v:sortKey="5" v:langID="1031"/>
-			</v:custProps>
-			<v:userDefs>
-				<v:ud v:nameU="visKeywords"
-						v:val="VT4(Major,Pipeline,connector,automatically,routes,between,connects,Pipelines,ID,piping,instrumentation,design,process,plant)"/>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-				<v:ud v:nameU="TextCH" v:prompt="Determines text control handle visibility." v:val="VT0(0):26"/>
-				<v:ud v:nameU="SOLSH" v:val="VT4({D7D7DB7E-3668-43e5-AF97-97F58AB229A5})"/>
-				<v:ud v:nameU="ShapeClass" v:val="VT4(Pipelines)"/>
-				<v:ud v:nameU="PEComponentTag" v:val="VT4(P-29)"/>
-				<v:ud v:nameU="PETagNumber" v:val="VT0(29):26"/>
-				<v:ud v:nameU="PETagFormat" v:prompt="P-29" v:val="VT4(Pipeline)"/>
-				<v:ud v:nameU="PEHideTag" v:val="VT0(1):26"/>
-				<v:ud v:nameU="PEPageHideTags" v:val="VT0(0):26"/>
-				<v:ud v:nameU="PELayout" v:val="VT0(31):26"/>
-				<v:ud v:nameU="CPMSetList" v:prompt="Description,LineSize,Schedule,Material,DesignPressure,DesignTemperature"
-						v:val="VT4(Pipeline)"/>
-				<v:ud v:nameU="UnitSize" v:val="VT0(0.11811023622047):24"/>
-			</v:userDefs>
-			<v:textBlock v:margins="rect(0,0,0,0)" v:tabSpace="42.5197"/>
-			<v:textRect cx="54.7654" cy="501.594" width="96" height="14.4037"/>
-			<path d="M-2.83 595.28 L-2.83 510.24 L-11.34 510.24" class="st6"/>
-		</g>
-		<g id="shape69-532" v:mID="69" v:groupContext="shape" v:layerMember="2" transform="translate(1369.13,431.717) rotate(90)">
-			<title>Mischventil.69</title>
-			<v:custProps>
-				<v:cp v:nameU="Description" v:lbl="Beschreibung" v:type="0" v:sortKey="0" v:langID="1031"/>
-				<v:cp v:nameU="LineSize" v:lbl="Leitungsgröße" v:type="0" v:sortKey="1" v:langID="1031"/>
-				<v:cp v:nameU="ValveClass" v:lbl="Ventilklasse" v:type="0" v:sortKey="2" v:langID="1031"/>
-				<v:cp v:nameU="Manufacturer" v:lbl="Hersteller" v:type="0" v:sortKey="3" v:langID="1031"/>
-				<v:cp v:nameU="Model" v:lbl="Modell" v:type="0" v:sortKey="4" v:langID="1031"/>
-			</v:custProps>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-				<v:ud v:nameU="TextCH" v:prompt="Determines text control handle visibility." v:val="VT0(5):26"/>
-				<v:ud v:nameU="SOLSH" v:val="VT4({D7D7DB7E-3668-43e5-AF97-97F58AB229A5})"/>
-				<v:ud v:nameU="ShapeClass" v:val="VT4(Ventil)"/>
-				<v:ud v:nameU="PETagFormat" v:prompt="V-20" v:val="VT4(Ventil)"/>
-				<v:ud v:nameU="PETagNumber" v:val="VT0(20):26"/>
-				<v:ud v:nameU="PEHideTag"/>
-				<v:ud v:nameU="PEPageHideTags" v:val="VT0(0):26"/>
-				<v:ud v:nameU="PELayout" v:val="VT0(31):26"/>
-				<v:ud v:nameU="CPMSetList" v:prompt="Description,LineSize,ValveClass,Manufacturer,Model" v:val="VT4(Ventil)"/>
-				<v:ud v:nameU="PEComponentTag" v:val="VT4(V-20)"/>
-			</v:userDefs>
-			<path d="M4.25 586.77 A4.25197 4.25197 0 1 0 12.76 586.77 A4.25197 4.25197 0 1 0 4.25 586.77 ZM0 591.02 L0 582.52 L4.7
-						 584.87 A4.25074 4.25074 -180 0 0 4.7 588.67 L0 591.02 ZM17.01 591.02 L17.01 582.52 L12.29 584.87 A4.08328
-						 4.08328 0 0 1 12.29 588.67 L17.01 591.02 ZM4.25 595.28 L12.76 595.28 L10.41 590.57 A4.25074 4.25074 0 0
-						 1 6.6 590.57 L4.25 595.28 Z" class="st5"/>
-			<path d="M4.25 586.77 A4.25197 4.25197 0 1 0 12.76 586.77 A4.25197 4.25197 0 1 0 4.25 586.77" class="st7"/>
-			<path d="M0 591.02 L0 582.52 L4.7 584.87 A4.25074 4.25074 -180 0 0 4.7 588.67 L0 591.02" class="st7"/>
-			<path d="M17.01 591.02 L17.01 582.52 L12.29 584.87 A4.08328 4.08328 0 0 1 12.29 588.67 L17.01 591.02" class="st7"/>
-			<path d="M4.25 595.28 L12.76 595.28 L10.41 590.57 A4.25074 4.25074 0 0 1 6.6 590.57 L4.25 595.28" class="st7"/>
-			<path d="M8.5 586.77 L4.7 584.87 A4.25074 4.25074 -180 0 0 4.7 588.67 L8.5 586.77 L12.29 584.87 A4.0859 4.0859 0 0 1
-						 12.29 588.67 L8.5 586.77 L10.41 590.57 A4.25074 4.25074 0 0 1 6.6 590.57 L8.5 586.77" class="st7"/>
-		</g>
-		<g id="shape54-539" v:mID="54" v:groupContext="shape" v:layerMember="2" transform="translate(1386.14,397.701) rotate(90)">
-			<title>Mischventil.54</title>
-			<v:custProps>
-				<v:cp v:nameU="Description" v:lbl="Beschreibung" v:type="0" v:sortKey="0" v:langID="1031"/>
-				<v:cp v:nameU="LineSize" v:lbl="Leitungsgröße" v:type="0" v:sortKey="1" v:langID="1031"/>
-				<v:cp v:nameU="ValveClass" v:lbl="Ventilklasse" v:type="0" v:sortKey="2" v:langID="1031"/>
-				<v:cp v:nameU="Manufacturer" v:lbl="Hersteller" v:type="0" v:sortKey="3" v:langID="1031"/>
-				<v:cp v:nameU="Model" v:lbl="Modell" v:type="0" v:sortKey="4" v:langID="1031"/>
-			</v:custProps>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-				<v:ud v:nameU="TextCH" v:prompt="Determines text control handle visibility." v:val="VT0(5):26"/>
-				<v:ud v:nameU="SOLSH" v:val="VT4({D7D7DB7E-3668-43e5-AF97-97F58AB229A5})"/>
-				<v:ud v:nameU="ShapeClass" v:val="VT4(Ventil)"/>
-				<v:ud v:nameU="PETagFormat" v:prompt="V-22" v:val="VT4(Ventil)"/>
-				<v:ud v:nameU="PETagNumber" v:val="VT0(22):26"/>
-				<v:ud v:nameU="PEHideTag"/>
-				<v:ud v:nameU="PEPageHideTags" v:val="VT0(0):26"/>
-				<v:ud v:nameU="PELayout" v:val="VT0(31):26"/>
-				<v:ud v:nameU="CPMSetList" v:prompt="Description,LineSize,ValveClass,Manufacturer,Model" v:val="VT4(Ventil)"/>
-				<v:ud v:nameU="PEComponentTag" v:val="VT4(V-22)"/>
-			</v:userDefs>
-			<path d="M4.25 586.77 A4.25197 4.25197 0 1 0 12.76 586.77 A4.25197 4.25197 0 1 0 4.25 586.77 ZM0 591.02 L0 582.52 L4.7
-						 584.87 A4.25074 4.25074 -180 0 0 4.7 588.67 L0 591.02 ZM17.01 591.02 L17.01 582.52 L12.29 584.87 A4.08328
-						 4.08328 0 0 1 12.29 588.67 L17.01 591.02 ZM4.25 595.28 L12.76 595.28 L10.41 590.57 A4.25074 4.25074 0 0
-						 1 6.6 590.57 L4.25 595.28 Z" class="st5"/>
-			<path d="M4.25 586.77 A4.25197 4.25197 0 1 0 12.76 586.77 A4.25197 4.25197 0 1 0 4.25 586.77" class="st7"/>
-			<path d="M0 591.02 L0 582.52 L4.7 584.87 A4.25074 4.25074 -180 0 0 4.7 588.67 L0 591.02" class="st7"/>
-			<path d="M17.01 591.02 L17.01 582.52 L12.29 584.87 A4.08328 4.08328 0 0 1 12.29 588.67 L17.01 591.02" class="st7"/>
-			<path d="M4.25 595.28 L12.76 595.28 L10.41 590.57 A4.25074 4.25074 0 0 1 6.6 590.57 L4.25 595.28" class="st7"/>
-			<path d="M8.5 586.77 L4.7 584.87 A4.25074 4.25074 -180 0 0 4.7 588.67 L8.5 586.77 L12.29 584.87 A4.0859 4.0859 0 0 1
-						 12.29 588.67 L8.5 586.77 L10.41 590.57 A4.25074 4.25074 0 0 1 6.6 590.57 L8.5 586.77" class="st7"/>
-		</g>
-		<g id="shape120-546" v:mID="120" v:groupContext="shape" v:layerMember="1" transform="translate(814.961,-62.6457)">
+		<g id="shape120-529" v:mID="120" v:groupContext="shape" v:layerMember="1" transform="translate(814.961,-62.6457)">
 			<title>Verbindung.120</title>
 			<v:userDefs>
 				<v:ud v:nameU="SOLSH" v:val="VT4({D7D7DB7E-3668-43e5-AF97-97F58AB229A5})"/>
@@ -2652,7 +2556,7 @@
 				<v:ud v:nameU="CPMSetList"/>
 			</v:userDefs>
 		</g>
-		<g id="shape122-548" v:mID="122" v:groupContext="shape" v:layerMember="1" transform="translate(809.291,-56.9764)">
+		<g id="shape122-531" v:mID="122" v:groupContext="shape" v:layerMember="1" transform="translate(809.291,-56.9764)">
 			<title>Hauptleitung.122</title>
 			<v:custProps>
 				<v:cp v:nameU="Description" v:lbl="Beschreibung" v:type="0" v:sortKey="0" v:langID="1031"/>
@@ -2680,7 +2584,7 @@
 			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
 			<v:textRect cx="35.8866" cy="579.067" width="48" height="15.2035"/>
 		</g>
-		<g id="shape50-549" v:mID="50" v:groupContext="shape" v:layerMember="1" transform="translate(709.369,-95.2283)">
+		<g id="shape50-532" v:mID="50" v:groupContext="shape" v:layerMember="1" transform="translate(709.369,-95.2283)">
 			<title>Hauptleitung.50</title>
 			<v:custProps>
 				<v:cp v:nameU="Description" v:lbl="Beschreibung" v:type="0" v:sortKey="0" v:langID="1031"/>
@@ -2707,7 +2611,7 @@
 			</v:userDefs>
 			<path d="M7.09 595.28 L7.09 663.01 L7.09 663.01" class="st19"/>
 		</g>
-		<g id="shape123-552" v:mID="123" v:groupContext="shape" v:layerMember="1" transform="translate(716.457,-20.4608)">
+		<g id="shape123-535" v:mID="123" v:groupContext="shape" v:layerMember="1" transform="translate(716.457,-20.4608)">
 			<title>Dynamischer Verbinder.123</title>
 			<v:custProps>
 				<v:cp v:nameU="Description" v:lbl="Beschreibung" v:type="0" v:sortKey="0" v:langID="1031"/>
@@ -2738,7 +2642,7 @@
 			<v:textRect cx="140.771" cy="579.495" width="96" height="14.4037"/>
 			<path d="M0 588.24 L83.17 588.14" class="st6"/>
 		</g>
-		<g id="shape119-555" v:mID="119" v:groupContext="shape" v:layerMember="1" transform="translate(773.858,-325.134)">
+		<g id="shape119-538" v:mID="119" v:groupContext="shape" v:layerMember="1" transform="translate(773.858,-325.134)">
 			<title>Hauptleitung.119</title>
 			<v:custProps>
 				<v:cp v:nameU="Description" v:lbl="Beschreibung" v:type="0" v:sortKey="0" v:langID="1031"/>
@@ -2763,64 +2667,9 @@
 						v:val="VT4(Rohrleitung)"/>
 				<v:ud v:nameU="UnitSize" v:val="VT0(0.11811023622047):24"/>
 			</v:userDefs>
-			<path d="M0 595.28 L25.51 595.28 L25.51 722.83" class="st19"/>
+			<path d="M0 595.28 L25.51 595.28 L25.51 756.85" class="st19"/>
 		</g>
-		<g id="shape124-558" v:mID="124" v:groupContext="shape" v:layerMember="1" transform="translate(792.412,-180.567)">
-			<title>Hauptleitung.124</title>
-			<v:custProps>
-				<v:cp v:nameU="Description" v:lbl="Beschreibung" v:type="0" v:sortKey="0" v:langID="1031"/>
-				<v:cp v:nameU="LineSize" v:lbl="Leitungsgröße" v:type="0" v:sortKey="1" v:langID="1031"/>
-				<v:cp v:nameU="Schedule" v:lbl="Zeitplan" v:type="0" v:sortKey="2" v:langID="1031"/>
-				<v:cp v:nameU="Material" v:lbl="Material" v:type="0" v:sortKey="3" v:langID="1031"/>
-				<v:cp v:nameU="DesignPressure" v:lbl="Entwurfsdruck" v:type="0" v:sortKey="4" v:langID="1031"/>
-				<v:cp v:nameU="DesignTemperature" v:lbl="Entwurfstemperatur" v:type="0" v:sortKey="5" v:langID="1031"/>
-			</v:custProps>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-				<v:ud v:nameU="TextCH" v:prompt="Determines text control handle visibility." v:val="VT0(5):26"/>
-				<v:ud v:nameU="SOLSH" v:val="VT4({D7D7DB7E-3668-43e5-AF97-97F58AB229A5})"/>
-				<v:ud v:nameU="ShapeClass" v:val="VT4(Rohrleitungen)"/>
-				<v:ud v:nameU="PEComponentTag" v:val="VT4(P-17)"/>
-				<v:ud v:nameU="PETagNumber" v:val="VT0(17):26"/>
-				<v:ud v:nameU="PETagFormat" v:prompt="P-17" v:val="VT4(Rohrleitung)"/>
-				<v:ud v:nameU="PEHideTag"/>
-				<v:ud v:nameU="PEPageHideTags" v:val="VT0(0):26"/>
-				<v:ud v:nameU="PELayout" v:val="VT0(31):26"/>
-				<v:ud v:nameU="CPMSetList" v:prompt="Description,LineSize,Schedule,Material,DesignPressure,DesignTemperature"
-						v:val="VT4(Rohrleitung)"/>
-				<v:ud v:nameU="UnitSize" v:val="VT0(0.11811023622047):24"/>
-			</v:userDefs>
-			<path d="M6.96 595.28 L7.22 748.24" class="st19"/>
-		</g>
-		<g id="shape196-561" v:mID="196" v:groupContext="shape" v:layerMember="1" transform="translate(331.654,-325.134)">
-			<title>Hauptleitung.196</title>
-			<v:custProps>
-				<v:cp v:nameU="Description" v:lbl="Beschreibung" v:type="0" v:sortKey="0" v:langID="1031"/>
-				<v:cp v:nameU="LineSize" v:lbl="Leitungsgröße" v:type="0" v:sortKey="1" v:langID="1031"/>
-				<v:cp v:nameU="Schedule" v:lbl="Zeitplan" v:type="0" v:sortKey="2" v:langID="1031"/>
-				<v:cp v:nameU="Material" v:lbl="Material" v:type="0" v:sortKey="3" v:langID="1031"/>
-				<v:cp v:nameU="DesignPressure" v:lbl="Entwurfsdruck" v:type="0" v:sortKey="4" v:langID="1031"/>
-				<v:cp v:nameU="DesignTemperature" v:lbl="Entwurfstemperatur" v:type="0" v:sortKey="5" v:langID="1031"/>
-			</v:custProps>
-			<v:userDefs>
-				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
-				<v:ud v:nameU="TextCH" v:prompt="Determines text control handle visibility." v:val="VT0(5):26"/>
-				<v:ud v:nameU="SOLSH" v:val="VT4({D7D7DB7E-3668-43e5-AF97-97F58AB229A5})"/>
-				<v:ud v:nameU="ShapeClass" v:val="VT4(Rohrleitungen)"/>
-				<v:ud v:nameU="PEComponentTag" v:val="VT4(P-18)"/>
-				<v:ud v:nameU="PETagNumber" v:val="VT0(18):26"/>
-				<v:ud v:nameU="PETagFormat" v:prompt="P-18" v:val="VT4(Rohrleitung)"/>
-				<v:ud v:nameU="PEHideTag"/>
-				<v:ud v:nameU="PEPageHideTags" v:val="VT0(0):26"/>
-				<v:ud v:nameU="PELayout" v:val="VT0(31):26"/>
-				<v:ud v:nameU="CPMSetList" v:prompt="Description,LineSize,Schedule,Material,DesignPressure,DesignTemperature"
-						v:val="VT4(Rohrleitung)"/>
-				<v:ud v:nameU="UnitSize" v:val="VT0(0.11811023622047):24"/>
-			</v:userDefs>
-			<path d="M0 595.28 L0 731.34 L447.87 731.34" class="st19"/>
-			<path d="M453.54 731.34 L459.21 731.34" class="st19"/>
-		</g>
-		<g id="shape199-565" v:mID="199" v:groupContext="shape" v:layerMember="1" transform="translate(314.646,-240.094)">
+		<g id="shape199-541" v:mID="199" v:groupContext="shape" v:layerMember="1" transform="translate(314.646,-240.094)">
 			<title>Hauptleitung.199</title>
 			<v:custProps>
 				<v:cp v:nameU="Description" v:lbl="Beschreibung" v:type="0" v:sortKey="0" v:langID="1031"/>
@@ -2845,9 +2694,10 @@
 						v:val="VT4(Rohrleitung)"/>
 				<v:ud v:nameU="UnitSize" v:val="VT0(0.11811023622047):24"/>
 			</v:userDefs>
-			<path d="M0 595.28 L0 680.31 L459.21 680.31" class="st19"/>
+			<path d="M0 595.28 L0 680.31 L464.88 680.31" class="st19"/>
+			<path d="M470.55 680.31 L476.22 680.31" class="st19"/>
 		</g>
-		<g id="shape200-568" v:mID="200" v:groupContext="shape" v:layerMember="1" transform="translate(313.228,-238.677)">
+		<g id="shape200-545" v:mID="200" v:groupContext="shape" v:layerMember="1" transform="translate(313.228,-238.677)">
 			<title>Verbindung.200</title>
 			<v:userDefs>
 				<v:ud v:nameU="SOLSH" v:val="VT4({D7D7DB7E-3668-43e5-AF97-97F58AB229A5})"/>
@@ -2859,7 +2709,7 @@
 				<v:ud v:nameU="CPMSetList"/>
 			</v:userDefs>
 		</g>
-		<g id="shape202-570" v:mID="202" v:groupContext="shape" v:layerMember="1" transform="translate(715.039,-26.0787)">
+		<g id="shape202-547" v:mID="202" v:groupContext="shape" v:layerMember="1" transform="translate(715.039,-26.0787)">
 			<title>Verbindung.202</title>
 			<v:userDefs>
 				<v:ud v:nameU="SOLSH" v:val="VT4({D7D7DB7E-3668-43e5-AF97-97F58AB229A5})"/>
@@ -2871,7 +2721,7 @@
 				<v:ud v:nameU="CPMSetList"/>
 			</v:userDefs>
 		</g>
-		<g id="shape52-572" v:mID="52" v:groupContext="shape" v:layerMember="1" transform="translate(587.479,-25.9213)">
+		<g id="shape52-549" v:mID="52" v:groupContext="shape" v:layerMember="1" transform="translate(587.479,-25.9213)">
 			<title>Verbindung.52</title>
 			<v:userDefs>
 				<v:ud v:nameU="SOLSH" v:val="VT4({D7D7DB7E-3668-43e5-AF97-97F58AB229A5})"/>
@@ -2883,18 +2733,18 @@
 				<v:ud v:nameU="CPMSetList"/>
 			</v:userDefs>
 		</g>
-		<g id="group185-574" transform="translate(526.989,-31.1811)" v:mID="185" v:groupContext="group">
+		<g id="group185-551" transform="translate(526.989,-31.1811)" v:mID="185" v:groupContext="group">
 			<title>Temp_3.185</title>
-			<g id="shape186-575" v:mID="186" v:groupContext="shape" transform="translate(-3.34732E-014,-4.8189)">
+			<g id="shape186-552" v:mID="186" v:groupContext="shape" transform="translate(-3.34732E-014,-4.8189)">
 				<title>Tabelle.186</title>
 				<path d="M0 595.28 L8.76 595.28" class="st21"/>
 			</g>
-			<g id="shape187-578" v:mID="187" v:groupContext="shape" transform="translate(595.86,585.638) rotate(90)">
+			<g id="shape187-555" v:mID="187" v:groupContext="shape" transform="translate(595.86,585.638) rotate(90)">
 				<title>Tabelle.187</title>
 				<path d="M0 595.28 L9.64 595.28" class="st21"/>
 			</g>
 		</g>
-		<g id="shape204-581" v:mID="204" v:groupContext="shape" v:layerMember="1" transform="translate(814.89,-26.202)">
+		<g id="shape204-558" v:mID="204" v:groupContext="shape" v:layerMember="1" transform="translate(814.89,-26.202)">
 			<title>Verbindung.204</title>
 			<v:userDefs>
 				<v:ud v:nameU="SOLSH" v:val="VT4({D7D7DB7E-3668-43e5-AF97-97F58AB229A5})"/>
@@ -2906,7 +2756,7 @@
 				<v:ud v:nameU="CPMSetList"/>
 			</v:userDefs>
 		</g>
-		<g id="shape205-583" v:mID="205" v:groupContext="shape" v:layerMember="1" transform="translate(809.221,-34.7059)">
+		<g id="shape205-560" v:mID="205" v:groupContext="shape" v:layerMember="1" transform="translate(809.221,-34.7059)">
 			<title>Dynamischer Verbinder.205</title>
 			<v:custProps>
 				<v:cp v:nameU="Description" v:lbl="Beschreibung" v:type="0" v:sortKey="0" v:langID="1031"/>
@@ -2936,7 +2786,7 @@
 			<v:textBlock v:margins="rect(0,0,0,0)" v:tabSpace="42.5197"/>
 			<v:textRect cx="64.6866" cy="593.72" width="96" height="14.4037"/>
 		</g>
-		<g id="shape46-584" v:mID="46" v:groupContext="shape" v:layerMember="1" transform="translate(578.268,-96.6358)">
+		<g id="shape46-561" v:mID="46" v:groupContext="shape" v:layerMember="1" transform="translate(578.268,-96.6358)">
 			<title>Hauptleitung.46</title>
 			<v:custProps>
 				<v:cp v:nameU="Description" v:lbl="Beschreibung" v:type="0" v:sortKey="0" v:langID="1031"/>
@@ -2963,8 +2813,8 @@
 			</v:userDefs>
 			<path d="M0 588.2 L0 588.18 L129.68 588.18" class="st19"/>
 		</g>
-		<g id="shape48-587" v:mID="48" v:groupContext="shape" v:layerMember="0" transform="translate(34.0157,508.551) rotate(-90)">
-			<title>Verdichter 2.48</title>
+		<g id="shape48-564" v:mID="48" v:groupContext="shape" v:layerMember="0" transform="translate(34.0157,508.551) rotate(-90)">
+			<title>PC_1</title>
 			<desc>PC_1</desc>
 			<v:custProps>
 				<v:cp v:nameU="SubType" v:lbl="Kompressortyp" v:type="1"
@@ -2991,15 +2841,15 @@
 				<v:ud v:nameU="CPMSetList" v:prompt="Description,Material,Manufacturer,Model" v:val="VT4(Geräte)"/>
 			</v:userDefs>
 			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
-			<v:textRect cx="42.8189" cy="578.268" width="64" height="17.6036" transform="rotate(90)"/>
+			<v:textRect cx="-8.20472" cy="578.268" width="64" height="17.6036" transform="rotate(90)"/>
 			<path d="M0 578.27 A17.0079 17.0079 0 0 1 34.02 578.27 A17.0079 17.0079 0 1 1 0 578.27 Z" class="st5"/>
 			<path d="M0 578.27 A17.0079 17.0079 0 0 1 34.02 578.27 A17.0079 17.0079 0 1 1 0 578.27" class="st6"/>
 			<path d="M1.55 585.35 L8.5 563.54" class="st6"/>
 			<path d="M32.47 585.35 L25.51 563.54" class="st6"/>
 			<path d="M17.01 603.78 L17.01 595.28" class="st6"/>
 			<path d="M17.01 561.26 L17.01 552.76" class="st6"/>
-			<text x="570.05" y="-40.42" transform="rotate(90)" class="st2" v:langID="1031"><v:paragraph v:horizAlign="1"/><v:tabList/>PC_1</text>		</g>
-		<g id="shape24-595" v:mID="24" v:groupContext="shape" v:layerMember="1" transform="translate(314.646,-233.008)">
+			<text x="570.05" y="10.6" transform="rotate(90)" class="st2" v:langID="1031"><v:paragraph v:horizAlign="1"/><v:tabList/>PC_1</text>		</g>
+		<g id="shape24-572" v:mID="24" v:groupContext="shape" v:layerMember="1" transform="translate(314.646,-233.008)">
 			<title>Hauptleitung.24</title>
 			<v:custProps>
 				<v:cp v:nameU="Description" v:lbl="Beschreibung" v:type="0" v:sortKey="0" v:langID="1031"/>
@@ -3027,7 +2877,7 @@
 			<path d="M0 588.19 L14.17 588.19" class="st19"/>
 			<path d="M19.84 588.19 L34.02 588.19" class="st19"/>
 		</g>
-		<g id="shape201-599" v:mID="201" v:groupContext="shape" v:layerMember="1" transform="translate(381.26,-247.181)">
+		<g id="shape201-576" v:mID="201" v:groupContext="shape" v:layerMember="1" transform="translate(381.26,-247.181)">
 			<title>Verbindung.201</title>
 			<v:userDefs>
 				<v:ud v:nameU="SOLSH" v:val="VT4({D7D7DB7E-3668-43e5-AF97-97F58AB229A5})"/>
@@ -3039,35 +2889,35 @@
 				<v:ud v:nameU="CPMSetList"/>
 			</v:userDefs>
 		</g>
-		<g id="shape197-601" v:mID="197" v:groupContext="shape" transform="translate(714.331,-70.0157)">
+		<g id="shape197-578" v:mID="197" v:groupContext="shape" transform="translate(714.331,-70.0157)">
 			<title>MC_1_CL</title>
 			<desc>MC_1_CL</desc>
 			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
 			<v:textRect cx="28.7008" cy="589.606" width="57.41" height="11.3386"/>
 			<rect x="0" y="583.937" width="57.4016" height="11.3386" class="st9"/>
 			<text x="9.48" y="592.61" class="st18" v:langID="1031"><v:paragraph v:horizAlign="1"/><v:tabList/>MC_1_CL</text>		</g>
-		<g id="shape206-604" v:mID="206" v:groupContext="shape" transform="translate(650.748,-121.039)">
+		<g id="shape206-581" v:mID="206" v:groupContext="shape" transform="translate(650.748,-121.039)">
 			<title>MC_1_OP</title>
 			<desc>MC_1_OP</desc>
 			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
 			<v:textRect cx="29.5669" cy="589.165" width="59.14" height="12.2205"/>
 			<rect x="0" y="583.055" width="59.1339" height="12.2205" class="st9"/>
 			<text x="9.22" y="592.17" class="st18" v:langID="1031"><v:paragraph v:horizAlign="1"/><v:tabList/>MC_1_OP</text>		</g>
-		<g id="shape207-607" v:mID="207" v:groupContext="shape" transform="translate(709.821,-177.423)">
+		<g id="shape207-584" v:mID="207" v:groupContext="shape" transform="translate(709.821,-177.423)">
 			<title>VSHC_OP</title>
 			<desc>VSHC_OP</desc>
 			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
 			<v:textRect cx="25.2441" cy="591.043" width="50.49" height="8.46457"/>
 			<rect x="0" y="586.811" width="50.4882" height="8.46457" class="st9"/>
 			<text x="5.94" y="594.04" class="st18" v:langID="1031"><v:paragraph v:horizAlign="1"/><v:tabList/>VSHC_OP</text>		</g>
-		<g id="shape208-610" v:mID="208" v:groupContext="shape" transform="translate(796.181,-223.126)">
+		<g id="shape208-587" v:mID="208" v:groupContext="shape" transform="translate(796.181,-223.126)">
 			<title>VSHC_OP.208</title>
 			<desc>VSHC_CL</desc>
 			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
 			<v:textRect cx="25.2441" cy="591.043" width="50.49" height="8.46457"/>
 			<rect x="0" y="586.811" width="50.4882" height="8.46457" class="st9"/>
 			<text x="7.07" y="594.04" class="st18" v:langID="1031"><v:paragraph v:horizAlign="1"/><v:tabList/>VSHC_CL</text>		</g>
-		<g id="shape209-613" v:mID="209" v:groupContext="shape" v:layerMember="1" transform="translate(341.575,-316.63)">
+		<g id="shape209-590" v:mID="209" v:groupContext="shape" v:layerMember="1" transform="translate(341.575,-316.63)">
 			<title>Hauptleitung.209</title>
 			<v:custProps>
 				<v:cp v:nameU="Description" v:lbl="Beschreibung" v:type="0" v:sortKey="0" v:langID="1031"/>
@@ -3094,7 +2944,7 @@
 			</v:userDefs>
 			<path d="M7.09 595.28 L7.09 671.81" class="st19"/>
 		</g>
-		<g id="shape210-616" v:mID="210" v:groupContext="shape" v:layerMember="1" transform="translate(347.244,-238.677)">
+		<g id="shape210-593" v:mID="210" v:groupContext="shape" v:layerMember="1" transform="translate(347.244,-238.677)">
 			<title>Verbindung.210</title>
 			<v:userDefs>
 				<v:ud v:nameU="SOLSH" v:val="VT4({D7D7DB7E-3668-43e5-AF97-97F58AB229A5})"/>
@@ -3106,7 +2956,7 @@
 				<v:ud v:nameU="CPMSetList"/>
 			</v:userDefs>
 		</g>
-		<g id="shape211-618" v:mID="211" v:groupContext="shape" v:layerMember="1" transform="translate(348.661,-237.26)">
+		<g id="shape211-595" v:mID="211" v:groupContext="shape" v:layerMember="1" transform="translate(348.661,-237.26)">
 			<title>Hauptleitung.211</title>
 			<v:custProps>
 				<v:cp v:nameU="Description" v:lbl="Beschreibung" v:type="0" v:sortKey="0" v:langID="1031"/>
@@ -3133,21 +2983,21 @@
 			</v:userDefs>
 			<path d="M0 592.44 L0 583.94 L34.02 583.94" class="st19"/>
 		</g>
-		<g id="shape212-621" v:mID="212" v:groupContext="shape" transform="translate(323.15,-350.646)">
+		<g id="shape212-598" v:mID="212" v:groupContext="shape" transform="translate(323.15,-350.646)">
 			<title>MCHG_1_OP</title>
 			<desc>MCHG_1_OP</desc>
 			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
 			<v:textRect cx="31.3515" cy="591.449" width="62.71" height="7.65354"/>
 			<rect x="0" y="587.622" width="62.7029" height="7.65354" class="st9"/>
 			<text x="4.73" y="594.45" class="st18" v:langID="1031"><v:paragraph v:horizAlign="1"/><v:tabList/>MCHG_1_OP</text>		</g>
-		<g id="shape213-624" v:mID="213" v:groupContext="shape" transform="translate(353.181,-284.225)">
+		<g id="shape213-601" v:mID="213" v:groupContext="shape" transform="translate(353.181,-284.225)">
 			<title>MCHG_1_CL</title>
 			<desc>MCHG_1_CL</desc>
 			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
 			<v:textRect cx="29.4961" cy="591.829" width="59" height="6.89263"/>
 			<rect x="0" y="588.383" width="58.9921" height="6.89263" class="st9"/>
 			<text x="4" y="594.83" class="st18" v:langID="1031"><v:paragraph v:horizAlign="1"/><v:tabList/>MCHG_1_CL</text>		</g>
-		<g id="shape73-627" v:mID="73" v:groupContext="shape" v:layerMember="6" transform="translate(-527.244,227.764) rotate(-90)">
+		<g id="shape73-604" v:mID="73" v:groupContext="shape" v:layerMember="6" transform="translate(-527.244,227.764) rotate(-90)">
 			<title>FMSOP</title>
 			<desc>FMSOP</desc>
 			<v:custProps>
@@ -3177,35 +3027,35 @@
 			<path d="M0 595.28 L17.29 595.28 L17.29 578.27 L0 578.27 L0 595.28" class="st7"/>
 			<path d="M4.32 591.02 L4.32 582.52 L12.97 586.77 L4.32 591.02" class="st7"/>
 			<text x="540.83" y="-19.82" transform="rotate(90)" class="st18" v:langID="1031"><v:paragraph v:horizAlign="1"/><v:tabList/>FMSOP</text>		</g>
-		<g id="shape214-632" v:mID="214" v:groupContext="shape" transform="translate(637.795,-346.598)">
+		<g id="shape214-609" v:mID="214" v:groupContext="shape" transform="translate(637.795,-346.598)">
 			<title>MCHE_1_OP</title>
 			<desc>MCHE_1_OP</desc>
 			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
 			<v:textRect cx="30.4724" cy="591.228" width="60.95" height="8.09449"/>
 			<rect x="0" y="587.181" width="60.9449" height="8.09449" class="st9"/>
 			<text x="4.57" y="594.23" class="st18" v:langID="1031"><v:paragraph v:horizAlign="1"/><v:tabList/>MCHE_1_OP</text>		</g>
-		<g id="shape215-635" v:mID="215" v:groupContext="shape" transform="translate(652.535,-291.118)">
+		<g id="shape215-612" v:mID="215" v:groupContext="shape" transform="translate(652.535,-291.118)">
 			<title>MCHE_1_CL</title>
 			<desc>MCHE_1_CL</desc>
 			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
 			<v:textRect cx="28.9764" cy="591.469" width="57.96" height="7.61417"/>
 			<rect x="0" y="587.661" width="57.9528" height="7.61417" class="st9"/>
 			<text x="4.2" y="594.47" class="st18" v:langID="1031"><v:paragraph v:horizAlign="1"/><v:tabList/>MCHE_1_CL</text>		</g>
-		<g id="shape216-638" v:mID="216" v:groupContext="shape" transform="translate(263.622,-281.165)">
+		<g id="shape216-615" v:mID="216" v:groupContext="shape" transform="translate(263.622,-281.165)">
 			<title>VSHS_OP</title>
 			<desc>VSHS_OP</desc>
 			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
 			<v:textRect cx="27.3701" cy="590.299" width="54.75" height="9.95276"/>
 			<rect x="0" y="585.323" width="54.7402" height="9.95276" class="st9"/>
 			<text x="8.44" y="593.3" class="st18" v:langID="1031"><v:paragraph v:horizAlign="1"/><v:tabList/>VSHS_OP</text>		</g>
-		<g id="shape217-641" v:mID="217" v:groupContext="shape" transform="translate(262.74,-201.988)">
+		<g id="shape217-618" v:mID="217" v:groupContext="shape" transform="translate(262.74,-201.988)">
 			<title>VSHS_CL</title>
 			<desc>VSHS_CL</desc>
 			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
 			<v:textRect cx="25.9528" cy="591.185" width="51.91" height="8.1811"/>
 			<rect x="0" y="587.094" width="51.9055" height="8.1811" class="st9"/>
 			<text x="8.15" y="594.19" class="st18" v:langID="1031"><v:paragraph v:horizAlign="1"/><v:tabList/>VSHS_CL</text>		</g>
-		<g id="shape198-644" v:mID="198" v:groupContext="shape" v:layerMember="1" transform="translate(807.164,-26.1925)">
+		<g id="shape198-621" v:mID="198" v:groupContext="shape" v:layerMember="1" transform="translate(807.164,-26.1925)">
 			<title>Verbindung.198</title>
 			<v:userDefs>
 				<v:ud v:nameU="SOLSH" v:val="VT4({D7D7DB7E-3668-43e5-AF97-97F58AB229A5})"/>
@@ -3217,7 +3067,7 @@
 				<v:ud v:nameU="CPMSetList"/>
 			</v:userDefs>
 		</g>
-		<g id="shape203-646" v:mID="203" v:groupContext="shape" v:layerMember="1" transform="translate(801.495,-34.6964)">
+		<g id="shape203-623" v:mID="203" v:groupContext="shape" v:layerMember="1" transform="translate(801.495,-34.6964)">
 			<title>Dynamischer Verbinder.203</title>
 			<v:custProps>
 				<v:cp v:nameU="Description" v:lbl="Beschreibung" v:type="0" v:sortKey="0" v:langID="1031"/>
@@ -3247,7 +3097,7 @@
 			<v:textBlock v:margins="rect(0,0,0,0)" v:tabSpace="42.5197"/>
 			<v:textRect cx="64.6866" cy="593.72" width="96" height="14.4037"/>
 		</g>
-		<g id="shape218-647" v:mID="218" v:groupContext="shape" v:layerMember="1" transform="translate(798.21,-26.1814)">
+		<g id="shape218-624" v:mID="218" v:groupContext="shape" v:layerMember="1" transform="translate(798.21,-26.1814)">
 			<title>Verbindung.218</title>
 			<v:userDefs>
 				<v:ud v:nameU="SOLSH" v:val="VT4({D7D7DB7E-3668-43e5-AF97-97F58AB229A5})"/>
@@ -3259,7 +3109,7 @@
 				<v:ud v:nameU="CPMSetList"/>
 			</v:userDefs>
 		</g>
-		<g id="shape219-649" v:mID="219" v:groupContext="shape" v:layerMember="1" transform="translate(792.541,-34.6854)">
+		<g id="shape219-626" v:mID="219" v:groupContext="shape" v:layerMember="1" transform="translate(792.541,-34.6854)">
 			<title>Dynamischer Verbinder.219</title>
 			<v:custProps>
 				<v:cp v:nameU="Description" v:lbl="Beschreibung" v:type="0" v:sortKey="0" v:langID="1031"/>
@@ -3289,5 +3139,233 @@
 			<v:textBlock v:margins="rect(0,0,0,0)" v:tabSpace="42.5197"/>
 			<v:textRect cx="64.6866" cy="593.72" width="96" height="14.4037"/>
 		</g>
+		<g id="shape124-627" v:mID="124" v:groupContext="shape" v:layerMember="1" transform="translate(785.197,-197.575)">
+			<title>Dynamischer Verbinder.124</title>
+			<v:custProps>
+				<v:cp v:nameU="Description" v:lbl="Beschreibung" v:type="0" v:sortKey="0" v:langID="1031"/>
+				<v:cp v:nameU="LineSize" v:lbl="Leitungsgröße" v:type="0" v:sortKey="1" v:langID="1031"/>
+				<v:cp v:nameU="Schedule" v:lbl="Zeitplan" v:type="0" v:sortKey="2" v:langID="1031"/>
+				<v:cp v:nameU="Material" v:lbl="Material" v:type="0" v:sortKey="3" v:langID="1031"/>
+				<v:cp v:nameU="DesignPressure" v:lbl="Entwurfsdruck" v:type="0" v:sortKey="4" v:langID="1031"/>
+				<v:cp v:nameU="DesignTemperature" v:lbl="Entwurfstemperatur" v:type="0" v:sortKey="5" v:langID="1031"/>
+			</v:custProps>
+			<v:userDefs>
+				<v:ud v:nameU="visKeywords"
+						v:val="VT4(Major,Pipeline,connector,automatically,routes,between,connects,Pipelines,ID,piping,instrumentation,design,process,plant)"/>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+				<v:ud v:nameU="TextCH" v:prompt="Determines text control handle visibility." v:val="VT0(0):26"/>
+				<v:ud v:nameU="SOLSH" v:val="VT4({D7D7DB7E-3668-43e5-AF97-97F58AB229A5})"/>
+				<v:ud v:nameU="ShapeClass" v:val="VT4(Pipelines)"/>
+				<v:ud v:nameU="PEComponentTag" v:val="VT4(P-29)"/>
+				<v:ud v:nameU="PETagNumber" v:val="VT0(29):26"/>
+				<v:ud v:nameU="PETagFormat" v:prompt="P-29" v:val="VT4(Pipeline)"/>
+				<v:ud v:nameU="PEHideTag" v:val="VT0(1):26"/>
+				<v:ud v:nameU="PEPageHideTags" v:val="VT0(0):26"/>
+				<v:ud v:nameU="PELayout" v:val="VT0(31):26"/>
+				<v:ud v:nameU="CPMSetList" v:prompt="Description,LineSize,Schedule,Material,DesignPressure,DesignTemperature"
+						v:val="VT4(Pipeline)"/>
+				<v:ud v:nameU="UnitSize" v:val="VT0(0.11811023622047):24"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(0,0,0,0)" v:tabSpace="42.5197"/>
+			<v:textRect cx="54.7654" cy="535.61" width="96" height="14.4037"/>
+			<path d="M-2.83 595.28 L-2.83 544.25 L-11.34 544.25" class="st6"/>
+		</g>
+		<g id="shape54-630" v:mID="54" v:groupContext="shape" v:layerMember="2" transform="translate(1369.13,397.701) rotate(90)">
+			<title>Mischventil.54</title>
+			<v:custProps>
+				<v:cp v:nameU="Description" v:lbl="Beschreibung" v:type="0" v:sortKey="0" v:langID="1031"/>
+				<v:cp v:nameU="LineSize" v:lbl="Leitungsgröße" v:type="0" v:sortKey="1" v:langID="1031"/>
+				<v:cp v:nameU="ValveClass" v:lbl="Ventilklasse" v:type="0" v:sortKey="2" v:langID="1031"/>
+				<v:cp v:nameU="Manufacturer" v:lbl="Hersteller" v:type="0" v:sortKey="3" v:langID="1031"/>
+				<v:cp v:nameU="Model" v:lbl="Modell" v:type="0" v:sortKey="4" v:langID="1031"/>
+			</v:custProps>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+				<v:ud v:nameU="TextCH" v:prompt="Determines text control handle visibility." v:val="VT0(0):26"/>
+				<v:ud v:nameU="SOLSH" v:val="VT4({D7D7DB7E-3668-43e5-AF97-97F58AB229A5})"/>
+				<v:ud v:nameU="ShapeClass" v:val="VT4(Ventil)"/>
+				<v:ud v:nameU="PETagFormat" v:prompt="V-23" v:val="VT4(Ventil)"/>
+				<v:ud v:nameU="PETagNumber" v:val="VT0(23):26"/>
+				<v:ud v:nameU="PEHideTag" v:val="VT0(1):26"/>
+				<v:ud v:nameU="PEPageHideTags" v:val="VT0(0):26"/>
+				<v:ud v:nameU="PELayout" v:val="VT0(31):26"/>
+				<v:ud v:nameU="CPMSetList" v:prompt="Description,LineSize,ValveClass,Manufacturer,Model" v:val="VT4(Ventil)"/>
+				<v:ud v:nameU="PEComponentTag" v:val="VT4(V-23)"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(0,0,0,0)" v:tabSpace="42.5197"/>
+			<v:textRect cx="7.65354" cy="609.165" width="48" height="7.20349" transform="rotate(-90)"/>
+			<path d="M4.25 586.77 A4.25197 4.25197 0 1 0 12.76 586.77 A4.25197 4.25197 0 1 0 4.25 586.77 ZM0 591.02 L0 582.52 L4.7
+						 584.87 A4.25074 4.25074 -180 0 0 4.7 588.67 L0 591.02 ZM17.01 591.02 L17.01 582.52 L12.29 584.87 A4.08328
+						 4.08328 0 0 1 12.29 588.67 L17.01 591.02 ZM4.25 595.28 L12.76 595.28 L10.41 590.57 A4.25074 4.25074 0 0
+						 1 6.6 590.57 L4.25 595.28 Z" class="st5"/>
+			<path d="M4.25 586.77 A4.25197 4.25197 0 1 0 12.76 586.77 A4.25197 4.25197 0 1 0 4.25 586.77" class="st7"/>
+			<path d="M0 591.02 L0 582.52 L4.7 584.87 A4.25074 4.25074 -180 0 0 4.7 588.67 L0 591.02" class="st7"/>
+			<path d="M17.01 591.02 L17.01 582.52 L12.29 584.87 A4.08328 4.08328 0 0 1 12.29 588.67 L17.01 591.02" class="st7"/>
+			<path d="M4.25 595.28 L12.76 595.28 L10.41 590.57 A4.25074 4.25074 0 0 1 6.6 590.57 L4.25 595.28" class="st7"/>
+			<path d="M8.5 586.77 L4.7 584.87 A4.25074 4.25074 -180 0 0 4.7 588.67 L8.5 586.77 L12.29 584.87 A4.0859 4.0859 0 0 1
+						 12.29 588.67 L8.5 586.77 L10.41 590.57 A4.25074 4.25074 0 0 1 6.6 590.57 L8.5 586.77" class="st7"/>
+		</g>
+		<g id="shape196-637" v:mID="196" v:groupContext="shape" v:layerMember="1" transform="translate(331.654,-325.134)">
+			<title>Hauptleitung.196</title>
+			<v:custProps>
+				<v:cp v:nameU="Description" v:lbl="Beschreibung" v:type="0" v:sortKey="0" v:langID="1031"/>
+				<v:cp v:nameU="LineSize" v:lbl="Leitungsgröße" v:type="0" v:sortKey="1" v:langID="1031"/>
+				<v:cp v:nameU="Schedule" v:lbl="Zeitplan" v:type="0" v:sortKey="2" v:langID="1031"/>
+				<v:cp v:nameU="Material" v:lbl="Material" v:type="0" v:sortKey="3" v:langID="1031"/>
+				<v:cp v:nameU="DesignPressure" v:lbl="Entwurfsdruck" v:type="0" v:sortKey="4" v:langID="1031"/>
+				<v:cp v:nameU="DesignTemperature" v:lbl="Entwurfstemperatur" v:type="0" v:sortKey="5" v:langID="1031"/>
+			</v:custProps>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+				<v:ud v:nameU="TextCH" v:prompt="Determines text control handle visibility." v:val="VT0(0):26"/>
+				<v:ud v:nameU="SOLSH" v:val="VT4({D7D7DB7E-3668-43e5-AF97-97F58AB229A5})"/>
+				<v:ud v:nameU="ShapeClass" v:val="VT4(Rohrleitungen)"/>
+				<v:ud v:nameU="PEComponentTag" v:val="VT4(P-24)"/>
+				<v:ud v:nameU="PETagNumber" v:val="VT0(24):26"/>
+				<v:ud v:nameU="PETagFormat" v:prompt="P-24" v:val="VT4(Rohrleitung)"/>
+				<v:ud v:nameU="PEHideTag" v:val="VT0(1):26"/>
+				<v:ud v:nameU="PEPageHideTags" v:val="VT0(0):26"/>
+				<v:ud v:nameU="PELayout" v:val="VT0(31):26"/>
+				<v:ud v:nameU="CPMSetList" v:prompt="Description,LineSize,Schedule,Material,DesignPressure,DesignTemperature"
+						v:val="VT4(Rohrleitung)"/>
+				<v:ud v:nameU="UnitSize" v:val="VT0(0.11811023622047):24"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="28.8" cy="722.216" width="48" height="15.2035"/>
+			<path d="M0 595.28 L0 731.34 L442.2 731.34" class="st19"/>
+		</g>
+		<g id="shape220-640" v:mID="220" v:groupContext="shape" v:layerMember="1" transform="translate(330.236,-323.717)">
+			<title>Verbindung.220</title>
+			<v:userDefs>
+				<v:ud v:nameU="SOLSH" v:val="VT4({D7D7DB7E-3668-43e5-AF97-97F58AB229A5})"/>
+				<v:ud v:nameU="ShapeClass"/>
+				<v:ud v:nameU="PEComponentTag"/>
+				<v:ud v:nameU="PETagNumber"/>
+				<v:ud v:nameU="PETagFormat"/>
+				<v:ud v:nameU="PELayout" v:val="VT0(63):26"/>
+				<v:ud v:nameU="CPMSetList"/>
+			</v:userDefs>
+		</g>
+		<g id="shape221-642" v:mID="221" v:groupContext="shape" v:layerMember="1" transform="translate(328.819,-318.047)">
+			<title>Hauptleitung.221</title>
+			<v:custProps>
+				<v:cp v:nameU="Description" v:lbl="Beschreibung" v:type="0" v:sortKey="0" v:langID="1031"/>
+				<v:cp v:nameU="LineSize" v:lbl="Leitungsgröße" v:type="0" v:sortKey="1" v:langID="1031"/>
+				<v:cp v:nameU="Schedule" v:lbl="Zeitplan" v:type="0" v:sortKey="2" v:langID="1031"/>
+				<v:cp v:nameU="Material" v:lbl="Material" v:type="0" v:sortKey="3" v:langID="1031"/>
+				<v:cp v:nameU="DesignPressure" v:lbl="Entwurfsdruck" v:type="0" v:sortKey="4" v:langID="1031"/>
+				<v:cp v:nameU="DesignTemperature" v:lbl="Entwurfstemperatur" v:type="0" v:sortKey="5" v:langID="1031"/>
+			</v:custProps>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+				<v:ud v:nameU="TextCH" v:prompt="Determines text control handle visibility." v:val="VT0(0):26"/>
+				<v:ud v:nameU="SOLSH" v:val="VT4({D7D7DB7E-3668-43e5-AF97-97F58AB229A5})"/>
+				<v:ud v:nameU="ShapeClass" v:val="VT4(Rohrleitungen)"/>
+				<v:ud v:nameU="PEComponentTag" v:val="VT4(P-11)"/>
+				<v:ud v:nameU="PETagNumber" v:val="VT0(11):26"/>
+				<v:ud v:nameU="PETagFormat" v:prompt="P-11" v:val="VT4(Rohrleitung)"/>
+				<v:ud v:nameU="PEHideTag" v:val="VT0(1):26"/>
+				<v:ud v:nameU="PEPageHideTags" v:val="VT0(0):26"/>
+				<v:ud v:nameU="PELayout" v:val="VT0(31):26"/>
+				<v:ud v:nameU="CPMSetList" v:prompt="Description,LineSize,Schedule,Material,DesignPressure,DesignTemperature"
+						v:val="VT4(Rohrleitung)"/>
+				<v:ud v:nameU="UnitSize" v:val="VT0(0.11811023622047):24"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="40.1386" cy="579.067" width="48" height="15.2035"/>
+			<path d="M2.83 588.19 L11.34 588.19" class="st19"/>
+		</g>
+		<g id="shape69-645" v:mID="69" v:groupContext="shape" v:layerMember="2" transform="translate(1386.14,431.717) rotate(90)">
+			<title>Mischventil.69</title>
+			<v:custProps>
+				<v:cp v:nameU="Description" v:lbl="Beschreibung" v:type="0" v:sortKey="0" v:langID="1031"/>
+				<v:cp v:nameU="LineSize" v:lbl="Leitungsgröße" v:type="0" v:sortKey="1" v:langID="1031"/>
+				<v:cp v:nameU="ValveClass" v:lbl="Ventilklasse" v:type="0" v:sortKey="2" v:langID="1031"/>
+				<v:cp v:nameU="Manufacturer" v:lbl="Hersteller" v:type="0" v:sortKey="3" v:langID="1031"/>
+				<v:cp v:nameU="Model" v:lbl="Modell" v:type="0" v:sortKey="4" v:langID="1031"/>
+			</v:custProps>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+				<v:ud v:nameU="TextCH" v:prompt="Determines text control handle visibility." v:val="VT0(0):26"/>
+				<v:ud v:nameU="SOLSH" v:val="VT4({D7D7DB7E-3668-43e5-AF97-97F58AB229A5})"/>
+				<v:ud v:nameU="ShapeClass" v:val="VT4(Ventil)"/>
+				<v:ud v:nameU="PETagFormat" v:prompt="V-24" v:val="VT4(Ventil)"/>
+				<v:ud v:nameU="PETagNumber" v:val="VT0(24):26"/>
+				<v:ud v:nameU="PEHideTag" v:val="VT0(1):26"/>
+				<v:ud v:nameU="PEPageHideTags" v:val="VT0(0):26"/>
+				<v:ud v:nameU="PELayout" v:val="VT0(31):26"/>
+				<v:ud v:nameU="CPMSetList" v:prompt="Description,LineSize,ValveClass,Manufacturer,Model" v:val="VT4(Ventil)"/>
+				<v:ud v:nameU="PEComponentTag" v:val="VT4(V-24)"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(0,0,0,0)" v:tabSpace="42.5197"/>
+			<v:textRect cx="8.50394" cy="601.003" width="48" height="7.20349" transform="rotate(-90)"/>
+			<path d="M4.25 586.77 A4.25197 4.25197 0 1 0 12.76 586.77 A4.25197 4.25197 0 1 0 4.25 586.77 ZM0 591.02 L0 582.52 L4.7
+						 584.87 A4.25074 4.25074 -180 0 0 4.7 588.67 L0 591.02 ZM17.01 591.02 L17.01 582.52 L12.29 584.87 A4.08328
+						 4.08328 0 0 1 12.29 588.67 L17.01 591.02 ZM4.25 595.28 L12.76 595.28 L10.41 590.57 A4.25074 4.25074 0 0
+						 1 6.6 590.57 L4.25 595.28 Z" class="st5"/>
+			<path d="M4.25 586.77 A4.25197 4.25197 0 1 0 12.76 586.77 A4.25197 4.25197 0 1 0 4.25 586.77" class="st7"/>
+			<path d="M0 591.02 L0 582.52 L4.7 584.87 A4.25074 4.25074 -180 0 0 4.7 588.67 L0 591.02" class="st7"/>
+			<path d="M17.01 591.02 L17.01 582.52 L12.29 584.87 A4.08328 4.08328 0 0 1 12.29 588.67 L17.01 591.02" class="st7"/>
+			<path d="M4.25 595.28 L12.76 595.28 L10.41 590.57 A4.25074 4.25074 0 0 1 6.6 590.57 L4.25 595.28" class="st7"/>
+			<path d="M8.5 586.77 L4.7 584.87 A4.25074 4.25074 -180 0 0 4.7 588.67 L8.5 586.77 L12.29 584.87 A4.0859 4.0859 0 0 1
+						 12.29 588.67 L8.5 586.77 L10.41 590.57 A4.25074 4.25074 0 0 1 6.6 590.57 L8.5 586.77" class="st7"/>
+		</g>
+		<g id="shape72-652" v:mID="72" v:groupContext="shape" v:layerMember="1" transform="translate(792.412,-146.551)">
+			<title>Hauptleitung.72</title>
+			<v:custProps>
+				<v:cp v:nameU="Description" v:lbl="Beschreibung" v:type="0" v:sortKey="0" v:langID="1031"/>
+				<v:cp v:nameU="LineSize" v:lbl="Leitungsgröße" v:type="0" v:sortKey="1" v:langID="1031"/>
+				<v:cp v:nameU="Schedule" v:lbl="Zeitplan" v:type="0" v:sortKey="2" v:langID="1031"/>
+				<v:cp v:nameU="Material" v:lbl="Material" v:type="0" v:sortKey="3" v:langID="1031"/>
+				<v:cp v:nameU="DesignPressure" v:lbl="Entwurfsdruck" v:type="0" v:sortKey="4" v:langID="1031"/>
+				<v:cp v:nameU="DesignTemperature" v:lbl="Entwurfstemperatur" v:type="0" v:sortKey="5" v:langID="1031"/>
+			</v:custProps>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+				<v:ud v:nameU="TextCH" v:prompt="Determines text control handle visibility." v:val="VT0(0):26"/>
+				<v:ud v:nameU="SOLSH" v:val="VT4({D7D7DB7E-3668-43e5-AF97-97F58AB229A5})"/>
+				<v:ud v:nameU="ShapeClass" v:val="VT4(Rohrleitungen)"/>
+				<v:ud v:nameU="PEComponentTag" v:val="VT4(P-25)"/>
+				<v:ud v:nameU="PETagNumber" v:val="VT0(25):26"/>
+				<v:ud v:nameU="PETagFormat" v:prompt="P-25" v:val="VT4(Rohrleitung)"/>
+				<v:ud v:nameU="PEHideTag" v:val="VT0(1):26"/>
+				<v:ud v:nameU="PEPageHideTags" v:val="VT0(0):26"/>
+				<v:ud v:nameU="PELayout" v:val="VT0(31):26"/>
+				<v:ud v:nameU="CPMSetList" v:prompt="Description,LineSize,Schedule,Material,DesignPressure,DesignTemperature"
+						v:val="VT4(Rohrleitung)"/>
+				<v:ud v:nameU="UnitSize" v:val="VT0(0.11811023622047):24"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="35.7579" cy="705.106" width="48" height="15.2035"/>
+			<path d="M6.96 595.28 L6.96 714.23 L7.22 714.23" class="st19"/>
+		</g>
+		<g id="shape222-655" v:mID="222" v:groupContext="shape" transform="translate(2.07874,-520.724)">
+			<title>Kreis</title>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(14):26"/>
+			</v:userDefs>
+			<path d="M0 560.55 A34.7244 34.7244 0 0 1 69.45 560.55 A34.7244 34.7244 0 1 1 0 560.55 Z" class="st22"/>
+		</g>
+		<g id="shape223-657" v:mID="223" v:groupContext="shape" transform="translate(78.2105,-573.209)">
+			<title>total</title>
+			<desc>total</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="14.1732" cy="591.754" width="28.35" height="7.04331"/>
+			<rect x="0" y="588.232" width="28.3465" height="7.04331" class="st9"/>
+			<text x="4.64" y="594.75" class="st18" v:langID="1031"><v:paragraph v:horizAlign="1"/><v:tabList/>total</text>		</g>
+		<g id="shape224-660" v:mID="224" v:groupContext="shape" transform="translate(73.6693,-542.028)">
+			<title>diffuse</title>
+			<desc>diffuse</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="18.4409" cy="591.067" width="36.89" height="8.41732"/>
+			<rect x="0" y="586.858" width="36.8819" height="8.41732" class="st9"/>
+			<text x="4.54" y="594.07" class="st18" v:langID="1031"><v:paragraph v:horizAlign="1"/><v:tabList/>diffuse</text>		</g>
+		<g id="shape225-663" v:mID="225" v:groupContext="shape" transform="translate(-9.44882,-508.356)">
+			<title>sunshine_presence</title>
+			<desc>sunshine_presence</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="51.4961" cy="591.411" width="103" height="7.72938"/>
+			<rect x="0" y="587.546" width="102.992" height="7.72938" class="st9"/>
+			<text x="12.42" y="594.41" class="st18" v:langID="1031"><v:paragraph v:horizAlign="1"/><v:tabList/>sunshine_presence</text>		</g>
 	</g>
 </svg>
