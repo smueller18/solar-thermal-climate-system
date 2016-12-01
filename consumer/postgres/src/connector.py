@@ -31,9 +31,11 @@ class PostgresConnector:
 
     def table_exists(self, table_name):
         cur = self.con.cursor()
-        sql = cur.mogrify("""SELECT 1
-                              FROM information_schema.tables
-                              WHERE table_name=%s;""", (table_name,))
+        sql = cur.mogrify("""
+                          SELECT 1
+                          FROM information_schema.tables
+                          WHERE table_name=%s;
+                          """, (table_name,))
         cur.execute(sql)
 
         result = cur.fetchall()
@@ -57,10 +59,12 @@ class PostgresConnector:
 
             column_sql += ", " + key + " " + data_type
 
-        sql = """CREATE TABLE IF NOT EXISTS %s (
-                    timestamp TIMESTAMP PRIMARY KEY DEFAULT current_timestamp
-                    %s
-                );""" % (table_name, column_sql)
+        sql = """
+              CREATE TABLE IF NOT EXISTS %s (
+                timestamp TIMESTAMP WITH TIME ZONE PRIMARY KEY DEFAULT current_timestamp
+                %s
+              );
+              """ % (table_name, column_sql)
 
         try:
             cur.execute(sql)
@@ -73,9 +77,11 @@ class PostgresConnector:
 
         cur = self.con.cursor()
         # todo table_name = re.sub('[^A-Za-z0-9]+', '', table_name)
-        sql = cur.mogrify("""SELECT column_name
-                                            FROM information_schema.columns
-                                            WHERE table_name=%s;""", [table_name])
+        sql = cur.mogrify("""
+                          SELECT column_name
+                          FROM information_schema.columns
+                          WHERE table_name=%s;
+                          """, [table_name])
         cur.execute(sql)
 
         table_columns = cur.fetchall()[1:]
