@@ -32,6 +32,8 @@ if os.path.isfile(logging_config_file):
 
 logger = logging.getLogger('database_writer')
 
+
+
 # only way to handle SocketDisconnectedError exceptions and exit program by killing task with interrupt signal
 # because os.exit() is not possible due to threading of pykafka
 class ListenFilter(logging.Filter):

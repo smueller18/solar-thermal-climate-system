@@ -4,7 +4,7 @@
 # destroy old consumer thread and start new one
 
 import os
-import logging
+import logging.config
 import signal
 import io
 import datetime
