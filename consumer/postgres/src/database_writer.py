@@ -97,7 +97,7 @@ def loop_inserter(consumer):
     for message in consumer:
         try:
             decoded_message = decode_message(message)
-            logger.debug("Received message from topic '" + topic + "' with offset " + str(message.offset) + " and timestamp " +
+            logger.info("Received message from topic '" + topic + "' with offset " + str(message.offset) + " and timestamp " +
                         datetime.datetime.fromtimestamp(decoded_message["timestamp"]).strftime('%Y-%m-%d %H:%M:%S.%f'))
             try:
                 postgress_connector.insert_values(table_name=topic, data=decoded_message)
@@ -122,7 +122,7 @@ for consumer_topic in client.topics:
             use_rdkafka=True)
 
         consumer_threads.append(threading.Thread(target=loop_inserter, args=(simple_consumer,)))
-        logger.debug("Starting consumer thread #" + str(len(consumer_threads) - 1))
+        logger.info("Starting consumer thread #" + str(len(consumer_threads) - 1))
         consumer_threads[-1].start()
 
         managed_topics.append(consumer_topic)
