@@ -41,8 +41,6 @@ Here is a list of all variables which can be set by environment variables.
 | KAFKA_SCHEMA | /avro/schema/kafka.timestamp-data.avsc | string | use absolute paths |
 | CONSUMER_GROUP | cache-rest | string |   |
 | AUTO_COMMIT_INTERVAL | 60000 | int | milliseconds |
-| LOGGING_LEVEL | INFO | string | one of CRITICAL, ERROR, WARNING, INFO, DEBUG |
-| LOGGING_FORMAT | %(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s | string | allowed attributes see  [here](https://docs.python.org/3.6/library/logging.html#logrecord-attributes) |
 
 ## Exception handling
 If connection to broker is lost, `collector.py` will be terminated.
