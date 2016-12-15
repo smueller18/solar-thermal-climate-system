@@ -6,7 +6,7 @@
 
 ## Running
 
-If your config folder is not located a `../config`, then set `STCS_CONFIG_FOLDER` environment variable:
+If your config folder is not located at `../config`, then set `STCS_CONFIG_FOLDER` environment variable:
 ```
 export STCS_CONFIG_FOLDER="YOUR_PATH"
 ```
