@@ -65,7 +65,7 @@ def kafka_consumer():
             reader = avro.io.DatumReader(kafka_message_schema)
             sensor_values = reader.read(decoder)
             latest_sensor_values_json = json.dumps(sensor_values)
-            logger.debug("Received message with offset " + str(message.offset) + " and timestamp " +
+            logger.info("Received message with offset " + str(message.offset) + " and timestamp " +
                          datetime.datetime.fromtimestamp(sensor_values["timestamp"]).strftime('%Y-%m-%d %H:%M:%S.%f'))
         except Exception as e:
             logger.warn(e)
