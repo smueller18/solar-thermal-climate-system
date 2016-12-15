@@ -11,8 +11,8 @@ services:
       - "444:444"
     command: /bin/sh -c "nginx -g 'daemon off;'"
     env_file:
-      - ${CONFIG_FOLDER-./../config}/global.env
-      - ${CONFIG_FOLDER-./../config}/nginx/config.env
+      - ${STCS_CONFIG_FOLDER-./../config}/global.env
+      - ${STCS_CONFIG_FOLDER-./../config}/nginx/config.env
     environment:
       USER_NAME: nginx
     volumes:
@@ -21,30 +21,29 @@ services:
       # nginx config files
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/http.conf:/etc/nginx/http.conf
-      - ${CONFIG_FOLDER-./../config}/nginx/conf.d:/etc/nginx/conf.d
+      - ${STCS_CONFIG_FOLDER-./../config}/nginx/conf.d:/etc/nginx/conf.d
       # password files
-      - ${CONFIG_FOLDER-./../config}/nginx/htpasswd:/etc/nginx/htpasswd
+      - ${STCS_CONFIG_FOLDER-./../config}/nginx/htpasswd:/etc/nginx/htpasswd
       # certificates
-      - ${CONFIG_FOLDER-./../config}/nginx/certs/server.crt:/etc/nginx/certs/server.crt
-      - ${CONFIG_FOLDER-./../config}/nginx/certs/server.key:/etc/nginx/certs/server.key
+      - ${STCS_CONFIG_FOLDER-./../config}/nginx/certs/server.crt:/etc/nginx/certs/server.crt
+      - ${STCS_CONFIG_FOLDER-./../config}/nginx/certs/server.key:/etc/nginx/certs/server.key
       # monitor
       - ./monitor:/var/www/monitor
-      - ${CONFIG_FOLDER-./../config}/monitor/technical/sensor_description.json:/var/www/monitor/technical/sensor_description.json
-      - ${CONFIG_FOLDER-./../config}/monitor/technical/js/config.js:/var/www/monitor/technical/js/config.js
+      - ${STCS_CONFIG_FOLDER-./../config}/monitor/technical/sensor_description.json:/var/www/monitor/technical/sensor_description.json
+      - ${STCS_CONFIG_FOLDER-./../config}/monitor/technical/js/config.js:/var/www/monitor/technical/js/config.js
     logging:
       driver: "json-file"
       options:
         max-size: "1m"
         max-file: "1"
 
-
-  dockerui:
-    container_name: dockerui
-    image: uifd/ui-for-docker:0.12.0-beta
+  portainer:
+    container_name: portainer
+    image: portainer/portainer
     restart: always
     privileged: true
     env_file:
-      - ${CONFIG_FOLDER-./../config}/global.env
+      - ${STCS_CONFIG_FOLDER-./../config}/global.env
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     logging:
@@ -61,7 +60,7 @@ services:
     ports:
       - "2181:2181"
     env_file:
-      - ${CONFIG_FOLDER-./../config}/global.env
+      - ${STCS_CONFIG_FOLDER-./../config}/global.env
     environment:
       USER_NAME: zookeeper
     volumes:
@@ -82,8 +81,8 @@ services:
     depends_on:
       - zookeeper
     env_file:
-      - ${CONFIG_FOLDER-./../config}/global.env
-      - ${CONFIG_FOLDER-./../config}/kafka/config.env
+      - ${STCS_CONFIG_FOLDER-./../config}/global.env
+      - ${STCS_CONFIG_FOLDER-./../config}/kafka/config.env
     environment:
       USER_NAME: kafka
     volumes:
@@ -96,20 +95,20 @@ services:
 
   postgres:
     container_name: postgres
-    image: biggis/postgres:9.6-alpine-v2
+    image: biggis/postgres:9.6
     restart: always
     hostname: postgres
     ports:
       - "5432:5432"
     env_file:
-      - ${CONFIG_FOLDER-./../config}/global.env
-      - ${CONFIG_FOLDER-./../config}/postgres/config.env
+      - ${STCS_CONFIG_FOLDER-./../config}/global.env
+      - ${STCS_CONFIG_FOLDER-./../config}/postgres/config.env
     environment:
       USER_NAME: postgres
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - postgres-data:/var/lib/postgresql/data/pgdata
-      - ${CONFIG_FOLDER-./../config}/postgres/postgresql.conf:/var/lib/postgresql/data/pgdata/postgresql.conf
+      - ${STCS_CONFIG_FOLDER-./../config}/postgres/postgresql.conf:/var/lib/postgresql/data/pgdata/postgresql.conf
     logging:
       driver: "json-file"
       options:
@@ -122,7 +121,7 @@ services:
     restart: always
     hostname: pgadmin4
     env_file:
-      - ${CONFIG_FOLDER-./../config}/global.env
+      - ${STCS_CONFIG_FOLDER-./../config}/global.env
     environment:
       USER_NAME: pgadmin
       PORT: 5050
@@ -141,8 +140,8 @@ services:
     restart: always
     hostname: consumer-postgres
     env_file:
-      - ${CONFIG_FOLDER-./../config}/global.env
-      - ${CONFIG_FOLDER-./../config}/consumer/postgres/config.env
+      - ${STCS_CONFIG_FOLDER-./../config}/global.env
+      - ${STCS_CONFIG_FOLDER-./../config}/consumer/postgres/config.env
     environment:
       USER_NAME: consumer-postgres
     volumes:
@@ -160,8 +159,8 @@ services:
     restart: always
     hostname: consumer-cache-rest
     env_file:
-      - ${CONFIG_FOLDER-./../config}/global.env
-      - ${CONFIG_FOLDER-./../config}/consumer/cache-rest/config.env
+      - ${STCS_CONFIG_FOLDER-./../config}/global.env
+      - ${STCS_CONFIG_FOLDER-./../config}/consumer/cache-rest/config.env
     environment:
       USER_NAME: consumer-cache-rest
     volumes:
