@@ -23,13 +23,15 @@ KAFKA_SCHEMA = os.getenv("KAFKA_SCHEMA", "/avro/schema/kafka.timestamp-data.avsc
 TOPIC = os.getenv("TOPIC", "chillii")
 CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "cache-rest")
 AUTO_COMMIT_INTERVAL = int(os.getenv("AUTO_COMMIT_INTERVAL", 60000))
-LOGGING_LEVEL = os.getenv("LOGGING_LEVEL", "INFO")
-LOGGING_FORMAT = os.getenv("LOGGING_FORMAT", "%(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s")
+LOGGING_LEVEL = os.getenv("LOGGING_LEVEL", "")
 
+logging_config_file = os.path.dirname(os.path.abspath(__file__)) + "logging.ini"
+if os.path.isfile(logging_config_file):
+    logging.config.fileConfig(logging_config_file)
 
-logging.basicConfig(format=LOGGING_FORMAT)
 logger = logging.getLogger('app')
-logger.setLevel(logging.getLevelName(LOGGING_LEVEL))
+if LOGGING_LEVEL != "":
+    logging.basicConfig(level=LOGGING_LEVEL)
 
 
 # only way to handle SocketDisconnectedError exceptions and exit program by killing task with interrupt signal
