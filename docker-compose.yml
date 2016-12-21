@@ -9,6 +9,7 @@ services:
       - "80:80"
       - "443:443"
       - "444:444"
+      - "8888:8888"
     command: /bin/sh -c "nginx -g 'daemon off;'"
     env_file:
       - ${STCS_CONFIG_FOLDER-./../config}/global.env
@@ -132,6 +133,20 @@ services:
         max-size: "1m"
         max-file: "1"
 
+  jupyter-notebook:
+    container_name: jupyter-notebook
+    image: continuumio/anaconda3
+    restart: always
+    hostname: jupyter-notebook
+    command: jupyter notebook --notebook-dir=/opt/notebooks --ip='*' --port=8888 --no-browser
+    volumes:
+      - jupyter-notebook-data:/opt/notebooks
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
   consumer-postgres:
     container_name: consumer-postgres
     build: ./consumer/postgres
@@ -176,3 +191,4 @@ volumes:
   kafka-data:
   postgres-data:
   pgadmin-data:
+  jupyter-notebook-data:
