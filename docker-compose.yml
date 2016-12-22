@@ -31,6 +31,9 @@ services:
       # monitor
       - ./monitor:/var/www/monitor
       - ${STCS_CONFIG_FOLDER-./../config}/monitor/technical/js/config.js:/var/www/monitor/technical/js/config.js
+    networks:
+      - default
+      - jupyter-notebook
     logging:
       driver: "json-file"
       options:
@@ -46,6 +49,8 @@ services:
       - ${STCS_CONFIG_FOLDER-./../config}/global.env
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - default
     logging:
       driver: "json-file"
       options:
@@ -65,6 +70,8 @@ services:
       USER_NAME: zookeeper
     volumes:
       - zookeeper-data:/tmp/zookeeper/data
+    networks:
+      - default
     logging:
       driver: "json-file"
       options:
@@ -87,6 +94,8 @@ services:
       USER_NAME: kafka
     volumes:
       - kafka-data:/tmp/kafka/data
+    networks:
+      - default
     logging:
       driver: "json-file"
       options:
@@ -109,6 +118,8 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data/pgdata
       - ${STCS_CONFIG_FOLDER-./../config}/postgres/postgresql.conf:/var/lib/postgresql/data/pgdata/postgresql.conf
+    networks:
+      - default
     logging:
       driver: "json-file"
       options:
@@ -127,6 +138,8 @@ services:
       PORT: 5050
     volumes:
       - pgadmin-data:/root/.pgadmin
+    networks:
+      - default
     logging:
       driver: "json-file"
       options:
@@ -140,6 +153,8 @@ services:
     hostname: jupyter-notebook
     volumes:
       - jupyter-notebook-data:/opt/notebooks
+    networks:
+      - jupyter-notebook
     logging:
       driver: "json-file"
       options:
@@ -159,6 +174,8 @@ services:
       USER_NAME: consumer-postgres
     volumes:
       - ./avro/schema/kafka.timestamp-data.avsc:/avro/schema/kafka.timestamp-data.avsc
+    networks:
+      - default
     logging:
       driver: "json-file"
       options:
@@ -178,12 +195,18 @@ services:
       USER_NAME: consumer-cache-rest
     volumes:
       - ./avro/schema/kafka.timestamp-data.avsc:/avro/schema/kafka.timestamp-data.avsc
+    networks:
+      - default
     logging:
       driver: "json-file"
       options:
         max-size: "1m"
         max-file: "1"
 
+
+networks:
+  jupyter-notebook:
+  default:
 
 volumes:
   zookeeper-data:
