@@ -135,10 +135,9 @@ services:
 
   jupyter-notebook:
     container_name: jupyter-notebook
-    image: continuumio/anaconda3
+    image: smueller18/base:anaconda3
     restart: always
     hostname: jupyter-notebook
-    command: jupyter notebook --notebook-dir=/opt/notebooks --ip='*' --port=8888 --no-browser
     volumes:
       - jupyter-notebook-data:/opt/notebooks
     logging:

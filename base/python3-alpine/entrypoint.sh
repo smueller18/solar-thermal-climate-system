@@ -1,4 +1,3 @@
-
 #!/bin/sh
 
 # adopted from https://github.com/biggis-project/biggis-infrastructure/blob/master/biggis-docker/biggis-pipeline/biggis-base/alpine/entrypoint.sh
