@@ -1,5 +1,7 @@
 # solar-thermal-climate-system
 
+Docker containers for the solar thermal climate system project at Karlsruhe University of Applied Sciences.
+
 ## Requirements
 
 - docker-compose >= 1.9.0
