@@ -116,7 +116,7 @@ function updateSensorValues() {
 				}
             });
             var datetime = new Date(timestamp * 1000);
-            document.getElementById("last-update-time").textContent = datetime.toString("dd.MM.yyyy HH:mm:ss.") + Math.floor(datetime.getMilliseconds()/100);
+            document.getElementById("last-update-time").textContent = datetime.toString("dd.MM.yyyy HH:mm:ss");
         }
         setTimeout(updateSensorValues, UPDATE_INTERVAL * 1000)
     });
