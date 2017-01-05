@@ -18,7 +18,7 @@ __license__ = u'MIT'
 __dirname__ = os.path.dirname(os.path.abspath(__file__))
 
 PORT = int(os.getenv("PORT", 5001))
-KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "localhost:9092")
+KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "kafka:9092")
 KAFKA_SCHEMA = os.getenv("KAFKA_SCHEMA", __dirname__ + "/kafka.timestamp-data.avsc")
 CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "cache-rest")
 AUTO_COMMIT_INTERVAL = int(os.getenv("AUTO_COMMIT_INTERVAL", 60000))
