@@ -24,7 +24,7 @@ Install all required libraries and python packages.
 ## How to use
 First, clone this project to your local PC. Then, you can run `database_writer.py`.
 ```
-$ git clone https://github.com/smueller18/solar-thermal-climate-system/tree/master/consumer/postgres/src
+$ git clone https://github.com/smueller18/solar-thermal-climate-system.git
 $ cd solar-thermal-climate-system/consumer/postgres/src/
 $ python3 database_writer.py
 ```
