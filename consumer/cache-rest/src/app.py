@@ -1,74 +1,76 @@
 #!/usr/bin/env python3
-
-# todo handle pykafka if logging Encountered SocketDisconnectedError while requesting metadata from broker
-# destroy old consumer thread and start new one
+# -*- coding: utf-8 -*-
 
 import os
 import logging.config
-import signal
-import io
-import datetime
 import threading
-import json
 import avro.io
+import json
+import time
 from pykafka import KafkaClient
 from flask import Flask
+from kafka_consumer import KafkaConsumer
 
-__author__ = "Stephan Müller"
-__license__ = "MIT"
+__author__ = u'Stephan Müller'
+__copyright__ = u'2016, Stephan Müller'
+__license__ = u'MIT'
+
+__dirname__ = os.path.dirname(os.path.abspath(__file__))
 
 PORT = int(os.getenv("PORT", 5001))
-KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "kafka:9092")
-KAFKA_SCHEMA = os.getenv("KAFKA_SCHEMA", "/avro/schema/kafka.timestamp-data.avsc")
-TOPIC = os.getenv("TOPIC", "chillii")
+KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "localhost:9092")
+KAFKA_SCHEMA = os.getenv("KAFKA_SCHEMA", __dirname__ + "/kafka.timestamp-data.avsc")
 CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "cache-rest")
 AUTO_COMMIT_INTERVAL = int(os.getenv("AUTO_COMMIT_INTERVAL", 60000))
+LOGGING_INI = os.getenv("LOGGING_INI", __dirname__ + "/logging.ini")
+logging_format = "%(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s"
 
-logging_config_file = os.path.dirname(os.path.abspath(__file__)) + "/logging.ini"
-if os.path.isfile(logging_config_file):
-    logging.config.fileConfig(logging_config_file)
+if os.path.isfile(LOGGING_INI):
+    logging.config.fileConfig(LOGGING_INI)
+else:
+    logging.basicConfig(level=logging.INFO, format=logging_format)
 
 logger = logging.getLogger('app')
 
-# only way to handle SocketDisconnectedError exceptions and exit program by killing task with interrupt signal
-# because os.exit() is not possible due to threading of pykafka
-class ListenFilter(logging.Filter):
-    def filter(self, record):
-        if record.getMessage().startswith("Encountered SocketDisconnectedError"):
-            logger.error("Lost connection to Kafka")
-            os.kill(os.getpid(), signal.SIGINT)
 
-        return True
-
-logging.getLogger('pykafka.broker').addFilter(ListenFilter())
-logging.getLogger('pykafka.cluster').addFilter(ListenFilter())
+consumer_sensor_values = dict()
+latest_sensor_values_json = json.dumps({'timestamp': 0, 'data': {}})
 
 
-kafka_message_schema = avro.schema.Parse(open(KAFKA_SCHEMA, "rb").read().decode())
-
-client = KafkaClient(hosts=KAFKA_HOSTS)
-topic = client.topics[str.encode(TOPIC)]
-
-latest_sensor_values_json = "{}"
-
-
-def kafka_consumer():
+def handle_sensor_update(sender, sensor_values):
     global latest_sensor_values_json
-    consumer = topic.get_simple_consumer(consumer_group=str.encode(CONSUMER_GROUP),
-                                         auto_commit_enable=True,
-                                         auto_commit_interval_ms=AUTO_COMMIT_INTERVAL,
-                                         use_rdkafka=True)
-    for message in consumer:
+    consumer_sensor_values.update({sender.get_topic(): sensor_values})
+
+    latest_sensor_values = {'timestamp': 0, 'data': dict()}
+    for topic in consumer_sensor_values:
+        if consumer_sensor_values[topic]['timestamp'] > latest_sensor_values['timestamp']:
+            latest_sensor_values['timestamp'] = consumer_sensor_values[topic]['timestamp']
+            latest_sensor_values['data'].update(consumer_sensor_values[topic]['data'])
+    latest_sensor_values_json = json.dumps(latest_sensor_values)
+
+
+def kafka_consumers():
+    started = False
+    while not started:
+        started_threads = dict()
         try:
-            bytes_reader = io.BytesIO(message.value)
-            decoder = avro.io.BinaryDecoder(bytes_reader)
-            reader = avro.io.DatumReader(kafka_message_schema)
-            sensor_values = reader.read(decoder)
-            latest_sensor_values_json = json.dumps(sensor_values)
-            logger.info("Received message with offset " + str(message.offset) + " and timestamp " +
-                         datetime.datetime.fromtimestamp(sensor_values["timestamp"]).strftime('%Y-%m-%d %H:%M:%S.%f'))
+            kafka_message_schema = avro.schema.Parse(open(KAFKA_SCHEMA, "rb").read().decode())
+            client = KafkaClient(hosts=KAFKA_HOSTS)
+
+            for topic in client.topics:
+                thread = KafkaConsumer(KAFKA_HOSTS, topic.decode(), CONSUMER_GROUP, kafka_message_schema=kafka_message_schema)
+                thread.sensor_values_update_event += handle_sensor_update
+                thread.start()
+
+                started_threads.update({
+                    topic.decode(): thread
+                })
+                logger.info("Started consumer thread for topic " + topic.decode())
+            started = True
+
         except Exception as e:
-            logger.warn(e)
+            logger.error(e)
+            time.sleep(3)
 
 
 app = Flask(__name__)
@@ -78,10 +80,6 @@ app = Flask(__name__)
 def index():
     return latest_sensor_values_json
 
-# @app.route('/latest_sensor_values.json')
-# def route_latest_sensor_values():
-#     return latest_sensor_values_json
-
 
 def run():
     logger.info("Starting cache-rest at port " + str(PORT))
@@ -90,7 +88,7 @@ def run():
 
 if __name__ == '__main__':
     webapp_thread = threading.Thread(target=run)
-    consumer_thread = threading.Thread(target=kafka_consumer)
+    consumer_thread = threading.Thread(target=kafka_consumers)
 
     webapp_thread.start()
     consumer_thread.start()

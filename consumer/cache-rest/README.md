@@ -1,19 +1,12 @@
 # cache-rest
-This app consumes all messages for topic `chillii` and provides latest sensor values by REST interface.
+This app consumes all messages for all available Kafka topics and provides latest sensor values by REST interface.
 
 ## How to prepare
 Required libraries:
 
 - python3
-- librdkafka
 
-Required python packages:
-- os
-- logging
-- signal
-- io
-- datetime
-- threading
+Required non-standard python packages:
 - json
 - avro-python3
 - pykafka
@@ -21,14 +14,14 @@ Required python packages:
 
 Install all required libraries and python packages.
 
-## How to use
-First, clone this project to your local PC. Then, you can run `app.py`.
+## Getting started
+First, clone this project to your local PC. Then, you can run `app.py`. For parameterization, environment variables are used.
 ```
-$ git clone https://github.com/smueller18/solar-thermal-climate-system/tree/master/consumer/cache-rest/src
+$ git clone https://github.com/smueller18/solar-thermal-climate-system.git
 $ cd solar-thermal-climate-system/consumer/cache-rest/src/
 $ python3 app.py
 ```
-Here is a list of all variables which can be set by environment variables.
+Here is a list of all variables which can be set by environment variables. `__dirname__` is a placeholder for the absolute path to the directory of `app.py`.
 
 | variable | default | type | info |
 | --- | --- | --- | --- |
@@ -37,12 +30,7 @@ Here is a list of all variables which can be set by environment variables.
 | KAFKA_SCHEMA | /avro/schema/kafka.timestamp-data.avsc | string |   |
 | CONSUMER_GROUP | postgres | string |   |
 | AUTO_COMMIT_INTERVAL | 60000 | int | milliseconds |
-
-## Exception handling
-If connection to broker is lost, `collector.py` will be terminated.
+| LOGGING_INI | `__dirname__` + "/logging.ini" | string | preferrably use absolute path |
 
 ## Timing
-The time of sensor values is set to the time before the function to read the values over modbus is called.
-
-## Chillii System Controller modbus definition
-Define all available sensor addresses in `config/modbus_chillii_definition.json`. To see how the information must be provided have a look at the related schema `config/modbus_device_definition.schema.json`.
+The global timestamp is set to the latest timestamp of all consumed messages. Therefore it is possible that not all sensor values have the same time stamp and it could be that there are older than given global timestamp.
