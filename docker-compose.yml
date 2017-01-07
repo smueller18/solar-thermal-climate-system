@@ -9,6 +9,7 @@ services:
       - "80:80"
       - "443:443"
       - "444:444"
+      - "445:445"
       - "8888:8888"
     command: /bin/sh -c "nginx -g 'daemon off;'"
     env_file:
@@ -42,7 +43,7 @@ services:
 
   portainer:
     container_name: portainer
-    image: portainer/portainer
+    image: portainer/portainer:1.10.2
     restart: always
     privileged: true
     env_file:
@@ -193,6 +194,27 @@ services:
       - ${STCS_CONFIG_FOLDER-./../config}/consumer/cache-rest/config.env
     environment:
       USER_NAME: consumer-cache-rest
+    volumes:
+      - ./avro/schema/kafka.timestamp-data.avsc:/avro/schema/kafka.timestamp-data.avsc
+    networks:
+      - default
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
+  producer-rolling-median:
+    container_name: producer-rolling-median
+    build: ./producer/rolling-median
+    image: smueller18/producer:rolling-median
+    restart: always
+    hostname: producer-rolling-median
+    env_file:
+      - ${STCS_CONFIG_FOLDER-./../config}/global.env
+      - ${STCS_CONFIG_FOLDER-./../config}/producer/rolling-median/config.env
+    environment:
+      USER_NAME: producer-rolling-median
     volumes:
       - ./avro/schema/kafka.timestamp-data.avsc:/avro/schema/kafka.timestamp-data.avsc
     networks:
