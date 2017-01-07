@@ -21,7 +21,6 @@ PORT = int(os.getenv("PORT", 5001))
 KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "kafka:9092")
 KAFKA_SCHEMA = os.getenv("KAFKA_SCHEMA", __dirname__ + "/kafka.timestamp-data.avsc")
 CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "cache-rest")
-AUTO_COMMIT_INTERVAL = int(os.getenv("AUTO_COMMIT_INTERVAL", 60000))
 ALLOWED_TOPICS_REGEX = os.getenv("ALLOWED_TOPIC_REGEX", ".*")
 LOGGING_INI = os.getenv("LOGGING_INI", __dirname__ + "/logging.ini")
 logging_format = "%(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s"
