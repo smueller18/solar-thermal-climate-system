@@ -1,0 +1,20 @@
+{
+  "namespace": "stcs.avro",
+  "name": "DataRecord",
+  "type": "record",
+  "fields": [
+    {
+      "name": "timestamp",
+      "type": "double",
+      "doc": "timestamp of collection of data"
+    },
+    {
+      "name": "data",
+      "type": {
+        "type": "map",
+        "values": ["string", "bytes", "float", "long", "int", "boolean"],
+        "doc": "key is id and column name for database tables. Important: keep the order of value types! Avro decoder parses data by trying value types from right to left."
+      }
+    }
+  ]
+}

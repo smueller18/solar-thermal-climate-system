@@ -8,27 +8,21 @@ Required libraries:
 - postgresql-dev
 - librdkafka
 
-Required python packages:
-- os
-- logging
-- signal
-- io
-- datetime
-- threading
+Required non-standard python packages:
 - avro-python3
 - psycopg2
 - pykafka
 
 Install all required libraries and python packages.
 
-## How to use
-First, clone this project to your local PC. Then, you can run `database_writer.py`.
+## Getting started
+First, clone this project to your local PC. Then, you can run `database_writer.py`. For parameterization, environment variables are used.
 ```
 $ git clone https://github.com/smueller18/solar-thermal-climate-system.git
 $ cd solar-thermal-climate-system/consumer/postgres/src/
 $ python3 database_writer.py
 ```
-Here is a list of all variables which can be set by environment variables.
+Here is a list of all variables which can be set by environment variables. `__dirname__` is a placeholder for the absolute path to the directory of `database_writer.py`.
 
 | variable | default | type | info |
 | --- | --- | --- | --- |
@@ -38,15 +32,8 @@ Here is a list of all variables which can be set by environment variables.
 | POSTGRES_USER | postgres | string |   |
 | POSTGRES_PW | postgres | string |   |
 | KAFKA_HOSTS | kafka:9092 | string |   |
-| KAFKA_SCHEMA | /avro/schema/kafka.timestamp-data.avsc | string | use absolute paths |
+| KAFKA_SCHEMA | \_\_dirname\_\_ + "/kafka.timestamp-data.avsc" | string |   |
 | CONSUMER_GROUP | cache-rest | string |   |
 | AUTO_COMMIT_INTERVAL | 60000 | int | milliseconds |
-
-## Exception handling
-If connection to broker is lost, `collector.py` will be terminated.
-
-## Timing
-The time of sensor values is set to the time before the function to read the values over modbus is called.
-
-## Chillii System Controller modbus definition
-Define all available sensor addresses in `config/modbus_chillii_definition.json`. To see how the information must be provided have a look at the related schema `config/modbus_device_definition.schema.json`.
+| ALLOWED_TOPICS_REGEX | .* | string | .* means handle all topics |
+| LOGGING_INI | `__dirname__` + "/logging.ini" | string | preferrably use absolute path |
