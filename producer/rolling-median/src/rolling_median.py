@@ -49,7 +49,14 @@ def handle_sensor_update(sender, message):
             values = list()
             for i in range(0, ROLLING_MEDIAN_WINDOW):
                 values.append(topics[sender.get_topic()][i]["data"][sensor_id])
-            produce_message["data"][sensor_id] = np.median(values)
+
+            median = np.median(values)
+            if type(values[0]) == bool:
+                median = bool(median)
+            elif type(values[0]) == int:
+                median = int(median)
+
+            produce_message["data"][sensor_id] = median
 
         kafka_producer_pool.produce(sender.get_topic() + TOPIC_SUFFIX_PRODUCER, produce_message)
 
