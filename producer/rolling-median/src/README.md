@@ -30,7 +30,6 @@ Here is a list of all variables which can be set by environment variables. `__di
 | KAFKA_SCHEMA | /avro/schema/kafka.timestamp-data.avsc | string |   |
 | CONSUMER_GROUP | rolling-median | string |   |
 | ROLLING_MEDIAN_WINDOW | 5 | int |   |
-| AUTO_COMMIT_INTERVAL | 60000 | int | milliseconds |
 | ALLOWED_TOPICS_REGEX_CONSUMER | .* | regex | .* means handle all topics |
 | TOPIC_SUFFIX_PRODUCER | _rolling_median | string | produce topic is consumer topic + this suffix |
 | LOGGING_INI | `__dirname__` + "/logging.ini" | string | preferrably use absolute path |
