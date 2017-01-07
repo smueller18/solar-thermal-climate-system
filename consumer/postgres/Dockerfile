@@ -6,4 +6,4 @@ COPY src /opt/postgres
 
 WORKDIR /opt/postgres
 
-CMD ["python", "database_writer.py"]
+CMD ["python", "consumer_cache_rest.py"]

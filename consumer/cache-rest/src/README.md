@@ -16,13 +16,13 @@ Required non-standard python packages:
 Install all required libraries and python packages.
 
 ## Getting started
-First, clone this project to your local PC. Then, you can run `app.py`. For parameterization, environment variables are used.
+First, clone this project to your local PC. Then, you can run `consumer_cache_rest.py`. For parameterization, environment variables are used.
 ```
 $ git clone https://github.com/smueller18/solar-thermal-climate-system.git
 $ cd solar-thermal-climate-system/consumer/cache-rest/src/
-$ python3 app.py
+$ python3 consumer_cache_rest.py
 ```
-Here is a list of all variables which can be set by environment variables. `__dirname__` is a placeholder for the absolute path to the directory of `app.py`.
+Here is a list of all variables which can be set by environment variables. `__dirname__` is a placeholder for the absolute path to the directory of `consumer_cache_rest.py`.
 
 | variable | default | type | info |
 | --- | --- | --- | --- |
