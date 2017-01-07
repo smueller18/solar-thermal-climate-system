@@ -19,18 +19,15 @@ __dirname__ = os.path.dirname(os.path.abspath(__file__))
 
 KAFKA_HOSTS_CONSUMER = os.getenv("KAFKA_HOSTS_CONSUMER", "kafka:9092")
 KAFKA_HOSTS_PRODUCER = os.getenv("KAFKA_HOSTS_PRODUCER", "kafka:9092")
-KAFKA_SCHEMA = os.getenv("KAFKA_SCHEMA", "/avro/schema/kafka.timestamp-data.avsc")
+KAFKA_SCHEMA = os.getenv("KAFKA_SCHEMA", __dirname__ + "/kafka.timestamp-data.avsc")
 CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "rolling-median")
 ROLLING_MEDIAN_WINDOW = int(os.getenv("ROLLING_MEDIAN_WINDOW", 5))
 ALLOWED_TOPICS_REGEX_CONSUMER = os.getenv("ALLOWED_TOPICS_REGEX_CONSUMER", ".*")
 TOPIC_SUFFIX_PRODUCER = os.getenv("TOPIC_SUFFIX_PRODUCER", "_rolling_median")
-LOGGING_INI = os.getenv("LOGGING_INI", __dirname__ + "/logging.ini")
+LOGGING_LEVEL = os.getenv("LOGGING_LEVEL", "INFO")
 logging_format = "%(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s"
 
-if os.path.isfile(LOGGING_INI):
-    logging.config.fileConfig(LOGGING_INI)
-else:
-    logging.basicConfig(level=logging.INFO, format=logging_format)
+logging.basicConfig(level=logging.getLevelName(LOGGING_LEVEL), format=logging_format)
 
 logger = logging.getLogger('rolling-median')
 
@@ -89,7 +86,7 @@ while not started:
 
     except Exception as e:
         logger.exception(e)
-        time.sleep(3)
+        time.sleep(30)
 
 while True:
     time.sleep(100)

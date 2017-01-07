@@ -35,4 +35,3 @@ Here is a list of all variables which can be set by environment variables. `__di
 | KAFKA_SCHEMA | `__dirname__` + "/kafka.timestamp-data.avsc" | string |   |
 | CONSUMER_GROUP | cache-rest | string |   |
 | ALLOWED_TOPICS_REGEX | .* | string | .* means handle all topics |
-| LOGGING_INI | `__dirname__` + "/logging.ini" | string | preferrably use absolute path |

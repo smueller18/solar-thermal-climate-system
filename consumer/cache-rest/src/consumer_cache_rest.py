@@ -22,15 +22,12 @@ KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "kafka:9092")
 KAFKA_SCHEMA = os.getenv("KAFKA_SCHEMA", __dirname__ + "/kafka.timestamp-data.avsc")
 CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "cache-rest")
 ALLOWED_TOPICS_REGEX = os.getenv("ALLOWED_TOPIC_REGEX", ".*")
-LOGGING_INI = os.getenv("LOGGING_INI", __dirname__ + "/logging.ini")
+LOGGING_LEVEL = os.getenv("LOGGING_LEVEL", "INFO")
 logging_format = "%(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s"
 
-if os.path.isfile(LOGGING_INI):
-    logging.config.fileConfig(LOGGING_INI)
-else:
-    logging.basicConfig(level=logging.INFO, format=logging_format)
+logging.basicConfig(level=logging.getLevelName(LOGGING_LEVEL), format=logging_format)
 
-logger = logging.getLogger('app')
+logger = logging.getLogger('consumer_cache_rest')
 
 
 consumer_sensor_values = dict()
@@ -70,8 +67,8 @@ def kafka_consumers():
             started = True
 
         except Exception as e:
-            logger.error(e)
-            time.sleep(3)
+            logger.exception(e)
+            time.sleep(30)
 
 
 app = Flask(__name__)
@@ -95,4 +92,3 @@ if __name__ == '__main__':
     consumer_thread.start()
 
     webapp_thread.join()
-    consumer_thread.join()

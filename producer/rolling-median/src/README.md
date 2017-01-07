@@ -32,4 +32,3 @@ Here is a list of all variables which can be set by environment variables. `__di
 | ROLLING_MEDIAN_WINDOW | 5 | int |   |
 | ALLOWED_TOPICS_REGEX_CONSUMER | .* | regex | .* means handle all topics |
 | TOPIC_SUFFIX_PRODUCER | _rolling_median | string | produce topic is consumer topic + this suffix |
-| LOGGING_INI | `__dirname__` + "/logging.ini" | string | preferrably use absolute path |
