@@ -28,7 +28,7 @@ Here is a list of all variables which can be set by environment variables. `__di
 | --- | --- | --- | --- |
 | PORT | 5001 | int | port of REST server |
 | KAFKA_HOSTS | kafka:9092 | string |   |
-| KAFKA_SCHEMA | \_\_dirname\_\_ + "/kafka.timestamp-data.avsc" | string |   |
+| KAFKA_SCHEMA | `__dirname__` + "/kafka.timestamp-data.avsc" | string |   |
 | CONSUMER_GROUP | postgres | string |   |
 | ALLOWED_TOPICS_REGEX | .* | string | .* means handle all topics |
 | LOGGING_INI | `__dirname__` + "/logging.ini" | string | preferrably use absolute path |
