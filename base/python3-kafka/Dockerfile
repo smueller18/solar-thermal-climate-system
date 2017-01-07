@@ -39,7 +39,7 @@ RUN apk add --no-cache --virtual .build-deps \
     && pip install flask \
     \
     # install pykafka-tools
-    && pip install git+https://github.com/smueller18/pykafka-tools.git@0.1.7#egg=pykafka-tools --process-dependency-links --allow-all-external \
+    && pip install git+https://github.com/smueller18/pykafka-tools.git@0.1.8#egg=pykafka-tools --process-dependency-links --allow-all-external \
     \
     # delete build dependencies
     && apk del .build-deps \
