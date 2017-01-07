@@ -6,8 +6,13 @@ RUN apk add --no-cache --virtual .build-deps \
           gcc \
           python3-dev \
           musl-dev \
+          # for numpy
+          linux-headers \
+          g++ \
+          # end for numpy
           postgresql-dev \
           curl \
+          git \
     \
     # install pykafka
     && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main/ \
@@ -19,6 +24,10 @@ RUN apk add --no-cache --virtual .build-deps \
             librdkafka-dev \
     && pip install pykafka \
     \
+    # install scientific
+    && ln -s /usr/include/locale.h /usr/include/xlocale.h \
+    && pip install numpy \
+    \
     # install avro
     && pip install avro_python3 \
     \
@@ -28,6 +37,9 @@ RUN apk add --no-cache --virtual .build-deps \
     \
     # install flask
     && pip install flask \
+    \
+    # install pykafka-tools
+    && pip install git+https://github.com/smueller18/pykafka-tools.git@0.1.7#egg=pykafka-tools --process-dependency-links --allow-all-external \
     \
     # delete build dependencies
     && apk del .build-deps \
