@@ -8,4 +8,4 @@ EXPOSE 5001
 
 WORKDIR /opt/cache-rest
 
-CMD ["python", "app.py"]
+CMD ["python", "consumer_cache_rest.py"]
