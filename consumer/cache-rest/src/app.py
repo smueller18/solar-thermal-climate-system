@@ -4,15 +4,15 @@
 import os
 import logging.config
 import threading
-import avro.io
+import re
 import json
 import time
 from pykafka import KafkaClient
 from flask import Flask
-from kafka_consumer import KafkaConsumer
+from pykafka_tools.kafka_consumer import KafkaConsumer
 
 __author__ = u'Stephan Müller'
-__copyright__ = u'2016, Stephan Müller'
+__copyright__ = u'2017, Stephan Müller'
 __license__ = u'MIT'
 
 __dirname__ = os.path.dirname(os.path.abspath(__file__))
@@ -22,6 +22,7 @@ KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "kafka:9092")
 KAFKA_SCHEMA = os.getenv("KAFKA_SCHEMA", __dirname__ + "/kafka.timestamp-data.avsc")
 CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "cache-rest")
 AUTO_COMMIT_INTERVAL = int(os.getenv("AUTO_COMMIT_INTERVAL", 60000))
+ALLOWED_TOPICS_REGEX = os.getenv("ALLOWED_TOPIC_REGEX", ".*")
 LOGGING_INI = os.getenv("LOGGING_INI", __dirname__ + "/logging.ini")
 logging_format = "%(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s"
 
@@ -54,18 +55,19 @@ def kafka_consumers():
     while not started:
         started_threads = dict()
         try:
-            kafka_message_schema = avro.schema.Parse(open(KAFKA_SCHEMA, "rb").read().decode())
             client = KafkaClient(hosts=KAFKA_HOSTS)
 
             for topic in client.topics:
-                thread = KafkaConsumer(KAFKA_HOSTS, topic.decode(), CONSUMER_GROUP, kafka_message_schema=kafka_message_schema)
-                thread.sensor_values_update_event += handle_sensor_update
-                thread.start()
+                if re.search(ALLOWED_TOPICS_REGEX, topic.decode()) is not None:
+                    thread = KafkaConsumer(KAFKA_HOSTS, topic.decode(), CONSUMER_GROUP,
+                                           kafka_message_schema_file=KAFKA_SCHEMA)
+                    thread.new_message_event += handle_sensor_update
+                    thread.start()
 
-                started_threads.update({
-                    topic.decode(): thread
-                })
-                logger.info("Started consumer thread for topic " + topic.decode())
+                    started_threads.update({
+                        topic.decode(): thread
+                    })
+                    logger.info("Started consumer thread for topic " + topic.decode())
             started = True
 
         except Exception as e:
