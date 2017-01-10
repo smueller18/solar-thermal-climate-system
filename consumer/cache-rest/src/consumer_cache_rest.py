@@ -30,20 +30,12 @@ logging.basicConfig(level=logging.getLevelName(LOGGING_LEVEL), format=logging_fo
 logger = logging.getLogger('consumer_cache_rest')
 
 
-consumer_sensor_values = dict()
-latest_sensor_values_json = json.dumps({'timestamp': 0, 'data': {}})
+latest_sensor_values = dict()
 
 
 def handle_sensor_update(sender, sensor_values):
-    global latest_sensor_values_json
-    consumer_sensor_values.update({sender.get_topic(): sensor_values})
-
-    latest_sensor_values = {'timestamp': 0, 'data': dict()}
-    for topic in consumer_sensor_values:
-        if consumer_sensor_values[topic]['timestamp'] > latest_sensor_values['timestamp']:
-            latest_sensor_values['timestamp'] = consumer_sensor_values[topic]['timestamp']
-            latest_sensor_values['data'].update(consumer_sensor_values[topic]['data'])
-    latest_sensor_values_json = json.dumps(latest_sensor_values)
+    global latest_sensor_values
+    latest_sensor_values.update({sender.get_topic(): sensor_values})
 
 
 def kafka_consumers():
@@ -76,7 +68,14 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return latest_sensor_values_json
+    all_sensor_values = {'timestamp': 0, 'data': dict()}
+
+    for topic in latest_sensor_values:
+        if latest_sensor_values[topic]['timestamp'] > all_sensor_values['timestamp']:
+            all_sensor_values['timestamp'] = latest_sensor_values[topic]['timestamp']
+            all_sensor_values['data'].update(latest_sensor_values[topic]['data'])
+
+    return json.dumps(all_sensor_values)
 
 
 def run():
