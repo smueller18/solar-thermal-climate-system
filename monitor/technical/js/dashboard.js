@@ -23,6 +23,7 @@ window.onload = function () {
 
         document.getElementById('connection-status').className =
             document.getElementById('connection-status').className.replace("btn-danger", "btn-success");
+        document.getElementById('connection-status').title = "online";
 
         socket.on('sensor_values_cache', function (message) {
 
@@ -62,6 +63,7 @@ window.onload = function () {
     socket.on('disconnect', function () {
         document.getElementById('connection-status').className =
             document.getElementById('connection-status').className.replace("btn-success", "btn-danger");
+        document.getElementById('connection-status').title = "offline";
     });
 };
 
