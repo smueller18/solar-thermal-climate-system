@@ -32,8 +32,7 @@ topic_cache = dict()
 
 
 def handle_sensor_update(sender, sensor_values):
-    global latest_sensor_values, topic_cache
-
+    global topic_cache
     topic_cache[sender.get_topic()].update(sensor_values)
 
 
