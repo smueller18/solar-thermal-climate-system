@@ -1,1 +1,1 @@
-const SENSOR_VALUES_URL = "https://localhost/consumer-cache-rest/";
+const SOCKET_URL = "https://localhost:446";

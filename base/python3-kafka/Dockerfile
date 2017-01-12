@@ -35,8 +35,10 @@ RUN apk add --no-cache --virtual .build-deps \
     && apk add --no-cache	libpq \
     && pip install psycopg2 \
     \
-    # install flask
+    # install flask, socketio
     && pip install flask \
+    && pip install cython mistune \
+    && pip install flask_socketio \
     \
     # install pykafka-tools
     && pip install git+https://github.com/smueller18/pykafka-tools.git@0.1.8#egg=pykafka-tools --process-dependency-links --allow-all-external \

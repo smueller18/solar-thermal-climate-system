@@ -1,9 +1,70 @@
-
-var UPDATE_INTERVAL = 1;
 const NAMESPACE_SVG = "http://www.w3.org/2000/svg";
 const SENSOR_DESCRIPTION_URL = "sensor_description.json";
 // to be defined in config/config.js
-// const SENSOR_VALUES_URL = "..."
+//const SOCKET_URL = "http://localhost:5002/";
+
+
+// required by function updateSensorValues()
+var sensorValueTextNodes = {};
+
+window.onload = function () {
+
+    getJSON(SENSOR_DESCRIPTION_URL,
+        function (err, data) {
+            if (err != null) {
+                console.log("Something went wrong: " + err);
+            } else {
+                sensorValueTextNodes = initializeSensorValueNodes(data);
+            }
+        });
+
+    var socket = io(SOCKET_URL);
+    socket.on('connect', function () {
+
+        document.getElementById('connection-status').className =
+            document.getElementById('connection-status').className.replace("btn-danger", "btn-success");
+
+        socket.on('sensor_values_cache', function (message) {
+
+            if (typeof(message) === "undefined")
+                return;
+
+            if ('error' in message) {
+                console.log(message.error);
+                return;
+            }
+
+            if ('timestamp' in message && 'data' in message) {
+                update(message['timestamp'], message['data']);
+            }
+        });
+
+        socket.on('sensor_values', function (message) {
+            if (typeof(message) === "undefined")
+                return;
+
+            if ('error' in message) {
+                console.log(message.error);
+                return;
+            }
+
+            if ('timestamp' in message && 'data' in message) {
+                update(message['timestamp'], message['data']);
+            }
+        });
+
+        socket.on('connected_clients', function (message) {
+            if (typeof(message) === "number")
+                document.getElementById("connected-clients").value = message;
+        });
+    });
+
+    socket.on('disconnect', function () {
+        document.getElementById('connection-status').className =
+            document.getElementById('connection-status').className.replace("btn-success", "btn-danger");
+    });
+};
+
 
 var getJSON = function (url, callback) {
     var xhr = new XMLHttpRequest();
@@ -33,7 +94,9 @@ var myNamespaceResolver = {
 };
 
 function initializeSensorValueNodes(sensorValues) {
-    var sensorValueNodes = {};
+
+    if (typeof(sensorValues) !== "object")
+        return;
 
     Object.keys(sensorValues).forEach(function (sensorId) {
         var sensorUnit = sensorValues[sensorId].unit;
@@ -58,7 +121,7 @@ function initializeSensorValueNodes(sensorValues) {
             sensorValueNode.setAttribute("y", y.toString());
             sensorValueNode.setAttribute("text-anchor", "left");
             sensorValueNode.setAttribute("fill", "red");
-            sensorValueNode.setAttribute("font-family", "Arial");
+            sensorValueNode.setAttribute("fonts-family", "Arial");
             sensorValueNode.textContent = "";
 
             var sensorValue = document.createElementNS(NAMESPACE_SVG, "tspan");
@@ -80,61 +143,40 @@ function initializeSensorValueNodes(sensorValues) {
     return sensorValueTextNodes;
 }
 
-function updateSensorValues() {
-    getJSON(SENSOR_VALUES_URL, function (err, data) {
-        if (err != null) {
-            console.log("Something went wrong: " + err);
-        } else {
-            var sensorValues = data["data"];
-            var timestamp = data["timestamp"];
+function update(timestamp, sensorValues) {
 
-            Object.keys(sensorValues).forEach(function (sensorId) {
-				if (sensorValueTextNodes[sensorId] != undefined) {
-					var sensorValue = sensorValues[sensorId];
-          var newSensorValue;
-					switch (typeof(sensorValue)) {
-						case "number":
-							// integer
-							if(sensorValue % 1 === 0)
-								newSensorValue = sensorValue.toString();
-							// float
-							else
-								newSensorValue = sensorValue.toFixed(1).toString();
-							break;
-						case "boolean":
-							if(sensorValue)
-								newSensorValue = "True";
-							else
-								newSensorValue = "False";
-                            break;
-						default:
-							newSensorValue = sensorValue.toString();
-							break;
-					}
-                    var oldSensorValue = sensorValueTextNodes[sensorId].textContent;
-                    sensorValueTextNodes[sensorId].textContent = newSensorValue;
-				}
-            });
-            var datetime = new Date(timestamp * 1000);
-            document.getElementById("last-update-time").textContent = datetime.toString("dd.MM.yyyy HH:mm:ss");
+    if (typeof(sensorValues) !== "object" || typeof(timestamp) !== "number")
+        return;
+
+    var datetime = new Date(timestamp * 1000);
+    var offset = new Date() - datetime;
+    document.getElementById("last-update-time").value = datetime.toString("dd.MM.yyyy HH:mm:ss");
+    document.getElementById("offset").value = offset;
+
+    Object.keys(sensorValues).forEach(function (sensorId) {
+        if (sensorValueTextNodes[sensorId] != undefined) {
+            var sensorValue = sensorValues[sensorId];
+            var newSensorValue;
+            switch (typeof(sensorValue)) {
+                case "number":
+                    // integer
+                    if (sensorValue % 1 === 0)
+                        newSensorValue = sensorValue.toString();
+                    // float
+                    else
+                        newSensorValue = sensorValue.toFixed(1).toString();
+                    break;
+                case "boolean":
+                    if (sensorValue)
+                        newSensorValue = "True";
+                    else
+                        newSensorValue = "False";
+                    break;
+                default:
+                    newSensorValue = sensorValue.toString();
+                    break;
+            }
+            sensorValueTextNodes[sensorId].textContent = newSensorValue;
         }
-        setTimeout(updateSensorValues, UPDATE_INTERVAL * 1000)
     });
 }
-
-
-// required by function updateSensorValues()
-var sensorValueTextNodes = {};
-
-window.onload = function () {
-
-    getJSON(SENSOR_DESCRIPTION_URL,
-        function (err, data) {
-            if (err != null) {
-                console.log("Something went wrong: " + err);
-            } else {
-                sensorValueTextNodes = initializeSensorValueNodes(data);
-                updateSensorValues();
-            }
-        });
-};

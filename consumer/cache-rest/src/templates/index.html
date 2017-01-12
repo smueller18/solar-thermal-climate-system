@@ -2,10 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="author" content="Stephan Müller">
     <title>API Description</title>
-    <link rel="stylesheet" href="stylesheet.css" />
+    <link href="css/markdown.css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/sticky-footer.css" rel="stylesheet">
 </head>
 <body class="markdown-body">
-    {{ content }}
+    <div class="container">
+        {{ content }}
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="text-muted">&copy;2017 Stephan Müller - Hochschule Karlsruhe</p>
+        </div>
+    </footer>
+
+    <script src="js/tether.min.js"></script>
+    <script src="js/jquery-3.1.1.slim.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
 </body>
 </html>

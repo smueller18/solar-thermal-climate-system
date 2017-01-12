@@ -33,5 +33,6 @@ Here is a list of all variables which can be set by environment variables. `__di
 | POSTGRES_PW | postgres | string |   |
 | KAFKA_HOSTS | kafka:9092 | string |   |
 | KAFKA_SCHEMA | `__dirname__` + "/kafka.timestamp-data.avsc" | string |   |
-| CONSUMER_GROUP | cache-rest | string |   |
+| CONSUMER_GROUP | postgres | string |   |
 | ALLOWED_TOPICS_REGEX | .* | string | .* means handle all topics |
+| LOGGING_LEVEL | INFO | string | one of CRITICAL, ERROR, WARNING, INFO, DEBUG |

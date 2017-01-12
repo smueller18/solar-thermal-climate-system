@@ -7,9 +7,7 @@ services:
     restart: always
     ports:
       - "80:80"
-      - "443:443"
-      - "444:444"
-      - "445:445"
+      - "443-446:443-446"
       - "8888:8888"
     command: /bin/sh -c "nginx -g 'daemon off;'"
     env_file:
@@ -194,6 +192,27 @@ services:
       - ${STCS_CONFIG_FOLDER-./../config}/consumer/cache-rest/config.env
     environment:
       USER_NAME: consumer-cache-rest
+    volumes:
+      - ./avro/schema/kafka.timestamp-data.avsc:/avro/schema/kafka.timestamp-data.avsc
+    networks:
+      - default
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
+  consumer-web-redirect:
+    container_name: consumer-web-redirect
+    build: ./consumer/web-redirect
+    image: smueller18/consumer:web-redirect
+    restart: always
+    hostname: consumer-web-redirect
+    env_file:
+      - ${STCS_CONFIG_FOLDER-./../config}/global.env
+      - ${STCS_CONFIG_FOLDER-./../config}/consumer/web-redirect/config.env
+    environment:
+      USER_NAME: consumer-web-redirect
     volumes:
       - ./avro/schema/kafka.timestamp-data.avsc:/avro/schema/kafka.timestamp-data.avsc
     networks:
