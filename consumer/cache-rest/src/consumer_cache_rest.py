@@ -7,7 +7,8 @@ import threading
 import re
 import time
 from pykafka import KafkaClient
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template, Markup
+import mistune
 from pykafka_tools.kafka_consumer import KafkaConsumer
 
 __author__ = u'Stephan Müller'
@@ -63,7 +64,20 @@ def kafka_consumers():
             time.sleep(30)
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
+
+renderer = mistune.Renderer(escape=False, hard_wrap=True, use_xhtml=True)
+markdown = mistune.Markdown(renderer=renderer)
+
+
+@app.route('/')
+def api_description():
+    global markdown
+    api_description_file = __dirname__ + "/API.md"
+
+    content = markdown(open(api_description_file, "rb").read().decode())
+
+    return render_template('index.html', content=Markup(content))
 
 
 @app.route('/topics')
