@@ -34,3 +34,13 @@ Here is a list of all variables which can be set by environment variables. `__di
 
 ## Timing
 The global timestamp is set to the latest timestamp of all consumed messages. Therefore it is possible that not all sensor values have the same time stamp and it could be that there are older than given global timestamp.
+
+## Defaults
+If no values are received via Kafka, the default values of the REST interface will be
+```json
+{
+  "timestamp": 0,
+  "data": {}
+}
+```
+For checking if values exist, simply check for `timestamp == 0`.

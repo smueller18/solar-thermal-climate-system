@@ -5,10 +5,9 @@ import os
 import logging.config
 import threading
 import re
-import json
 import time
 from pykafka import KafkaClient
-from flask import Flask
+from flask import Flask, jsonify
 from pykafka_tools.kafka_consumer import KafkaConsumer
 
 __author__ = u'Stephan Müller'
@@ -30,12 +29,17 @@ logging.basicConfig(level=logging.getLevelName(LOGGING_LEVEL), format=logging_fo
 logger = logging.getLogger('consumer_cache_rest')
 
 
-latest_sensor_values = dict()
+latest_sensor_values = {'timestamp': 0, 'data': dict()}
 
 
 def handle_sensor_update(sender, sensor_values):
     global latest_sensor_values
-    latest_sensor_values.update({sender.get_topic(): sensor_values})
+
+    if latest_sensor_values['timestamp'] < sensor_values['timestamp']:
+        latest_sensor_values['timestamp'] = sensor_values['timestamp']
+
+    for sensor_id in sensor_values['data']:
+        latest_sensor_values['data'][sensor_id] = sensor_values['data'][sensor_id]
 
 
 def kafka_consumers():
@@ -68,14 +72,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    all_sensor_values = {'timestamp': 0, 'data': dict()}
-
-    for topic in latest_sensor_values:
-        if latest_sensor_values[topic]['timestamp'] > all_sensor_values['timestamp']:
-            all_sensor_values['timestamp'] = latest_sensor_values[topic]['timestamp']
-            all_sensor_values['data'].update(latest_sensor_values[topic]['data'])
-
-    return json.dumps(all_sensor_values)
+    return jsonify(latest_sensor_values)
 
 
 def run():
