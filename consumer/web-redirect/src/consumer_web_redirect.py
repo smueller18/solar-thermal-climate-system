@@ -41,12 +41,6 @@ counter_lock = threading.Lock()
 connected_clients = 0
 
 
-@app.route("/")
-def index():
-    return "Hallo"
-
-
-
 @socketio.on('connect')
 def connect():
     global connected_clients
