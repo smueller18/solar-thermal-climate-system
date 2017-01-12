@@ -145,6 +145,7 @@ function initializeSensorValueNodes(sensorValues) {
     return sensorValueTextNodes;
 }
 
+var latest_timestamp = 0;
 function update(timestamp, sensorValues) {
 
     if (typeof(sensorValues) !== "object" || typeof(timestamp) !== "number")
@@ -152,8 +153,12 @@ function update(timestamp, sensorValues) {
 
     var datetime = new Date(timestamp * 1000);
     var offset = new Date() - datetime;
-    document.getElementById("last-update-time").value = datetime.toString("dd.MM.yyyy HH:mm:ss");
-    document.getElementById("offset").value = offset;
+
+    if(latest_timestamp < datetime) {
+        latest_timestamp = datetime;
+        document.getElementById("last-update-time").value = datetime.toString("dd.MM.yyyy HH:mm:ss");
+        document.getElementById("offset").value = offset;
+    }
 
     Object.keys(sensorValues).forEach(function (sensorId) {
         if (sensorValueTextNodes[sensorId] != undefined) {
