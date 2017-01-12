@@ -115,4 +115,4 @@ if __name__ == '__main__':
     consumer_thread = threading.Thread(target=kafka_consumers)
 
     webapp_thread.start()
-    #consumer_thread.start()
+    consumer_thread.start()
