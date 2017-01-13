@@ -34,30 +34,4 @@ Here is a list of all variables which can be set by environment variables. `__di
 | LOGGING_LEVEL | INFO | string | one of CRITICAL, ERROR, WARNING, INFO, DEBUG |
 
 ## API
-**Event**: sensor_values_cache<br>
-After a client connected, this event is used to push all latest available Kafka messages. For each topic. a separate message is send. The cache can be used if there are (temporarily) no producers available for a topic. The structure of the websocket messages are as follows:
-```json
-{
-  "topic": <topic>,
-  "timestamp": <timestamp>,
-  "data": {
-    "sensorId1": <value>,
-    "sensorId2": <value>,
-    ...
-  }
-}
-```
-
-**Event**: sensor_values<br>
-This is a broadcast event which is send to all connected clients as soon as a new Kafka message arrives. The structure of the websocket messages are as follows:
-```json
-{
-  "topic": <topic>,
-  "timestamp": <timestamp>,
-  "data": {
-    "sensorId1": <value>,
-    "sensorId2": <value>,
-    ...
-  }
-}
-```
+For the API description have a look at [API.md](API.md).

@@ -1,0 +1,23 @@
+.row > div {
+    margin-top: 2em;
+}
+
+.btn {
+    width: 100%;
+}
+
+.btn img {
+    margin-bottom: 1em;
+}
+
+.btn h4, .btn span {
+    white-space: pre-wrap;
+}
+
+.content > .container > .row > div {
+    display: flex;
+}
+
+.content > .container > .row > div > a {
+    align-items: stretch;
+}

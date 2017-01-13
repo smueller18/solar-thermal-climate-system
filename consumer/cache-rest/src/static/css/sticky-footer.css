@@ -1,20 +1,26 @@
-html {
-    position: relative;
+html, body {
     min-height: 100%;
 }
+
 body {
-    /* Margin bottom by footer height */
-    margin-bottom: 100px;
+    display: flex;
+    flex-flow: column;
 }
+
+.content{
+    margin-bottom: 40px;
+}
+
 .footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    /* Set the fixed height of the footer here */
-    height: 60px;
+    margin-top: auto;
     background-color: #f5f5f5;
 }
-.footer p {
-    line-height: 30px;
-    margin: 10px 0;
+
+.footer .container .row div {
+    margin-top: 2em;
 }
+
+dd {
+    margin-bottom: 0;
+}
+

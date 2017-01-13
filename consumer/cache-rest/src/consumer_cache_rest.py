@@ -74,9 +74,7 @@ markdown = mistune.Markdown(renderer=renderer)
 def api_description():
     global markdown
     api_description_file = __dirname__ + "/API.md"
-
     content = markdown(open(api_description_file, "rb").read().decode())
-
     return render_template('index.html', content=Markup(content))
 
 

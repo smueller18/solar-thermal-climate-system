@@ -1,0 +1,494 @@
+{
+  "VSOP_2_OP": {
+    "unit": "",
+    "description": "Umschaltventil Solar 2 AB-B (Wärmesenke)"
+  },
+  "VSOP_1_OP": {
+    "unit": "",
+    "description": "Umschaltventil Solar 1 AB-B (Wärmespeicher)"
+  },
+  "MCHG_1_OP": {
+    "unit": "",
+    "description": "Mischer Chiller Heißwasserkreis (Generator) öffnen"
+  },
+  "PC_1": {
+    "unit": "%",
+    "description": "Pumpe Verbraucherkreis 1"
+  },
+  "PCHG_1": {
+    "unit": "%",
+    "description": "Pumpe Chiller Heißwasserkreis (Generator)"
+  },
+  "TSOC_2_NTC": {
+    "unit": "°C",
+    "description": "Temperatur Kollektor 2"
+  },
+  "TSH3": {
+    "unit": "°C",
+    "description": "Temperatur Wärmespeicher mitte (Ladebereich WEZ 2)"
+  },
+  "PC_4": {
+    "unit": "%",
+    "description": "Pumpe Verbraucherkreis 4"
+  },
+  "CCON_OPER": {
+    "unit": "",
+    "description": "Betriebsmeldung Controller / System"
+  },
+  "TSOPI": {
+    "unit": "°C",
+    "description": "Temperatur Solaranlage Eintritt"
+  },
+  "VSOP_2_CL": {
+    "unit": "",
+    "description": "Umschaltventil Solar 2 AB-A (TWW-Speicher)"
+  },
+  "MCHE_1_CL": {
+    "unit": "",
+    "description": "Mischer Chiller Kaltwasserkreis (Verdampfer) schließen"
+  },
+  "MC_2_CL": {
+    "unit": "",
+    "description": "Mischer Verbraucherkreis 2 schließen"
+  },
+  "CC_4": {
+    "unit": "",
+    "description": "Freigabe Verbraucherkreis 4"
+  },
+  "SCOW1_1": {
+    "unit": "",
+    "description": "Füllstand Rückkühler unten"
+  },
+  "TSC2": {
+    "unit": "°C",
+    "description": "Temperatur Kältespeicher mitte (Ladebereich Kältebackup)"
+  },
+  "PC_2": {
+    "unit": "%",
+    "description": "Pumpe Verbraucherkreis 2"
+  },
+  "PC_1_AO": {
+    "unit": "V",
+    "description": "Pumpe Verbraucherkreis 1 Sollwert"
+  },
+  "MC_1_OP": {
+    "unit": "",
+    "description": "Mischer Verbraucherkreis 1 öffnen"
+  },
+  "VSHS_CL": {
+    "unit": "",
+    "description": "Einschicht Ventil Sekundär UNTEN"
+  },
+  "MC_1_CL": {
+    "unit": "",
+    "description": "Mischer Verbraucherkreis 1 schließen"
+  },
+  "VSHP_CL": {
+    "unit": "",
+    "description": "Entnahme Ventil Primär UNTEN"
+  },
+  "TCHCI_1": {
+    "unit": "°C",
+    "description": "Temperatur Rückkühlkreis (Kondensator) Eintritt"
+  },
+  "TSOC_1_NTC": {
+    "unit": "°C",
+    "description": "Temperatur Kollektor 1"
+  },
+  "SHUI_1": {
+    "unit": "%",
+    "description": "Relative Luftfeuchte Verbraucherkreis 1"
+  },
+  "THSA_1": {
+    "unit": "°C",
+    "description": "Temperatur Wärmesenke Solar"
+  },
+  "TSC1": {
+    "unit": "°C",
+    "description": "Temperatur Kältespeicher oben"
+  },
+  "TCI_3": {
+    "unit": "°C",
+    "description": "Temperatur Vorlauf Verbraucherkreis 3"
+  },
+  "TCHEI_1": {
+    "unit": "°C",
+    "description": "Temperatur Kaltwasserkreis (Verdampfer) Eintritt"
+  },
+  "PSOP": {
+    "unit": "%",
+    "description": "Pumpe Solarkreis Primär"
+  },
+  "TCO_3": {
+    "unit": "°C",
+    "description": "Temperatur Rücklauf Verbraucherkreis 3"
+  },
+  "PC_2_AO": {
+    "unit": "V",
+    "description": "Pumpe Verbraucherkreis 2 Sollwert"
+  },
+  "CHS_1": {
+    "unit": "",
+    "description": "Anforderung Wärmeerzeuger 1"
+  },
+  "TSH2": {
+    "unit": "°C",
+    "description": "Temperatur Wärmespeicher mitte (Ladebereich WEZ 1)"
+  },
+  "TCOWO_1": {
+    "unit": "°C",
+    "description": "Temperatur Rückkühler Austritt"
+  },
+  "VCOWWI_1_OP": {
+    "unit": "",
+    "description": "Ventil Rückkkühler Frischwasser AUF"
+  },
+  "PCHCS_1": {
+    "unit": "%",
+    "description": "Pumpe Chiller Rückkühlkreis (Kondensator) Sekundär"
+  },
+  "A_IN_4": {
+    "unit": "",
+    "description": "Analogeingang 4"
+  },
+  "THS": {
+    "unit": "°C",
+    "description": "Temperatur Wärmeerzeuger 1"
+  },
+  "PHS_AO": {
+    "unit": "V",
+    "description": "Pumpe Wärmeerzeuger Sollwert"
+  },
+  "PCHE_1_AO": {
+    "unit": "V",
+    "description": "Pumpe Chiller Kaltwasserkreis (Verdampfer) Sollwert"
+  },
+  "THSO": {
+    "unit": "°C",
+    "description": "Temperatur Wärmeerzeuger 1 Austritt"
+  },
+  "TOU": {
+    "unit": "°C",
+    "description": "Aussentemperatur"
+  },
+  "VSHC_CL": {
+    "unit": "",
+    "description": "Umschaltventil HEIZEN"
+  },
+  "PSOS": {
+    "unit": "%",
+    "description": "Pumpe Solarkreis Sekundär"
+  },
+  "MCHC_1_CL": {
+    "unit": "",
+    "description": "Mischer Chiller Rückkühlkreis (Kondensator) schließen"
+  },
+  "TSOPO": {
+    "unit": "°C",
+    "description": "Temperatur Solaranlage Austritt"
+  },
+  "CCH_1_ERRO": {
+    "unit": "",
+    "description": "Störungsmeldung Chiller"
+  },
+  "SCOW_1": {
+    "unit": "mS/cm",
+    "description": "Leitfähigkeit"
+  },
+  "A_IN_1": {
+    "unit": "",
+    "description": "Analogeingang 1"
+  },
+  "PSW": {
+    "unit": "%",
+    "description": "Pumpe alternativ Umschaltventil Beladung TWW-Speicher"
+  },
+  "MCHE_1_OP": {
+    "unit": "",
+    "description": "Mischer Chiller Kaltwasserkreis (Verdampfer) öffnen"
+  },
+  "MC_3_OP": {
+    "unit": "",
+    "description": "Mischer Verbraucherkreis 3 öffnen"
+  },
+  "TCO_4": {
+    "unit": "°C",
+    "description": "Temperatur Rücklauf Verbraucherkreis 4"
+  },
+  "TCHGO_1": {
+    "unit": "°C",
+    "description": "Temperatur Heißwasserkreis (Generator) Austritt"
+  },
+  "TCI_4": {
+    "unit": "°C",
+    "description": "Temperatur Vorlauf Verbraucherkreis 4"
+  },
+  "VCOWWI_1_CL": {
+    "unit": "",
+    "description": "Ventil Rückkkühler Frischwasser ZU"
+  },
+  "VCOWWO_1_CL": {
+    "unit": "",
+    "description": "Ventil Rückkkühler Abschlämmen/Entleerung ZU"
+  },
+  "MCHG_1_CL": {
+    "unit": "",
+    "description": "Mischer Chiller Heißwasserkreis (Generator) schließen"
+  },
+  "TIN_4": {
+    "unit": "°C",
+    "description": "Referenzraumtemperatur Verbraucherkreis 4"
+  },
+  "A_IN_3": {
+    "unit": "",
+    "description": "Analogeingang 3"
+  },
+  "TIN_3": {
+    "unit": "°C",
+    "description": "Referenzraumtemperatur Verbraucherkreis 3"
+  },
+  "PSOP_AO": {
+    "unit": "V",
+    "description": "Pumpe Solarkreis Primär Sollwert"
+  },
+  "MSOP_OP": {
+    "unit": "",
+    "description": "Mischer Kollektoren AUF (Kollektorfeld 2)"
+  },
+  "TCHGI_1": {
+    "unit": "°C",
+    "description": "Temperatur Heißwasserkreis (Generator) Eintritt"
+  },
+  "PC_3": {
+    "unit": "%",
+    "description": "Pumpe Verbraucherkreis 3"
+  },
+  "TIN_1": {
+    "unit": "°C",
+    "description": "Referenzraumtemperatur Verbraucherkreis 1"
+  },
+  "CCH_EX": {
+    "unit": "",
+    "description": "Anforderung Kältemaschine extern"
+  },
+  "CCH_1": {
+    "unit": "",
+    "description": "Anforderung Chiller"
+  },
+  "PSWZ": {
+    "unit": "%",
+    "description": "Zirkulationspumpe TWW"
+  },
+  "MHS_CL": {
+    "unit": "",
+    "description": "Mischer Wärmeerzeuger 1 schließen"
+  },
+  "VSHC_OP": {
+    "unit": "",
+    "description": "Umschaltventil KÜHLEN"
+  },
+  "MC_2_OP": {
+    "unit": "",
+    "description": "Mischer Verbraucherkreis 2 öffnen"
+  },
+  "MC_3_CL": {
+    "unit": "",
+    "description": "Mischer Verbraucherkreis 3 schließen"
+  },
+  "CC_3": {
+    "unit": "",
+    "description": "Freigabe Verbraucherkreis 3"
+  },
+  "CHS_OPER": {
+    "unit": "",
+    "description": "Betriebsmeldung Wärmeerzeuger 1"
+  },
+  "TSW1": {
+    "unit": "°C",
+    "description": "Temperatur TWW-Speicher unten"
+  },
+  "TIN_2": {
+    "unit": "°C",
+    "description": "Referenzraumtemperatur Verbraucherkreis 2"
+  },
+  "TCI_2": {
+    "unit": "°C",
+    "description": "Temperatur Vorlauf Verbraucherkreis 2"
+  },
+  "VSHP_OP": {
+    "unit": "",
+    "description": "Entnahme Ventil Primär OBEN"
+  },
+  "TCO_1": {
+    "unit": "°C",
+    "description": "Temperatur Rücklauf Verbraucherkreis 1"
+  },
+  "SCOW2_1": {
+    "unit": "",
+    "description": "Füllstand Rückkühler oben"
+  },
+  "A_IN_2": {
+    "unit": "",
+    "description": "Analogeingang 2"
+  },
+  "PCHCP_1_AO": {
+    "unit": "V",
+    "description": "Pumpe Chiller Rückkühlkreis (Kondensator) Primär Sollwert"
+  },
+  "TSW0": {
+    "unit": "°C",
+    "description": "Temperatur TWW-Speicher oben"
+  },
+  "CHSA_1": {
+    "unit": "",
+    "description": "Schalter für Ventilator Wärmesenke"
+  },
+  "SHUI_2": {
+    "unit": "%",
+    "description": "Relative Luftfeuchte Verbraucherkreis 2"
+  },
+  "TSOC_2": {
+    "unit": "°C",
+    "description": "Temperatur Kollektor 2"
+  },
+  "TSOC_1": {
+    "unit": "°C",
+    "description": "Temperatur Kollektor 1"
+  },
+  "TCHCO_1": {
+    "unit": "°C",
+    "description": "Temperatur Rückkühlkreis (Kondensator) Austritt"
+  },
+  "CHS_2": {
+    "unit": "",
+    "description": "Anforderung Wärmeerzeuger 2"
+  },
+  "VSOP_1_CL": {
+    "unit": "",
+    "description": "Umschaltventil Solar 1 AB-A (TWW-SpeicherKOMMA Wärmesenke)"
+  },
+  "CC_2": {
+    "unit": "",
+    "description": "Freigabe Verbraucherkreis 2"
+  },
+  "PHS": {
+    "unit": "%",
+    "description": "Pumpe Wärmeerzeuger"
+  },
+  "VSHS_OP": {
+    "unit": "",
+    "description": "Einschicht Ventil Sekundär OBEN"
+  },
+  "MHS_OP": {
+    "unit": "",
+    "description": "Mischer Wärmeerzeuger 1 öffnen"
+  },
+  "PCHCS_1_AO": {
+    "unit": "V",
+    "description": "Pumpe Chiller Rückkühlkreis (Kondensator) Sekundär Sollwert"
+  },
+  "PCHCP_1": {
+    "unit": "%",
+    "description": "Pumpe Chiller Rückkühlkreis (Kondensator) Primär"
+  },
+  "MC_4_CL": {
+    "unit": "",
+    "description": "Mischer Verbraucherkreis 4 schließen"
+  },
+  "CHS_ERRO": {
+    "unit": "",
+    "description": "Störungsmeldung Wärmeerzeuger 1"
+  },
+  "TSC0": {
+    "unit": "°C",
+    "description": "Temperatur Kältespeicher unten"
+  },
+  "TSOS": {
+    "unit": "°C",
+    "description": "Temperatur Solarwärmetauscher Sekundär"
+  },
+  "TSHSI": {
+    "unit": "°C",
+    "description": "Temperatur Wärmespeicher Sekundär IN"
+  },
+  "CCH_1_OPER": {
+    "unit": "",
+    "description": "Betriebsmeldung Chiller"
+  },
+  "PCHG_1_AO": {
+    "unit": "V",
+    "description": "Pumpe Chiller Heißwasserkreis (Generator) Sollwert"
+  },
+  "MSOP_CL": {
+    "unit": "",
+    "description": "Mischer Kollektoren ZU (Kollektorfeld 1)"
+  },
+  "PCHE_1": {
+    "unit": "%",
+    "description": "Pumpe Chiller Kaltwasserkreis (Verdampfer)"
+  },
+  "CCOW_1_OPER": {
+    "unit": "",
+    "description": "Betriebsmeldung Rückkühler"
+  },
+  "CCOW_1_ERRO": {
+    "unit": "",
+    "description": "Störungsmeldung Rückkühler"
+  },
+  "VCOWWO_1_OP": {
+    "unit": "",
+    "description": "Ventil Rückkkühler Abschlämmen/Entleerung AUF"
+  },
+  "PSOS_AO": {
+    "unit": "V",
+    "description": "Pumpe Solarkreis Sekundär Sollwert"
+  },
+  "CCON_ERRO": {
+    "unit": "",
+    "description": "Störungsmeldung Controller / System"
+  },
+  "TSH1": {
+    "unit": "°C",
+    "description": "Temperatur Wärmespeicher unten"
+  },
+  "MC_4_OP": {
+    "unit": "",
+    "description": "Mischer Verbraucherkreis 4 öffnen"
+  },
+  "TSH0": {
+    "unit": "°C",
+    "description": "Temperatur Wärmespeicher oben"
+  },
+  "TCHEO_1": {
+    "unit": "°C",
+    "description": "Temperatur Kaltwasserkreis (Verdampfer) Austritt"
+  },
+  "PC_3_AO": {
+    "unit": "V",
+    "description": "Pumpe Verbraucherkreis 3 Sollwert"
+  },
+  "MCHC_1_OP": {
+    "unit": "",
+    "description": "Mischer Chiller Rückkühlkreis (Kondensator) öffnen"
+  },
+  "CC_1": {
+    "unit": "",
+    "description": "Freigabe Verbraucherkreis 1"
+  },
+  "PC_4_AO": {
+    "unit": "V",
+    "description": "Pumpe Verbraucherkreis 4 Sollwert"
+  },
+  "CCOW_1": {
+    "unit": "",
+    "description": "Anforderung Rückkühler"
+  },
+  "TCI_1": {
+    "unit": "°C",
+    "description": "Temperatur Vorlauf Verbraucherkreis"
+  },
+  "TCO_2": {
+    "unit": "°C",
+    "description": "Temperatur Rücklauf Verbraucherkreis 2"
+  }
+}

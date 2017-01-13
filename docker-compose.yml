@@ -16,8 +16,6 @@ services:
     environment:
       USER_NAME: nginx
     volumes:
-      # index page
-      - ./nginx/html:/etc/nginx/html
       # nginx config files
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/http.conf:/etc/nginx/http.conf
@@ -27,8 +25,8 @@ services:
       # certificates
       - ${STCS_CONFIG_FOLDER-./../config}/nginx/certs/server.crt:/etc/nginx/certs/server.crt
       - ${STCS_CONFIG_FOLDER-./../config}/nginx/certs/server.key:/etc/nginx/certs/server.key
-      # monitor
-      - ./monitor:/var/www/monitor
+      # static_html
+      - ./static_html:/var/www
       - ${STCS_CONFIG_FOLDER-./../config}/monitor/technical/js/config.js:/var/www/monitor/technical/js/config.js
     networks:
       - default

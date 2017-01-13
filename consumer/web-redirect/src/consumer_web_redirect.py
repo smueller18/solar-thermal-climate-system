@@ -7,8 +7,9 @@ import threading
 import re
 import time
 from pykafka import KafkaClient
-from flask import Flask
+from flask import Flask, render_template, Markup
 from flask_socketio import SocketIO, emit
+import mistune
 from pykafka_tools.kafka_consumer import KafkaConsumer
 
 __author__ = u'Stephan Müller'
@@ -32,9 +33,20 @@ logger = logging.getLogger('consumer_web_redirect')
 cache = dict()
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
 app.config['SECRET_KEY'] = 'secret'
 socketio = SocketIO(app, async_mode='threading', logger=True, engineio_logger=True, ping_timeout=10, ping_interval=5)
+
+renderer = mistune.Renderer(escape=False, hard_wrap=True, use_xhtml=True)
+markdown = mistune.Markdown(renderer=renderer)
+
+
+@app.route('/')
+def api_description():
+    global markdown
+    api_description_file = __dirname__ + "/API.md"
+    content = markdown(open(api_description_file, "rb").read().decode())
+    return render_template('index.html', content=Markup(content))
 
 
 counter_lock = threading.Lock()
