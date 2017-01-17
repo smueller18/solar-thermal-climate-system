@@ -244,8 +244,7 @@ services:
 
   producer-weather-forecast-web:
     container_name: producer-weather-forecast-web
-    build: ./producer/weather-forecast-web
-    image: smueller18/producer:weather-forecast-web
+    image: smueller18/base:python3-kafka
     restart: always
     hostname: producer-weather-forecast-web
     env_file:
