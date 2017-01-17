@@ -242,6 +242,27 @@ services:
         max-size: "1m"
         max-file: "1"
 
+  producer-weather-forecast-web:
+    container_name: producer-weather-forecast-web
+    build: ./producer/weather-forecast-web
+    image: smueller18/producer:weather-forecast-web
+    restart: always
+    hostname: producer-weather-forecast-web
+    env_file:
+      - ${STCS_CONFIG_FOLDER-./../config}/global.env
+    environment:
+      USER_NAME: producer-weather-forecast-web
+    volumes:
+      - ${STCS_CONFIG_FOLDER-./../config}/producer/weather-forecast-web/src:/opt/weather-forecast-web
+    command: ["python", "/opt/weather-forecast-web/producer_weather_forecast_web.py"]
+    networks:
+      - default
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
 
 networks:
   jupyter-notebook:
