@@ -40,6 +40,9 @@ RUN apk add --no-cache --virtual .build-deps \
     && pip install cython mistune \
     && pip install flask_socketio \
     \
+    # install beautifulsoup4
+    && pip install beautifulsoup4 \
+    \
     # install pykafka-tools
     && pip install git+https://github.com/smueller18/pykafka-tools.git@0.1.8#egg=pykafka-tools --process-dependency-links --allow-all-external \
     \
