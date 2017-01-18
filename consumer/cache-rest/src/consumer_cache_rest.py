@@ -88,10 +88,10 @@ def route_topics():
         if 'timestamp' in topic_cache[topic] and 'data' in topic_cache[topic]:
             topics[topic] = topic_cache[topic]
 
-    if len(topics) > 0:
-        return jsonify(topics)
+        else:
+            topics[topic] = {'error': 'no cached messages available'}
 
-    return jsonify({'error': 'no cached messages available'})
+    return jsonify(topics)
 
 
 @app.route('/topic/<topic>')
