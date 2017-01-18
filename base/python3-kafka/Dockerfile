@@ -43,6 +43,9 @@ RUN apk add --no-cache --virtual .build-deps \
     # install beautifulsoup4
     && pip install beautifulsoup4 \
     \
+    # install schedule (scheduled task running in Python)
+    && pip install schedule \
+    \
     # install pykafka-tools
     && pip install git+https://github.com/smueller18/pykafka-tools.git@0.1.8#egg=pykafka-tools --process-dependency-links --allow-all-external \
     \
