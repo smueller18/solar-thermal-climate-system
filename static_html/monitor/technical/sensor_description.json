@@ -490,5 +490,29 @@
   "TCO_2": {
     "unit": "°C",
     "description": "Temperatur Rücklauf Verbraucherkreis 2"
+  },
+  "FVFS_C_1": {
+    "unit": "",
+    "description": ""
+  },
+  "FVFS_SOP": {
+    "unit": "",
+    "description": ""
+  },
+  "FVFS_SOS": {
+    "unit": "",
+    "description": ""
+  },
+  "TVFS_C_1": {
+    "unit": "",
+    "description": ""
+  },
+  "TVFS_SOP": {
+    "unit": "",
+    "description": ""
+  },
+  "TVFS_SOS": {
+    "unit": "",
+    "description": ""
   }
 }
