@@ -492,27 +492,27 @@
     "description": "Temperatur Rücklauf Verbraucherkreis 2"
   },
   "FVFS_C_1": {
-    "unit": "",
-    "description": ""
+    "unit": "l/min",
+    "description": "Durchflusssensor Rücklauf Verbraucherkreis 1"
   },
   "FVFS_SOP": {
-    "unit": "",
-    "description": ""
+    "unit": "l/min",
+    "description": "Durchflusssensor Rücklauf Solarkreis Primär"
   },
   "FVFS_SOS": {
-    "unit": "",
-    "description": ""
+    "unit": "l/min",
+    "description": "Durchflusssensor Rücklauf Solarkreis Sekundär"
   },
   "TVFS_C_1": {
-    "unit": "",
-    "description": ""
+    "unit": "°C",
+    "description": "Temperatur Rücklauf Verbraucherkreis 1"
   },
   "TVFS_SOP": {
-    "unit": "",
-    "description": ""
+    "unit": "°C",
+    "description": "Temperatur Rücklauf Solarkreis Primär"
   },
   "TVFS_SOS": {
-    "unit": "",
-    "description": ""
+    "unit": "°C",
+    "description": "Temperatur Rücklauf Solarkreis Sekundär"
   }
 }
