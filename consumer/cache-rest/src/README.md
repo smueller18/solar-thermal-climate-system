@@ -33,8 +33,5 @@ Here is a list of all variables which can be set by environment variables. `__di
 | ALLOWED_TOPICS_REGEX | .* | string | .* means handle all topics |
 | LOGGING_LEVEL | INFO | string | one of CRITICAL, ERROR, WARNING, INFO, DEBUG |
 
-## Timing
-The global timestamp is set to the latest timestamp of all consumed messages. Therefore it is possible that not all sensor values have the same time stamp and it could be that there are older than given global timestamp.
-
 ## API
 For the API description have a look at [API.md](API.md).
