@@ -514,5 +514,17 @@
   "TVFS_SOS": {
     "unit": "°C",
     "description": "Temperatur Rücklauf Solarkreis Sekundär"
+  },
+  "diffuse_radiation": {
+    "unit": "",
+    "description": ""
+  },
+  "sunshine_presence": {
+    "unit": "",
+    "description": ""
+  },
+  "total_radiation": {
+    "unit": "",
+    "description": ""
   }
 }
