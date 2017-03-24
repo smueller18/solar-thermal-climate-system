@@ -48,6 +48,9 @@ RUN apk add --no-cache --virtual .build-deps \
     # install schedule (scheduled task running in Python)
     && pip install schedule \
     \
+    # install pysolar
+    && pip install pysolar \
+    \
     # install pykafka-tools
     && pip install git+https://github.com/smueller18/pykafka-tools.git@0.1.8#egg=pykafka-tools --process-dependency-links --allow-all-external \
     \
