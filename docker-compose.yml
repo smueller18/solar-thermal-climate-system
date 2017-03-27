@@ -254,7 +254,7 @@ services:
 #        max-size: "1m"
 #        max-file: "1"
 
-  producer-rolling-median:
+  producer-solar-radiation:
     container_name: producer-solar-radiation
     build: ./producer/solar-radiation
     image: smueller18/producer:solar-radiation
@@ -266,7 +266,7 @@ services:
     env_file:
      - ${STCS_CONFIG_FOLDER-./../config}/global.env
     environment:
-     USER_NAME: producer-rolling-median
+     USER_NAME: producer-solar-radiation
     volumes:
      - ./avro/schema/kafka.timestamp-data.avsc:/avro/schema/kafka.timestamp-data.avsc
     networks:
