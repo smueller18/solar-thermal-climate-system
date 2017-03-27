@@ -39,7 +39,7 @@ services:
 
   portainer:
     container_name: portainer
-    image: portainer/portainer:1.10.2
+    image: portainer/portainer
     restart: always
     privileged: true
     env_file:
