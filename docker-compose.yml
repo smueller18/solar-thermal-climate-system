@@ -242,6 +242,29 @@ services:
 #        max-size: "1m"
 #        max-file: "1"
 
+  producer-rolling-median:
+    container_name: producer-solar-radiation
+    build: ./producer/solar-radiation
+    image: smueller18/producer:solar-radiation
+    restart: always
+    hostname: producer-solar-radiation
+    depends_on:
+      kafka:
+        condition: service_healthy
+    env_file:
+     - ${STCS_CONFIG_FOLDER-./../config}/global.env
+    environment:
+     USER_NAME: producer-rolling-median
+    volumes:
+     - ./avro/schema/kafka.timestamp-data.avsc:/avro/schema/kafka.timestamp-data.avsc
+    networks:
+     - default
+    logging:
+     driver: "json-file"
+     options:
+       max-size: "1m"
+       max-file: "1"
+
   producer-weather-forecast-web:
     container_name: producer-weather-forecast-web
     image: smueller18/base:python3-kafka
