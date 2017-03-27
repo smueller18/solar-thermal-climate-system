@@ -83,7 +83,8 @@ services:
     ports:
       - "9092:9092"
     depends_on:
-      - zookeeper
+      zookeeper:
+        condition: service_healthy
     env_file:
       - ${STCS_CONFIG_FOLDER-./../config}/global.env
       - ${STCS_CONFIG_FOLDER-./../config}/kafka/config.env
@@ -164,6 +165,11 @@ services:
     image: smueller18/consumer:postgres
     restart: always
     hostname: consumer-postgres
+    depends_on:
+      kafka:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
     env_file:
       - ${STCS_CONFIG_FOLDER-./../config}/global.env
       - ${STCS_CONFIG_FOLDER-./../config}/consumer/postgres/config.env
@@ -185,6 +191,9 @@ services:
     image: smueller18/consumer:cache-rest
     restart: always
     hostname: consumer-cache-rest
+    depends_on:
+      kafka:
+        condition: service_healthy
     env_file:
       - ${STCS_CONFIG_FOLDER-./../config}/global.env
       - ${STCS_CONFIG_FOLDER-./../config}/consumer/cache-rest/config.env
@@ -206,6 +215,9 @@ services:
     image: smueller18/consumer:web-redirect
     restart: always
     hostname: consumer-web-redirect
+    depends_on:
+      kafka:
+        condition: service_healthy
     env_file:
       - ${STCS_CONFIG_FOLDER-./../config}/global.env
       - ${STCS_CONFIG_FOLDER-./../config}/consumer/web-redirect/config.env
@@ -270,6 +282,9 @@ services:
     image: smueller18/base:python3-kafka
     restart: always
     hostname: producer-weather-forecast-web
+    depends_on:
+      kafka:
+        condition: service_healthy
     env_file:
       - ${STCS_CONFIG_FOLDER-./../config}/global.env
     environment:
