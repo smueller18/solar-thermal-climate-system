@@ -526,5 +526,9 @@
   "total_radiation": {
     "unit": "",
     "description": ""
+  },
+  "solar_radiation_45_deg_angle": {
+    "unit": "",
+    "description": ""
   }
 }
