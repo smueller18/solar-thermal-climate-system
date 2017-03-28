@@ -39,7 +39,7 @@ services:
 
   portainer:
     container_name: portainer
-    image: portainer/portainer:1.10.2
+    image: portainer/portainer
     restart: always
     privileged: true
     env_file:
@@ -77,13 +77,14 @@ services:
 
   kafka:
     container_name: kafka
-    image: biggis/kafka:0.9.0.0
+    image: biggis/kafka:0.10.1.1
     restart: always
     hostname: kafka
     ports:
       - "9092:9092"
     depends_on:
-      - zookeeper
+      zookeeper:
+        condition: service_healthy
     env_file:
       - ${STCS_CONFIG_FOLDER-./../config}/global.env
       - ${STCS_CONFIG_FOLDER-./../config}/kafka/config.env
@@ -164,6 +165,11 @@ services:
     image: smueller18/consumer:postgres
     restart: always
     hostname: consumer-postgres
+    depends_on:
+      kafka:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
     env_file:
       - ${STCS_CONFIG_FOLDER-./../config}/global.env
       - ${STCS_CONFIG_FOLDER-./../config}/consumer/postgres/config.env
@@ -185,6 +191,9 @@ services:
     image: smueller18/consumer:cache-rest
     restart: always
     hostname: consumer-cache-rest
+    depends_on:
+      kafka:
+        condition: service_healthy
     env_file:
       - ${STCS_CONFIG_FOLDER-./../config}/global.env
       - ${STCS_CONFIG_FOLDER-./../config}/consumer/cache-rest/config.env
@@ -206,6 +215,9 @@ services:
     image: smueller18/consumer:web-redirect
     restart: always
     hostname: consumer-web-redirect
+    depends_on:
+      kafka:
+        condition: service_healthy
     env_file:
       - ${STCS_CONFIG_FOLDER-./../config}/global.env
       - ${STCS_CONFIG_FOLDER-./../config}/consumer/web-redirect/config.env
@@ -242,11 +254,37 @@ services:
 #        max-size: "1m"
 #        max-file: "1"
 
+  producer-solar-radiation:
+    container_name: producer-solar-radiation
+    build: ./producer/solar-radiation
+    image: smueller18/producer:solar-radiation
+    restart: always
+    hostname: producer-solar-radiation
+    depends_on:
+      kafka:
+        condition: service_healthy
+    env_file:
+     - ${STCS_CONFIG_FOLDER-./../config}/global.env
+    environment:
+     USER_NAME: producer-solar-radiation
+    volumes:
+     - ./avro/schema/kafka.timestamp-data.avsc:/avro/schema/kafka.timestamp-data.avsc
+    networks:
+     - default
+    logging:
+     driver: "json-file"
+     options:
+       max-size: "1m"
+       max-file: "1"
+
   producer-weather-forecast-web:
     container_name: producer-weather-forecast-web
     image: smueller18/base:python3-kafka
     restart: always
     hostname: producer-weather-forecast-web
+    depends_on:
+      kafka:
+        condition: service_healthy
     env_file:
       - ${STCS_CONFIG_FOLDER-./../config}/global.env
     environment:
