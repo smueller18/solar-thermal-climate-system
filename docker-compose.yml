@@ -29,8 +29,10 @@ services:
       - ./static_html:/var/www
       - ${STCS_CONFIG_FOLDER-./../config}/monitor/technical/js/config.js:/var/www/monitor/technical/js/config.js
     networks:
-      - default
-      - jupyter-notebook
+      defaults:
+        ipv4_address: 172.20.0.1
+      jupyter-notebook:
+        ipv4_address: 172.20.1.1
     logging:
       driver: "json-file"
       options:
@@ -47,7 +49,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
-      - default
+      defaults:
+        ipv4_address: 172.20.0.2
     logging:
       driver: "json-file"
       options:
@@ -68,7 +71,8 @@ services:
     volumes:
       - zookeeper-data:/tmp/zookeeper/data
     networks:
-      - default
+      defaults:
+        ipv4_address: 172.20.0.3
     logging:
       driver: "json-file"
       options:
@@ -93,7 +97,8 @@ services:
     volumes:
       - kafka-data:/tmp/kafka/data
     networks:
-      - default
+      defaults:
+        ipv4_address: 172.20.0.4
     logging:
       driver: "json-file"
       options:
@@ -117,7 +122,8 @@ services:
       - postgres-data:/var/lib/postgresql/data/pgdata
       - ${STCS_CONFIG_FOLDER-./../config}/postgres/postgresql.conf:/var/lib/postgresql/data/pgdata/postgresql.conf
     networks:
-      - default
+      defaults:
+        ipv4_address: 172.20.0.5
     logging:
       driver: "json-file"
       options:
@@ -137,7 +143,8 @@ services:
     volumes:
       - pgadmin-data:/root/.pgadmin
     networks:
-      - default
+      defaults:
+        ipv4_address: 172.20.0.6
     logging:
       driver: "json-file"
       options:
@@ -152,7 +159,8 @@ services:
     volumes:
       - jupyter-notebook-data:/opt/notebooks
     networks:
-      - jupyter-notebook
+      jupyter-notebook:
+        ipv4_address: 172.20.1.2
     logging:
       driver: "json-file"
       options:
@@ -178,7 +186,8 @@ services:
     volumes:
       - ./avro/schema/kafka.timestamp-data.avsc:/avro/schema/kafka.timestamp-data.avsc
     networks:
-      - default
+      defaults:
+        ipv4_address: 172.20.0.7
     logging:
       driver: "json-file"
       options:
@@ -202,7 +211,8 @@ services:
     volumes:
       - ./avro/schema/kafka.timestamp-data.avsc:/avro/schema/kafka.timestamp-data.avsc
     networks:
-      - default
+      defaults:
+        ipv4_address: 172.20.0.8
     logging:
       driver: "json-file"
       options:
@@ -226,7 +236,8 @@ services:
     volumes:
       - ./avro/schema/kafka.timestamp-data.avsc:/avro/schema/kafka.timestamp-data.avsc
     networks:
-      - default
+      defaults:
+        ipv4_address: 172.20.0.9
     logging:
       driver: "json-file"
       options:
@@ -270,7 +281,8 @@ services:
     volumes:
      - ./avro/schema/kafka.timestamp-data.avsc:/avro/schema/kafka.timestamp-data.avsc
     networks:
-     - default
+      defaults:
+        ipv4_address: 172.20.0.10
     logging:
      driver: "json-file"
      options:
@@ -293,7 +305,8 @@ services:
       - ${STCS_CONFIG_FOLDER-./../config}/producer/weather-forecast-web/src:/opt/weather-forecast-web
     command: ["python", "/opt/weather-forecast-web/producer_weather_forecast_web.py"]
     networks:
-      - default
+      defaults:
+        ipv4_address: 172.20.0.11
     logging:
       driver: "json-file"
       options:
@@ -302,8 +315,18 @@ services:
 
 
 networks:
-  jupyter-notebook:
   default:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        subnet: 172.20.0.0/24
+  jupyter-notebook:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        subnet: 172.20.1.0/24
 
 volumes:
   zookeeper-data:
