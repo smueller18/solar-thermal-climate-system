@@ -149,7 +149,7 @@
   },
   "A_IN_4": {
     "unit": "",
-    "description": "Analogeingang 4"
+    "description": "unbelegt"
   },
   "THS": {
     "unit": "°C",
@@ -196,8 +196,8 @@
     "description": "Leitfähigkeit"
   },
   "A_IN_1": {
-    "unit": "",
-    "description": "Analogeingang 1"
+    "unit": "l/min",
+    "description": "Volumenstrom Kältemaschine HT Seite"
   },
   "PSW": {
     "unit": "%",
@@ -240,8 +240,8 @@
     "description": "Referenzraumtemperatur Verbraucherkreis 4"
   },
   "A_IN_3": {
-    "unit": "",
-    "description": "Analogeingang 3"
+    "unit": "l/min",
+    "description": "Volumenstrom Kältemaschine MT Seite"
   },
   "TIN_3": {
     "unit": "°C",
@@ -328,8 +328,8 @@
     "description": "Füllstand Rückkühler oben"
   },
   "A_IN_2": {
-    "unit": "",
-    "description": "Analogeingang 2"
+    "unit": "l/min",
+    "description": "Volumenstrom Kältemaschine LT Seite"
   },
   "PCHCP_1_AO": {
     "unit": "V",
@@ -516,19 +516,19 @@
     "description": "Temperatur Rücklauf Solarkreis Sekundär"
   },
   "diffuse_radiation": {
-    "unit": "",
-    "description": ""
+    "unit": "W/m²",
+    "description": "Diffuse solare Einstrahlung"
   },
   "sunshine_presence": {
     "unit": "",
-    "description": ""
+    "description": "Sonnenscheinpräsenz (berechnet)"
   },
   "total_radiation": {
-    "unit": "",
-    "description": ""
+    "unit": "W/m²",
+    "description": "Direkte solare Einstrahlung"
   },
   "solar_radiation_45_deg_angle": {
-    "unit": "",
-    "description": ""
+    "unit": "W/m²",
+    "description": "Solare Einstrahlung auf 45 Grad geneigte Fläche"
   }
 }
