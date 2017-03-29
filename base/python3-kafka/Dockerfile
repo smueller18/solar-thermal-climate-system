@@ -20,9 +20,9 @@ RUN apk add --no-cache --virtual .build-deps \
     && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main/ \
             libressl2.4-libcrypto \
    		      libressl2.4-libssl \
-    && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
+    && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ \
             librdkafka \
-    && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --virtual .librdkafka \
+    && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --virtual .librdkafka \
             librdkafka-dev \
     && pip install pykafka \
     \

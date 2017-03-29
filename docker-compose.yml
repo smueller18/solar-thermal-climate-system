@@ -300,6 +300,47 @@ services:
         max-size: "1m"
         max-file: "1"
 
+  flink-jobmanager:
+    container_name: flink-jobmanager
+    image: biggis/flink:1.2.0
+    restart: always
+    hostname: flink-jobmanager
+    depends_on:
+      - kafka
+    ports:
+      - "8081:8081"
+      - "6123:6123"
+    command: docker-entrypoint.sh jobmanager
+    environment:
+      JOB_MANAGER_RPC_ADDRESS: flink-jobmanager
+      USER_NAME: flink
+    networks:
+      default:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
+  flink-taskmanager:
+    container_name: flink-taskmanager
+    image: biggis/flink:1.2.0
+    restart: always
+    hostname: flink-taskmanager
+    depends_on:
+      - flink-jobmanager
+    command: docker-entrypoint.sh taskmanager
+    environment:
+      JOB_MANAGER_RPC_ADDRESS: flink-jobmanager
+      USER_NAME: flink
+    networks:
+      default:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
 
 networks:
   default:
