@@ -306,7 +306,8 @@ services:
     restart: always
     hostname: flink-jobmanager
     depends_on:
-      - kafka
+      kafka:
+        condition: service_healthy
     ports:
       - "8081:8081"
       - "6123:6123"
