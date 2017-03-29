@@ -310,7 +310,6 @@ services:
       kafka:
         condition: service_healthy
     ports:
-      - "8081:8081"
       - "6123:6123"
     command: docker-entrypoint.sh jobmanager
     environment:
