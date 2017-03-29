@@ -51,8 +51,8 @@ def compute_radiation_at_45_deg_angle(timestamp, total_radiation, diffuse_radiat
 
     # Pysolar: south is zero degree, clockwise negative, e.g. south east = - 315 degree, south west = -45 degree
 
-    azimuth = 180 + get_azimuth(when=datetime.datetime.fromtimestamp(timestamp),
-                                latitude_deg=LATITUDE_DEG, longitude_deg=LONGITUDE_DEG, elevation=EVALUATION)
+    azimuth = get_azimuth(when=datetime.datetime.fromtimestamp(timestamp),
+                          latitude_deg=LATITUDE_DEG, longitude_deg=LONGITUDE_DEG, elevation=EVALUATION)
 
     # In the calculation north is defined as zero degree, clockwise positive, the following conversion is required
     if azimuth < -180:
