@@ -10,6 +10,7 @@ services:
       - "443-446:443-446"
       - "8081:8081"
       - "8888:8888"
+      - "9000:9000"      
     command: /bin/sh -c "nginx -g 'daemon off;'"
     env_file:
       - ${STCS_CONFIG_FOLDER-./../config}/global.env
@@ -93,6 +94,24 @@ services:
       USER_NAME: kafka
     volumes:
       - kafka-data:/tmp/kafka/data
+    networks:
+      default:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
+  kafka-manager:
+    container_name: kafka-manager
+    image: sheepkiller/kafka-manager
+    hostname: kafka-manager
+    environment:
+      APPLICATION_SECRET: letmein
+      ZK_HOSTS: "zookeeper:2181"
+      KM_VERSION: 1.3.3.4
+    env_file:
+      - ${STCS_CONFIG_FOLDER-./../config}/global.env
     networks:
       default:
     logging:
