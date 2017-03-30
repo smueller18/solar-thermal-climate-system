@@ -10,7 +10,7 @@ services:
       - "443-446:443-446"
       - "8081:8081"
       - "8888:8888"
-      - "9000:9000"      
+      - "9000:9000"
     command: /bin/sh -c "nginx -g 'daemon off;'"
     env_file:
       - ${STCS_CONFIG_FOLDER-./../config}/global.env
@@ -106,6 +106,9 @@ services:
     container_name: kafka-manager
     image: sheepkiller/kafka-manager
     hostname: kafka-manager
+    depends_on:
+      kafka:
+        condition: service_healthy
     environment:
       APPLICATION_SECRET: letmein
       ZK_HOSTS: "zookeeper:2181"
