@@ -28,8 +28,7 @@ Here is a list of all variables which can be set by environment variables. `__di
 | KAFKA_HOSTS_CONSUMER | kafka:9092 | string |   |
 | KAFKA_HOSTS_PRODUCER | kafka:9092 | string |   |
 | KAFKA_SCHEMA | /avro/schema/kafka.timestamp-data.avsc | string |   |
-| CONSUMER_GROUP | rolling-median | string |   |
-| ROLLING_MEDIAN_WINDOW | 5 | int |   |
-| ALLOWED_TOPICS_REGEX_CONSUMER | .* | regex | .* means handle all topics |
-| TOPIC_SUFFIX_PRODUCER | _rolling_median | string | produce topic is consumer topic + this suffix |
+| CONSUMER_GROUP | solar_radiation | string |   |
+| CONSUMER_TOPIC | solar_radiation | string |   |
+| PRODUCER_TOPIC | solar_radiation_45_deg_angle | string |   |
 | LOGGING_LEVEL | INFO | string | one of CRITICAL, ERROR, WARNING, INFO, DEBUG |

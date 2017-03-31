@@ -40,7 +40,7 @@ BETA = 172
 
 logging.basicConfig(level=logging.getLevelName(LOGGING_LEVEL), format=logging_format)
 
-logger = logging.getLogger('rolling-median')
+logger = logging.getLogger('solar-radiation')
 
 kafka_producer_pool = None
 
