@@ -318,7 +318,7 @@ services:
       USER_NAME: producer-weather-forecast-web
     command: ["python", "/opt/producer.py"]
     volumes:
-      - ${STCS_CONFIG_FOLDER-./../config}/producer/weather-forecast-web:/opt/
+      - ${STCS_CONFIG_FOLDER-./../config}/producer/weather-forecast-web:/opt
       - ./avro/schema/kafka.timestamp-data.avsc:/opt/kafka.timestamp-data.avsc
     networks:
       default:
