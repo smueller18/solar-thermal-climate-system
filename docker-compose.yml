@@ -307,6 +307,7 @@ services:
 
   producer-weather-forecast-web:
     container_name: producer-weather-forecast-web
+    image: smueller18/stcs:python3
     restart: always
     hostname: producer-weather-forecast-web
     depends_on:
