@@ -7,7 +7,7 @@ RUN apk add --no-cache \
         libressl2.4-libssl@edge \
         librdkafka@community \
         librdkafka-dev@community && \
-    apk add --no-cache --virtual .build-deps \
+    apk add --update --no-cache --virtual .build-deps \
         gcc \
         python3-dev \
         musl-dev \
