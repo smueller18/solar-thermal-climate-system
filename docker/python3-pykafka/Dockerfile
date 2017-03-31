@@ -6,16 +6,18 @@ RUN apk add --no-cache \
         libressl2.4-libcrypto@edge \
         libressl2.4-libssl@edge \
         librdkafka@community \
-        librdkafka-dev@community && \
+        librdkafka-dev@community \
+    && \
     apk add --update --no-cache --virtual .build-deps \
         gcc \
         python3-dev \
         musl-dev \
         linux-headers \
         g++ \
-        postgresql-dev && \
+        postgresql-dev \
         curl \
         git \
+    && \
     ## preperations for installations
     # numpy
     ln -s /usr/include/locale.h /usr/include/xlocale.h && \
