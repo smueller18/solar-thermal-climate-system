@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 
 import os
-import re
 import logging.config
 import time
-from pykafka import KafkaClient
 
-from pykafka_tools.postgres_connector import PostgresConnector
-from pykafka_tools.kafka_consumer import DBWriter
+
+from confluent_kafka.avro import CachedSchemaRegistryClient
+from kafka_connector.avro_loop_consumer import AvroLoopConsumer
+import postgres
 
 __author__ = u'Stephan Müller'
 __copyright__ = u'2017, Stephan Müller'
@@ -22,7 +22,7 @@ POSTGRES_DB = os.getenv("POSTGRES_DB", "postgres")
 POSTGRES_USER = os.getenv("POSTGRES_USER", "postgres")
 POSTGRES_PW = os.getenv("POSTGRES_PW", "postgres")
 KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "kafka:9092")
-KAFKA_SCHEMA = os.getenv("KAFKA_SCHEMA", __dirname__ + "/kafka.timestamp-data.avsc")
+SCHEMA_REGISTRY_URL = os.getenv("SCHEMA_REGISTRY_URL", "http://localhost:8081")
 CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "postgres")
 ALLOWED_TOPICS_REGEX = os.getenv("ALLOWED_TOPICS_REGEX", ".*")
 LOGGING_LEVEL = os.getenv("LOGGING_LEVEL", "INFO")
@@ -30,8 +30,78 @@ logging_format = "%(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s -
 
 logging.basicConfig(level=logging.getLevelName(LOGGING_LEVEL), format=logging_format)
 
-logger = logging.getLogger('consumer_postgres')
+logger = logging.getLogger('consumer')
 
+
+schema_registry = CachedSchemaRegistryClient(url=SCHEMA_REGISTRY_URL)
+
+postgres_connector = postgres.Connector(host=POSTGRES_HOST, port=POSTGRES_PORT, database=POSTGRES_DB,
+                                         user=POSTGRES_USER, password=POSTGRES_PW)
+
+topics = list()
+
+def create_table_by_schema(topic):
+
+    schema_registry.
+
+
+
+
+def handle_message(msg):
+    global postgres_connector
+
+    # create table if not exists
+    if not msg.topic().str() in topics:
+
+        if not postgres_connector.table_exists(msg.topic().str()):
+            create_table_by_schema(msg.topic().str())
+
+        topics.append(msg.topic().str())
+
+
+
+
+
+consumer = AvroLoopConsumer(KAFKA_HOSTS, SCHEMA_REGISTRY_URL, CONSUMER_GROUP, [ALLOWED_TOPICS_REGEX])
+consumer.loop(lambda msg: handle_message(msg))
+
+
+
+
+
+class DBWriter(object):
+    def __init__(self, kafka_hosts, topic, kafka_message_schema_file, postgres_connector,
+                 consumer_group=None, use_rdkafka=False, auto_commit_enable=True,
+                 auto_commit_interval_ms=60000):
+
+    def _new_message_handler(self, sender, message):
+
+        try:
+            if not self._parsed_first_message_correctly:
+                # create or update table schema if necessary
+                if not self._postgres_connector.table_exists(self._topic):
+                    self._postgres_connector.create_table(table_name=self._topic, data=message["data"])
+                    logger.info("Created table for topic '" + self._topic + "'")
+
+                else:
+                    number_of_added_columns = self._postgres_connector.update_columns(table_name=self._topic,
+                                                                                      data=message["data"])
+                    logger.info(
+                        "Added " + str(number_of_added_columns) + " columns in table for topic '" + self._topic + "'")
+                self._parsed_first_message_correctly = True
+
+            self._postgres_connector.insert_values(table_name=self._topic, data=message)
+
+        except psycopg2.OperationalError:
+            raise ConnectionError("Postgres operational error.")
+
+        except:
+            # TODO not a nice way, because another exception is thrown
+            self.join(0)
+
+
+
+"""
 postgress_connector = None
 
 running = False
@@ -71,3 +141,5 @@ while True:
                     running = False
                     for thread in consumer_threads:
                         thread.join(0)
+"""
+
