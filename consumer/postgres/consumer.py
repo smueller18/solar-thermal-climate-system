@@ -24,7 +24,7 @@ POSTGRES_PW = os.getenv("POSTGRES_PW", "postgres")
 KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "kafka:9092")
 SCHEMA_REGISTRY_URL = os.getenv("SCHEMA_REGISTRY_URL", "http://localhost:8081")
 CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "postgres")
-ALLOWED_TOPICS_REGEX = os.getenv("ALLOWED_TOPICS_REGEX", ".*")
+TOPIC_PREFIX = os.getenv("TOPIC_PREFIX", "test.")
 LOGGING_LEVEL = os.getenv("LOGGING_LEVEL", "INFO")
 logging_format = "%(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s"
 
@@ -38,11 +38,48 @@ schema_registry = CachedSchemaRegistryClient(url=SCHEMA_REGISTRY_URL)
 postgres_connector = postgres.Connector(host=POSTGRES_HOST, port=POSTGRES_PORT, database=POSTGRES_DB,
                                          user=POSTGRES_USER, password=POSTGRES_PW)
 
-topics = list()
+topics = dict()
 
 def create_table_by_schema(topic):
 
-    schema_registry.
+    global postgres_connector
+
+    topics[topic] = {
+        "table_name": topic.replace(TOPIC_PREFIX, "", 1),
+        "parsed_first_message_correctly": False
+    }
+
+    try:
+        if not self._parsed_first_message_correctly:
+            # create or update table schema if necessary
+            if not self._postgres_connector.table_exists(self._topic):
+                self._postgres_connector.create_table(table_name=self._topic, data=message["data"])
+                logger.info("Created table for topic '" + self._topic + "'")
+
+            else:
+                number_of_added_columns = self._postgres_connector.update_columns(table_name=self._topic,
+                                                                                  data=message["data"])
+                logger.info(
+                    "Added " + str(number_of_added_columns) + " columns in table for topic '" + self._topic + "'")
+            self._parsed_first_message_correctly = True
+
+        self._postgres_connector.insert_values(table_name=self._topic, data=message)
+
+    except psycopg2.OperationalError:
+        raise ConnectionError("Postgres operational error.")
+
+
+    if not postgres_connector.table_exists(topic):
+        postgres_connector.create_table(table_name=topic, data=message["data"])
+        logger.info("Created table for topic '" + topic + "'")
+
+    else:
+        number_of_added_columns = self._postgres_connector.update_columns(table_name=self._topic,
+                                                                          data=message["data"])
+        logger.info(
+            "Added " + str(number_of_added_columns) + " columns in table for topic '" + self._topic + "'")
+    self._parsed_first_message_correctly = True
+
 
 
 
@@ -50,13 +87,14 @@ def create_table_by_schema(topic):
 def handle_message(msg):
     global postgres_connector
 
+    topic = msg.topic().str()
+
     # create table if not exists
-    if not msg.topic().str() in topics:
+    if not topic in topics and not topics[topic]["parsed_first_message_correctly"]:
 
         if not postgres_connector.table_exists(msg.topic().str()):
             create_table_by_schema(msg.topic().str())
 
-        topics.append(msg.topic().str())
 
 
 
@@ -76,24 +114,6 @@ class DBWriter(object):
 
     def _new_message_handler(self, sender, message):
 
-        try:
-            if not self._parsed_first_message_correctly:
-                # create or update table schema if necessary
-                if not self._postgres_connector.table_exists(self._topic):
-                    self._postgres_connector.create_table(table_name=self._topic, data=message["data"])
-                    logger.info("Created table for topic '" + self._topic + "'")
-
-                else:
-                    number_of_added_columns = self._postgres_connector.update_columns(table_name=self._topic,
-                                                                                      data=message["data"])
-                    logger.info(
-                        "Added " + str(number_of_added_columns) + " columns in table for topic '" + self._topic + "'")
-                self._parsed_first_message_correctly = True
-
-            self._postgres_connector.insert_values(table_name=self._topic, data=message)
-
-        except psycopg2.OperationalError:
-            raise ConnectionError("Postgres operational error.")
 
         except:
             # TODO not a nice way, because another exception is thrown
@@ -142,4 +162,3 @@ while True:
                     for thread in consumer_threads:
                         thread.join(0)
 """
-

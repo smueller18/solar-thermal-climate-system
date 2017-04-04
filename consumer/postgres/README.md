@@ -33,5 +33,5 @@ Here is a list of all variables which can be set by environment variables. `__di
 | POSTGRES_PW | postgres | string |   |
 | KAFKA_HOSTS | kafka:9092 | string |   |
 | CONSUMER_GROUP | postgres | string |   |
-| ALLOWED_TOPICS_REGEX | .* | string | .* means handle all topics |
+| TOPIC_PREFIX | test. | string | The prefix is part of a regular expression. The char "." is replaced with "\.", all other special characters are not allowed. |
 | LOGGING_LEVEL | INFO | string | one of CRITICAL, ERROR, WARNING, INFO, DEBUG |
