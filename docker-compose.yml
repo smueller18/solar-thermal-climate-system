@@ -184,8 +184,7 @@ services:
 
   consumer-postgres:
     container_name: consumer-postgres
-    build: ./consumer/postgres
-    image: smueller18/consumer:postgres
+    image: smueller18/stcs:python3
     restart: always
     hostname: consumer-postgres
     depends_on:
@@ -198,8 +197,10 @@ services:
       - ${STCS_CONFIG_FOLDER-./../config}/consumer/postgres/config.env
     environment:
       USER_NAME: consumer-postgres
+    command: ["python", "/opt/consumer.py"]
     volumes:
-      - ./avro/schema/kafka.timestamp-data.avsc:/avro/schema/kafka.timestamp-data.avsc
+      - ./consumer/postgres:/opt
+      - ./avro/schema/kafka.timestamp-data.avsc:/opt/kafka.timestamp-data.avsc
     networks:
       default:
     logging:
@@ -210,8 +211,7 @@ services:
 
   consumer-cache-rest:
     container_name: consumer-cache-rest
-    build: ./consumer/cache-rest
-    image: smueller18/consumer:cache-rest
+    image: smueller18/stcs:python3
     restart: always
     hostname: consumer-cache-rest
     depends_on:
@@ -222,8 +222,10 @@ services:
       - ${STCS_CONFIG_FOLDER-./../config}/consumer/cache-rest/config.env
     environment:
       USER_NAME: consumer-cache-rest
+    command: ["python", "/opt/consumer.py"]
     volumes:
-      - ./avro/schema/kafka.timestamp-data.avsc:/avro/schema/kafka.timestamp-data.avsc
+      - ./consumer/cache-rest:/opt
+      - ./avro/schema/kafka.timestamp-data.avsc:/opt/kafka.timestamp-data.avsc
     networks:
       default:
     logging:
@@ -235,7 +237,7 @@ services:
   consumer-web-redirect:
     container_name: consumer-web-redirect
     build: ./consumer/web-redirect
-    image: smueller18/consumer:web-redirect
+    image: smueller18/stcs:python3
     restart: always
     hostname: consumer-web-redirect
     depends_on:
@@ -246,8 +248,10 @@ services:
       - ${STCS_CONFIG_FOLDER-./../config}/consumer/web-redirect/config.env
     environment:
       USER_NAME: consumer-web-redirect
+    command: ["python", "/opt/consumer.py"]
     volumes:
-      - ./avro/schema/kafka.timestamp-data.avsc:/avro/schema/kafka.timestamp-data.avsc
+      - ./consumer/web-redirect:/opt
+      - ./avro/schema/kafka.timestamp-data.avsc:/opt/kafka.timestamp-data.avsc
     networks:
       default:
     logging:
@@ -279,8 +283,7 @@ services:
 
   producer-solar-radiation:
     container_name: producer-solar-radiation
-    build: ./producer/solar-radiation
-    image: smueller18/producer:solar-radiation
+    image: smueller18/stcs:python3
     restart: always
     hostname: producer-solar-radiation
     depends_on:
@@ -290,8 +293,10 @@ services:
      - ${STCS_CONFIG_FOLDER-./../config}/global.env
     environment:
      USER_NAME: producer-solar-radiation
+    command: ["python", "/opt/producer.py"]
     volumes:
-     - ./avro/schema/kafka.timestamp-data.avsc:/avro/schema/kafka.timestamp-data.avsc
+      - ./producer-solar-radiation:/opt
+      - ./avro/schema/kafka.timestamp-data.avsc:/opt/kafka.timestamp-data.avsc
     networks:
       default:
     logging:
@@ -302,7 +307,7 @@ services:
 
   producer-weather-forecast-web:
     container_name: producer-weather-forecast-web
-    image: smueller18/base:python3-kafka
+    image: smueller18/stcs:python3
     restart: always
     hostname: producer-weather-forecast-web
     depends_on:
@@ -312,9 +317,10 @@ services:
       - ${STCS_CONFIG_FOLDER-./../config}/global.env
     environment:
       USER_NAME: producer-weather-forecast-web
+    command: ["python", "/opt/producer.py"]
     volumes:
-      - ${STCS_CONFIG_FOLDER-./../config}/producer/weather-forecast-web/src:/opt/weather-forecast-web
-    command: ["python", "/opt/weather-forecast-web/producer_weather_forecast_web.py"]
+      - ${STCS_CONFIG_FOLDER-./../config}/producer/weather-forecast-web:/opt
+      - ./avro/schema/kafka.timestamp-data.avsc:/opt/kafka.timestamp-data.avsc
     networks:
       default:
     logging:
