@@ -27,9 +27,8 @@ RUN apk add --no-cache \
           numpy \
           flask mistune flask_socketio \
           beautifulsoup4 html5lib \
-          schedule \
           pysolar \
-          confluent-kafka confluent-kafka[avro] \
+          confluent-kafka confluent-kafka[avro] avro-python3 kafka_connector requests \
     && \
     apk del .build-deps && \
     rm -rf /var/cache/apk/*
