@@ -4,13 +4,11 @@
 import os
 import logging.config
 import threading
-import re
-import time
-from pykafka import KafkaClient
 from flask import Flask, render_template, Markup
 from flask_socketio import SocketIO, emit
 import mistune
-from pykafka_tools.kafka_consumer import KafkaConsumer
+from kafka_connector.avro_loop_consumer import default_conf
+from kafka_connector.avro_loop_consumer import AvroLoopConsumer
 
 __author__ = u'Stephan Müller'
 __copyright__ = u'2017, Stephan Müller'
@@ -20,27 +18,28 @@ __dirname__ = os.path.dirname(os.path.abspath(__file__))
 
 PORT = int(os.getenv("PORT", 5002))
 KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "kafka:9092")
-KAFKA_SCHEMA = os.getenv("KAFKA_SCHEMA", __dirname__ + "/kafka.timestamp-data.avsc")
-CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "web-redirect")
-ALLOWED_TOPICS_REGEX = os.getenv("ALLOWED_TOPIC_REGEX", ".*")
+SCHEMA_REGISTRY_URL = os.getenv("SCHEMA_REGISTRY_URL", "http://schema-registry:8081")
+CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "socketio")
+TOPIC_PREFIX = os.getenv("TOPIC_PREFIX", "stcs.")
 LOGGING_LEVEL = os.getenv("LOGGING_LEVEL", "INFO")
 logging_format = "%(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s"
 
 logging.basicConfig(level=logging.getLevelName(LOGGING_LEVEL), format=logging_format)
+logger = logging.getLogger('consumer')
 
-logger = logging.getLogger('consumer_web_redirect')
 
 cache = dict()
 
 
 app = Flask(__name__, static_url_path='')
 app.config['SECRET_KEY'] = 'secret'
-socketio = SocketIO(app, async_mode='threading', logger=True, engineio_logger=True, ping_timeout=10, ping_interval=5)
+socketio = SocketIO(app, logger=True, engineio_logger=True, ping_timeout=10, ping_interval=5)
 
 renderer = mistune.Renderer(escape=False, hard_wrap=True, use_xhtml=True)
 markdown = mistune.Markdown(renderer=renderer)
 
 
+# serve API description
 @app.route('/')
 def api_description():
     global markdown
@@ -49,6 +48,7 @@ def api_description():
     return render_template('index.html', content=Markup(content))
 
 
+# SocketIO
 counter_lock = threading.Lock()
 connected_clients = 0
 
@@ -78,53 +78,48 @@ def disconnect():
     emit('connected_clients', connected_clients, broadcast=True)
 
 
-def new_sensor_values(sender, message):
-    if 'data' in message and len(message['data']) > 0:
-        cache[sender.get_topic()].update(message)
-        message.update({'topic': sender.get_topic()})
-        socketio.start_background_task(socketio.emit, 'sensor_values', message)
-
-
-def kafka_consumers():
+def handle_message(msg):
     global socketio
 
-    started = False
-    while not started:
-        started_threads = dict()
-        try:
-            client = KafkaClient(hosts=KAFKA_HOSTS)
+    if len(msg.value()) > 0:
 
-            for topic in client.topics:
-                if re.search(ALLOWED_TOPICS_REGEX, topic.decode()) is not None:
+        if msg.topic() not in cache:
+            cache[msg.topic()] = dict()
 
-                    cache[topic.decode()] = dict()
+        cache[msg.topic()].update(msg.value())
 
-                    thread = KafkaConsumer(KAFKA_HOSTS, topic.decode(), CONSUMER_GROUP,
-                                           kafka_message_schema_file=KAFKA_SCHEMA)
-                    thread.new_message_event += new_sensor_values
-
-                    thread.start()
-
-                    started_threads.update({
-                        topic.decode(): thread
-                    })
-                    logger.info("Started consumer thread for topic " + topic.decode())
-            started = True
-
-        except Exception as e:
-            logger.exception(e)
-            time.sleep(30)
+        if type(msg.key()) is dict and "timestamp" in msg.key():
+            message = {
+                "timestamp": msg.key()["timestamp"],
+                "data": msg.value(),
+                "topic": msg.topic()
+            }
+            socketio.start_background_task(socketio.emit, 'sensor_values', message)
+            logger.warning("sensor_values: " + str(message))
 
 
-def run():
-    logger.info("Starting web-redirect at port " + str(PORT))
+def run_kafka_consumer():
+
+    # adjust config
+    config = default_conf
+
+    # todo add start with latest
+
+    consumer = AvroLoopConsumer(KAFKA_HOSTS, SCHEMA_REGISTRY_URL, CONSUMER_GROUP,
+                                ["^" + TOPIC_PREFIX.replace(".", r'\.') + ".*"])
+    consumer.loop(lambda msg: handle_message(msg))
+    logger.info("Started consumer thread")
+
+
+def run_socketio():
+    logger.info("Starting socketio at port " + str(PORT))
     socketio.run(app=app, host="0.0.0.0", port=PORT)
 
 
 if __name__ == '__main__':
 
-    webapp_thread = threading.Thread(target=run)
-    consumer_thread = threading.Thread(target=kafka_consumers)
+    socketio_thread = threading.Thread(target=run_socketio)
+    consumer_thread = threading.Thread(target=run_kafka_consumer)
 
-    webapp_thread.start()
+    socketio_thread.start()
     consumer_thread.start()
