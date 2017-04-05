@@ -9,9 +9,10 @@ Required libraries:
 - librdkafka
 
 Required non-standard python packages:
-- avro-python3
 - psycopg2
-- pykafka
+- avro-python3
+- confluent_kafka
+- kafka_connector
 
 Install all required libraries and python packages.
 
@@ -22,7 +23,6 @@ $ git clone https://github.com/smueller18/solar-thermal-climate-system.git
 $ cd solar-thermal-climate-system/consumer/postgres
 $ python3 consumer.py
 ```
-Here is a list of all variables which can be set by environment variables. `__dirname__` is a placeholder for the absolute path to the directory of `consumer.py`.
 
 | variable | default | type | info |
 | --- | --- | --- | --- |
@@ -32,6 +32,7 @@ Here is a list of all variables which can be set by environment variables. `__di
 | POSTGRES_USER | postgres | string |   |
 | POSTGRES_PW | postgres | string |   |
 | KAFKA_HOSTS | kafka:9092 | string |   |
+| SCHEMA_REGISTRY_URL | http://schema_registry:8081 | string |  |
 | CONSUMER_GROUP | postgres | string |   |
-| TOPIC_PREFIX | test. | string | The prefix is part of a regular expression. The char "." is replaced with "\.", all other special characters are not allowed. |
+| TOPIC_PREFIX | test. | string | The prefix is part of a regular expression. The char `.` is replaced with `\.`, all other special characters are not allowed. |
 | LOGGING_LEVEL | INFO | string | one of CRITICAL, ERROR, WARNING, INFO, DEBUG |

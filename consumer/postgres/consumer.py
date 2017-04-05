@@ -4,8 +4,9 @@ import os
 import logging.config
 import time
 
-
+import psycopg2
 from confluent_kafka.avro import CachedSchemaRegistryClient
+import kafka_connector.avro_loop_consumer as avro_loop_consumer
 from kafka_connector.avro_loop_consumer import AvroLoopConsumer
 import postgres
 
@@ -22,9 +23,9 @@ POSTGRES_DB = os.getenv("POSTGRES_DB", "postgres")
 POSTGRES_USER = os.getenv("POSTGRES_USER", "postgres")
 POSTGRES_PW = os.getenv("POSTGRES_PW", "postgres")
 KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "kafka:9092")
-SCHEMA_REGISTRY_URL = os.getenv("SCHEMA_REGISTRY_URL", "http://localhost:8081")
+SCHEMA_REGISTRY_URL = os.getenv("SCHEMA_REGISTRY_URL", "http://schema_registry:8081")
 CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "postgres")
-TOPIC_PREFIX = os.getenv("TOPIC_PREFIX", "test.")
+TOPIC_PREFIX = os.getenv("TOPIC_PREFIX", "stcs.")
 LOGGING_LEVEL = os.getenv("LOGGING_LEVEL", "INFO")
 logging_format = "%(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s"
 
@@ -36,52 +37,9 @@ logger = logging.getLogger('consumer')
 schema_registry = CachedSchemaRegistryClient(url=SCHEMA_REGISTRY_URL)
 
 postgres_connector = postgres.Connector(host=POSTGRES_HOST, port=POSTGRES_PORT, database=POSTGRES_DB,
-                                         user=POSTGRES_USER, password=POSTGRES_PW)
+                                        user=POSTGRES_USER, password=POSTGRES_PW)
 
 topics = dict()
-
-def create_table_by_schema(topic):
-
-    global postgres_connector
-
-    topics[topic] = {
-        "table_name": topic.replace(TOPIC_PREFIX, "", 1),
-        "parsed_first_message_correctly": False
-    }
-
-    try:
-        if not self._parsed_first_message_correctly:
-            # create or update table schema if necessary
-            if not self._postgres_connector.table_exists(self._topic):
-                self._postgres_connector.create_table(table_name=self._topic, data=message["data"])
-                logger.info("Created table for topic '" + self._topic + "'")
-
-            else:
-                number_of_added_columns = self._postgres_connector.update_columns(table_name=self._topic,
-                                                                                  data=message["data"])
-                logger.info(
-                    "Added " + str(number_of_added_columns) + " columns in table for topic '" + self._topic + "'")
-            self._parsed_first_message_correctly = True
-
-        self._postgres_connector.insert_values(table_name=self._topic, data=message)
-
-    except psycopg2.OperationalError:
-        raise ConnectionError("Postgres operational error.")
-
-
-    if not postgres_connector.table_exists(topic):
-        postgres_connector.create_table(table_name=topic, data=message["data"])
-        logger.info("Created table for topic '" + topic + "'")
-
-    else:
-        number_of_added_columns = self._postgres_connector.update_columns(table_name=self._topic,
-                                                                          data=message["data"])
-        logger.info(
-            "Added " + str(number_of_added_columns) + " columns in table for topic '" + self._topic + "'")
-    self._parsed_first_message_correctly = True
-
-
-
 
 
 def handle_message(msg):
@@ -89,76 +47,43 @@ def handle_message(msg):
 
     topic = msg.topic().str()
 
-    # create table if not exists
-    if not topic in topics and not topics[topic]["parsed_first_message_correctly"]:
+    if topic not in topics:
+        topics[topic] = {
+            "table_name": topic.replace(TOPIC_PREFIX, "", 1),
+            "table_check": False
+        }
 
-        if not postgres_connector.table_exists(msg.topic().str()):
-            create_table_by_schema(msg.topic().str())
+    try:
+        if not topics[topic]["table_check"]:
+            try:
+                if not postgres_connector.table_exists(topic):
+                    postgres_connector.create_table(table_name=topic, data=msg.value())
+                    topics[topic]["table_check"] = True
+                    logger.info("Created table for topic '" + topic + "'")
+                else:
+                    number_of_added_columns = postgres_connector.update_columns(table_name=topic, data=msg.value())
+                    topics[topic]["table_check"] = True
+                    logger.info("Added " + str(number_of_added_columns) + " columns in table for topic '" + topic + "'")
 
+            except psycopg2.OperationalError:
+                raise ConnectionError("Postgres operational error.")
 
+        if topics[topic]["message_schema_check"]:
+            postgres_connector.insert_values(table_name=topic, data=msg.value())
+            consumer.commit(msg, async=True)
 
+    except Exception as e:
+        logger.exception(e)
+        exit(1)
 
+"""
+'default.topic.config': {
+     'auto.offset.reset': 'earliest'
+}
+"""
 
-
-consumer = AvroLoopConsumer(KAFKA_HOSTS, SCHEMA_REGISTRY_URL, CONSUMER_GROUP, [ALLOWED_TOPICS_REGEX])
+config = avro_loop_consumer.default_conf
+config['enable.auto.commit'] = False
+topic_regex = '^' + TOPIC_PREFIX.replace('.', r'\.') + '.*'
+consumer = AvroLoopConsumer(KAFKA_HOSTS, SCHEMA_REGISTRY_URL, CONSUMER_GROUP, [topic_regex], config=config)
 consumer.loop(lambda msg: handle_message(msg))
-
-
-
-
-
-class DBWriter(object):
-    def __init__(self, kafka_hosts, topic, kafka_message_schema_file, postgres_connector,
-                 consumer_group=None, use_rdkafka=False, auto_commit_enable=True,
-                 auto_commit_interval_ms=60000):
-
-    def _new_message_handler(self, sender, message):
-
-
-        except:
-            # TODO not a nice way, because another exception is thrown
-            self.join(0)
-
-
-
-"""
-postgress_connector = None
-
-running = False
-consumer_threads = list()
-while True:
-    if not running:
-        consumer_threads = list()
-        try:
-            postgress_connector = PostgresConnector(host=POSTGRES_HOST, port=POSTGRES_PORT, database=POSTGRES_DB,
-                                                    user=POSTGRES_USER, password=POSTGRES_PW)
-
-            client = KafkaClient(hosts=KAFKA_HOSTS)
-            for topic in client.topics:
-                if re.search(ALLOWED_TOPICS_REGEX, topic.decode()) is not None:
-                    thread = DBWriter(KAFKA_HOSTS, topic.decode(), CONSUMER_GROUP, KAFKA_SCHEMA,
-                                      postgress_connector, use_rdkafka=False)
-                    thread.start()
-                    logger.info("Started consumer for topic " + topic.decode())
-                    consumer_threads.append(thread)
-
-            running = True
-
-        except Exception as e:
-            running = False
-            for thread in consumer_threads:
-                thread.join(0)
-            logger.error(str(e))
-
-        finally:
-            time.sleep(30)
-
-    else:
-        while running:
-            time.sleep(5)
-            for thread in consumer_threads:
-                if not thread.is_alive():
-                    running = False
-                    for thread in consumer_threads:
-                        thread.join(0)
-"""
