@@ -123,6 +123,32 @@ services:
         max-size: "1m"
         max-file: "1"
 
+  schema-registry:
+    container_name: schema-registry
+    image: confluentinc/cp-schema-registry:latest
+    hostname: schema-registry
+    ports:
+      - "8081:8081"
+    environment:
+      USER_NAME: schema-registry
+      SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8081"
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: "zookeeper:2181"
+      SCHEMA_REGISTRY_HOST_NAME: "0.0.0.0"
+    # todo ADD HEALTHCHECK
+
+    depends_on:
+      kafka:
+        condition: service_healthy
+    env_file:
+      - ${STCS_CONFIG_FOLDER-./../config}/global.env
+    networks:
+      default:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
   postgres:
     container_name: postgres
     image: biggis/postgres:9.6
@@ -192,6 +218,8 @@ services:
         condition: service_healthy
       postgres:
         condition: service_healthy
+      schema-registry:
+        condition: service_healthy
     env_file:
       - ${STCS_CONFIG_FOLDER-./../config}/global.env
       - ${STCS_CONFIG_FOLDER-./../config}/consumer/postgres/config.env
@@ -200,7 +228,6 @@ services:
     command: ["python", "/opt/consumer.py"]
     volumes:
       - ./consumer/postgres:/opt
-      - ./avro/schema/kafka.timestamp-data.avsc:/opt/kafka.timestamp-data.avsc
     networks:
       default:
     logging:
@@ -209,23 +236,24 @@ services:
         max-size: "1m"
         max-file: "1"
 
-  consumer-cache-rest:
-    container_name: consumer-cache-rest
+  consumer-rest-api:
+    container_name: consumer-rest-api
     image: smueller18/stcs:python3
     restart: always
-    hostname: consumer-cache-rest
+    hostname: consumer-rest-api
     depends_on:
       kafka:
         condition: service_healthy
+      schema-registry:
+        condition: service_healthy
     env_file:
       - ${STCS_CONFIG_FOLDER-./../config}/global.env
-      - ${STCS_CONFIG_FOLDER-./../config}/consumer/cache-rest/config.env
+      - ${STCS_CONFIG_FOLDER-./../config}/consumer/rest-api/config.env
     environment:
-      USER_NAME: consumer-cache-rest
+      USER_NAME: consumer-rest-api
     command: ["python", "/opt/consumer.py"]
     volumes:
-      - ./consumer/cache-rest:/opt
-      - ./avro/schema/kafka.timestamp-data.avsc:/opt/kafka.timestamp-data.avsc
+      - ./consumer/rest-api:/opt
     networks:
       default:
     logging:
@@ -234,24 +262,25 @@ services:
         max-size: "1m"
         max-file: "1"
 
-  consumer-web-redirect:
-    container_name: consumer-web-redirect
-    build: ./consumer/web-redirect
+  consumer-socketio:
+    container_name: consumer-socketio
+    build: ./consumer/socketio
     image: smueller18/stcs:python3
     restart: always
-    hostname: consumer-web-redirect
+    hostname: consumer-socketio
     depends_on:
       kafka:
         condition: service_healthy
+      schema-registry:
+        condition: service_healthy
     env_file:
       - ${STCS_CONFIG_FOLDER-./../config}/global.env
-      - ${STCS_CONFIG_FOLDER-./../config}/consumer/web-redirect/config.env
+      - ${STCS_CONFIG_FOLDER-./../config}/consumer/socketio/config.env
     environment:
-      USER_NAME: consumer-web-redirect
+      USER_NAME: consumer-socktio
     command: ["python", "/opt/consumer.py"]
     volumes:
-      - ./consumer/web-redirect:/opt
-      - ./avro/schema/kafka.timestamp-data.avsc:/opt/kafka.timestamp-data.avsc
+      - ./consumer/socketio:/opt
     networks:
       default:
     logging:
@@ -289,6 +318,8 @@ services:
     depends_on:
       kafka:
         condition: service_healthy
+      schema-registry:
+        condition: service_healthy
     env_file:
      - ${STCS_CONFIG_FOLDER-./../config}/global.env
     environment:
@@ -296,7 +327,6 @@ services:
     command: ["python", "/opt/producer.py"]
     volumes:
       - ./producer-solar-radiation:/opt
-      - ./avro/schema/kafka.timestamp-data.avsc:/opt/kafka.timestamp-data.avsc
     networks:
       default:
     logging:
@@ -312,6 +342,8 @@ services:
     hostname: producer-weather-forecast-web
     depends_on:
       kafka:
+        condition: service_healthy
+      schema-registry:
         condition: service_healthy
     env_file:
       - ${STCS_CONFIG_FOLDER-./../config}/global.env
