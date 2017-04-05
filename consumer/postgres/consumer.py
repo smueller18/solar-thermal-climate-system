@@ -45,33 +45,38 @@ topics = dict()
 def handle_message(msg):
     global postgres_connector
 
-    topic = msg.topic().str()
+    topic = msg.topic()
+
+    topic_split = topic.split(".")
+
+    if len(topic_split) < 3:
+        logging.warning("Table name cannot be derived from topic %s. Topic name must have at least 3 parts seperated "
+                        "with dots. Ignoring message." % topic)
+        return
 
     if topic not in topics:
         topics[topic] = {
-            "table_name": topic.replace(TOPIC_PREFIX, "", 1),
+            "table": topic_split[1] + ".public." + topic_split[2],
             "table_check": False
         }
 
     try:
         if not topics[topic]["table_check"]:
             try:
-                if not postgres_connector.table_exists(topic):
-                    postgres_connector.create_table(table_name=topic, data=msg.value())
+                if not postgres_connector.table_exists(topics[topic]["table"]):
+                    postgres_connector.create_table(table_name=topics[topic]["table"], keys=msg.key(), values=msg.value())
                     topics[topic]["table_check"] = True
                     logger.info("Created table for topic '" + topic + "'")
-                else:
-                    number_of_added_columns = postgres_connector.update_columns(table_name=topic, data=msg.value())
-                    topics[topic]["table_check"] = True
-                    logger.info("Added " + str(number_of_added_columns) + " columns in table for topic '" + topic + "'")
 
             except psycopg2.OperationalError:
                 raise ConnectionError("Postgres operational error.")
 
-        if topics[topic]["message_schema_check"]:
-            postgres_connector.insert_values(table_name=topic, data=msg.value())
-            # todo commit after successful db write
-            #consumer.commit(msg, async=True)
+        if topics[topic]["table_check"]:
+            postgres_connector.insert_values(table_name=topics[topic]["table"], data={**msg.key(), **msg.value()})
+
+            logging.info("Inserted into table %s: %s" % (topics[topic]["table"], {**msg.key(), **msg.value()}))
+
+            # consumer.commit(msg, async=True)
 
     except Exception as e:
         logger.exception(e)
@@ -86,7 +91,7 @@ def handle_message(msg):
 config = avro_loop_consumer.default_config
 config['enable.auto.commit'] = False
 config['default.topic.config'] = dict()
-config['default.topic.config']['auto.offset.reset'] = 'latest'
+config['default.topic.config']['auto.offset.reset'] = 'earliest'
 
 
 topic_regex = '^' + TOPIC_PREFIX.replace('.', r'\.') + '.*'

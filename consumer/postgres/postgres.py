@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import logging
+import datetime
+
 
 import psycopg2
 import psycopg2.extras
@@ -52,28 +54,39 @@ class Connector(object):
             return True
         return False
 
-    def create_table(self, table_name, data):
+    def create_table(self, table_name, keys, values):
 
         cur = self.con.cursor()
 
         column_names = list()
         column_sql = ""
-        for key in data:
-            column_names.append(key)
 
-            try:
-                data_type = _data_types[type(data[key])]
-            except KeyError:
-                data_type = _data_types[str]
+        data = {**keys, **values}
+        for column_name in data:
+            column_names.append(column_name)
 
-            column_sql += ", " + key + " " + data_type
+            if column_name.startswith("timestamp"):
+                data_type = "TIMESTAMP WITH TIME ZONE"
+            else:
+                try:
+                    data_type = _data_types[type(data[column_name])]
+
+                except KeyError:
+                    data_type = _data_types[str]
+
+            column_sql += column_name + " " + data_type + ","
+
+        column_sql += " PRIMARY KEY (" + ", ".join(keys) + ")"
 
         sql = """
               CREATE TABLE IF NOT EXISTS %s (
-                timestamp TIMESTAMP WITH TIME ZONE PRIMARY KEY DEFAULT current_timestamp
                 %s
               );
               """ % (table_name, column_sql)
+
+        # todo remove
+        #print(sql)
+        #return
 
         try:
             cur.execute(sql)
@@ -82,14 +95,15 @@ class Connector(object):
         except psycopg2.DatabaseError as de:
             logger.error(de.pgcode + " " + de.pgerror.replace("\n", " "))
 
+    """
     def update_columns(self, table_name, data):
 
         cur = self.con.cursor()
-        sql = cur.mogrify("""
+        sql = cur.mogrify(""
                           SELECT column_name
                           FROM information_schema.columns
                           WHERE table_name=%s;
-                          """, [table_name])
+                          "", [table_name])
         cur.execute(sql)
 
         table_columns = cur.fetchall()[1:]
@@ -118,24 +132,36 @@ class Connector(object):
         self.con.commit()
 
         return len(column_names_to_add)
+    """
 
     def insert_values(self, table_name, data):
 
         cur = self.con.cursor()
-        # empty string list item that there will be a comma after column timestamp
-        columns = [""]
-        values = list()
-        for key in data["data"]:
-            columns.append(key)
-            values.append(data["data"][key])
 
-        params = [data["timestamp"]]
-        params.extend(values)
-        sql = cur.mogrify("INSERT INTO " + table_name + " (timestamp" + ', '.join(columns) + ")"
-                          " VALUES (to_timestamp(%s)" + ', %s' * len(values) + ");", params)
+        keys = list()
+        values = list()
+        value_placeholders = list()
+
+        for key in data:
+            keys.append(key)
+
+            if key.startswith("timestamp"):
+                values.append(data[key] / 1000)
+                value_placeholders.append("to_timestamp(%s)")
+            else:
+                values.append(data[key])
+                value_placeholders.append("%s")
+
+        sql = cur.mogrify("INSERT INTO " + table_name + " (" + ', '.join(keys) + ")"
+                          " VALUES (" + ", ".join(value_placeholders) + ");", values)
+
+        # todo remove
+        print(sql)
+        # exit()
 
         try:
-            cur.execute(sql)
+            cur.execute("INSERT INTO " + table_name + " (" + ', '.join(keys) + ")"
+                        " VALUES (%s" + ', %s' * (len(values) - 1) + ");", values)
             self.con.commit()
 
         except psycopg2.OperationalError as e:
