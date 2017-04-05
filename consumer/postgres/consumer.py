@@ -23,9 +23,9 @@ POSTGRES_DB = os.getenv("POSTGRES_DB", "postgres")
 POSTGRES_USER = os.getenv("POSTGRES_USER", "postgres")
 POSTGRES_PW = os.getenv("POSTGRES_PW", "postgres")
 KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "kafka:9092")
-SCHEMA_REGISTRY_URL = os.getenv("SCHEMA_REGISTRY_URL", "http://schema_registry:8081")
+SCHEMA_REGISTRY_URL = os.getenv("SCHEMA_REGISTRY_URL", "http://schema_registry:8082")
 CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "postgres")
-TOPIC_PREFIX = os.getenv("TOPIC_PREFIX", "stcs.")
+TOPIC_PREFIX = os.getenv("TOPIC_PREFIX", "prod.")
 LOGGING_LEVEL = os.getenv("LOGGING_LEVEL", "INFO")
 logging_format = "%(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s"
 
@@ -82,7 +82,7 @@ def handle_message(msg):
 }
 """
 
-config = avro_loop_consumer.default_conf
+config = avro_loop_consumer.default_config
 config['enable.auto.commit'] = False
 topic_regex = '^' + TOPIC_PREFIX.replace('.', r'\.') + '.*'
 consumer = AvroLoopConsumer(KAFKA_HOSTS, SCHEMA_REGISTRY_URL, CONSUMER_GROUP, [topic_regex], config=config)
