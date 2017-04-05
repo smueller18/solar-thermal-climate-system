@@ -28,7 +28,7 @@ Here is a list of all variables which can be set by environment variables. `__di
 | --- | --- | --- | --- |
 | PORT | 5002 | int | port of SocketIO server |
 | KAFKA_HOSTS | kafka:9092 | string |   |
-| SCHEMA_REGISTRY_URL | http://schema-registry:8081 | string |   |
+| SCHEMA_REGISTRY_URL | http://schema-registry:8082 | string |   |
 | CONSUMER_GROUP | web-redirect | string |   |
 | TOPIC_PREFIX | stcs. | string |  |
 | LOGGING_LEVEL | INFO | string | one of CRITICAL, ERROR, WARNING, INFO, DEBUG |

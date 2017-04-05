@@ -7,7 +7,7 @@ import threading
 from flask import Flask, render_template, Markup
 from flask_socketio import SocketIO, emit
 import mistune
-from kafka_connector.avro_loop_consumer import default_config
+from kafka_connector.avro_loop_consumer as avro_loop_consumer
 from kafka_connector.avro_loop_consumer import AvroLoopConsumer
 
 __author__ = u'Stephan Müller'
@@ -20,7 +20,7 @@ PORT = int(os.getenv("PORT", 5002))
 KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "kafka:9092")
 SCHEMA_REGISTRY_URL = os.getenv("SCHEMA_REGISTRY_URL", "http://schema-registry:8082")
 CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "socketio")
-TOPIC_PREFIX = os.getenv("TOPIC_PREFIX", "stcs.")
+TOPIC_PREFIX = os.getenv("TOPIC_PREFIX", "prod.")
 LOGGING_LEVEL = os.getenv("LOGGING_LEVEL", "INFO")
 logging_format = "%(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s"
 
@@ -101,7 +101,7 @@ def handle_message(msg):
 def run_kafka_consumer():
 
     # adjust config
-    config = default_config
+    config = avro_loop_consumer.default_config
 
     # todo add start with latest
 

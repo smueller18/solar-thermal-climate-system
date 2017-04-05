@@ -32,7 +32,7 @@ $ python3 consumer.py
 | POSTGRES_USER | postgres | string |   |
 | POSTGRES_PW | postgres | string |   |
 | KAFKA_HOSTS | kafka:9092 | string |   |
-| SCHEMA_REGISTRY_URL | http://schema_registry:8081 | string |  |
+| SCHEMA_REGISTRY_URL | http://schema_registry:8082 | string |  |
 | CONSUMER_GROUP | postgres | string |   |
 | TOPIC_PREFIX | test. | string | The prefix is part of a regular expression. The char `.` is replaced with `\.`, all other special characters are not allowed. |
 | LOGGING_LEVEL | INFO | string | one of CRITICAL, ERROR, WARNING, INFO, DEBUG |

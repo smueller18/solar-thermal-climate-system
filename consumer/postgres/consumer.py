@@ -70,7 +70,8 @@ def handle_message(msg):
 
         if topics[topic]["message_schema_check"]:
             postgres_connector.insert_values(table_name=topic, data=msg.value())
-            consumer.commit(msg, async=True)
+            # todo commit after successful db write
+            #consumer.commit(msg, async=True)
 
     except Exception as e:
         logger.exception(e)
@@ -84,6 +85,10 @@ def handle_message(msg):
 
 config = avro_loop_consumer.default_config
 config['enable.auto.commit'] = False
+config['default.topic.config'] = dict()
+config['default.topic.config']['auto.offset.reset'] = 'latest'
+
+
 topic_regex = '^' + TOPIC_PREFIX.replace('.', r'\.') + '.*'
 consumer = AvroLoopConsumer(KAFKA_HOSTS, SCHEMA_REGISTRY_URL, CONSUMER_GROUP, [topic_regex], config=config)
 consumer.loop(lambda msg: handle_message(msg))
