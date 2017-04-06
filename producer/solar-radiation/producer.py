@@ -70,7 +70,7 @@ def compute_radiation_at_45_deg_angle(timestamp, total_radiation, diffuse_radiat
 
 
 def handle_message(msg):
-    radiation = compute_radiation_at_45_deg_angle(msg.key()["timestamp"],
+    radiation = compute_radiation_at_45_deg_angle(msg.key()["timestamp"] / 1000,
                                                   msg.value()["total_radiation"],
                                                   msg.value()["diffuse_radiation"])
     producer.produce(msg.key(), radiation)
