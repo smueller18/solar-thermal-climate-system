@@ -44,6 +44,13 @@ topics = dict()
 def handle_message(msg):
     global postgres_connector
 
+    if msg.key() is None:
+        logger.warning("Key is none. Ignoring message.")
+        return
+    elif msg.value() is None:
+        logger.warning("Value is none. Ignoring message.")
+        return
+
     topic = msg.topic()
 
     topic_split = topic.split(".")
