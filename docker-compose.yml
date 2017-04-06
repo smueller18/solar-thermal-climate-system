@@ -364,31 +364,31 @@ services:
         max-size: "1m"
         max-file: "1"
 
-    producer-pyranometer-huebsch-schule:
-      container_name: producer-pyranometer-huebsch-schule
-      image: smueller18/stcs:python3
-      restart: always
-      hostname: producer-pyranometer-huebsch-schule
-      depends_on:
-        kafka:
-          condition: service_healthy
-  #      schema-registry:
-  #        condition: service_healthy
-      env_file:
-        - ${STCS_CONFIG_FOLDER-./../config}/global.env
-        - ${STCS_CONFIG_FOLDER-./../config}/producer/pyranometer-huebsch-schule/config.env
-      environment:
-        USER_NAME: producer-weather-forecast-web
-      command: ["python", "/opt/producer.py"]
-      volumes:
-        - ${STCS_CONFIG_FOLDER-./../config}/producer/pyranometer-huebsch-schule:/opt
-      networks:
-        default:
-      logging:
-        driver: "json-file"
-        options:
-          max-size: "1m"
-          max-file: "1"
+  producer-pyranometer-huebsch-schule:
+    container_name: producer-pyranometer-huebsch-schule
+    image: smueller18/stcs:python3
+    restart: always
+    hostname: producer-pyranometer-huebsch-schule
+    depends_on:
+      kafka:
+        condition: service_healthy
+#      schema-registry:
+#        condition: service_healthy
+    env_file:
+      - ${STCS_CONFIG_FOLDER-./../config}/global.env
+      - ${STCS_CONFIG_FOLDER-./../config}/producer/pyranometer-huebsch-schule/config.env
+    environment:
+      USER_NAME: producer-pyranometer-huebsch-schule
+    command: ["python", "/opt/producer.py"]
+    volumes:
+      - ${STCS_CONFIG_FOLDER-./../config}/producer/pyranometer-huebsch-schule:/opt
+    networks:
+      default:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
 
   flink-jobmanager:
     container_name: flink-jobmanager
