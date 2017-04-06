@@ -2,7 +2,6 @@
 
 import os
 import logging.config
-import time
 
 import psycopg2
 from confluent_kafka.avro import CachedSchemaRegistryClient
@@ -77,10 +76,11 @@ def handle_message(msg):
                 postgres_connector.insert_values(table_name=topics[topic]["table"], data={**msg.key(), **msg.value()})
 
             except psycopg2.OperationalError as e:
+                logger.exception(e)
                 consumer.stop()
                 return
 
-            except psycopg2.DatabaseError as e:
+            except psycopg2.DatabaseError:
                 logger.error("Message with topic '%s' and offset % s was not inserted into database."
                              % (topic, msg.offset()))
 

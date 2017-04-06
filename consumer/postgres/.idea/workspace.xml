@@ -15,7 +15,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/consumer_postgres$consumer.coverage" NAME="consumer Coverage Results" MODIFIED="1491478240748" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/consumer_postgres$consumer.coverage" NAME="consumer Coverage Results" MODIFIED="1491480825462" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -26,43 +26,10 @@
       <file leaf-file-name="consumer.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/consumer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="523">
-              <caret line="93" column="23" lean-forward="true" selection-start-line="93" selection-start-column="23" selection-end-line="93" selection-end-column="23" />
+            <state relative-caret-position="208">
+              <caret line="78" column="34" lean-forward="false" selection-start-line="78" selection-start-column="34" selection-end-line="78" selection-end-column="34" />
               <folding>
                 <element signature="e#24#33#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="utf_8.py" pinned="false" current-in-tab="false">
-        <entry file="file:///usr/lib/python3.5/encodings/utf_8.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="avro_loop_consumer.py" pinned="false" current-in-tab="false">
-        <entry file="file:///usr/local/lib/python3.5/dist-packages/kafka_connector/avro_loop_consumer.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="522">
-              <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="postgres.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/postgres.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="712">
-              <caret line="170" column="37" lean-forward="false" selection-start-line="170" selection-start-column="37" selection-end-line="170" selection-end-column="37" />
-              <folding>
-                <marker date="1491477670455" expanded="true" signature="944:1055" ph="SELECT 1 FRO... tables" />
-                <marker date="1491477670455" expanded="true" signature="1950:2016" ph="CREATE TABLE... missing_value" />
               </folding>
             </state>
           </provider>
@@ -76,8 +43,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/postgres.py" />
         <option value="$PROJECT_DIR$/consumer.py" />
+        <option value="$PROJECT_DIR$/postgres.py" />
       </list>
     </option>
   </component>
@@ -202,6 +169,14 @@
       <option name="presentableId" value="Default" />
       <updated>1491300073431</updated>
     </task>
+    <task id="LOCAL-00001" summary="update consumer postgres">
+      <created>1491478471532</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1491478471532</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -239,6 +214,10 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="update consumer postgres" />
+    <option name="LAST_COMMIT_MESSAGE" value="update consumer postgres" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
@@ -267,8 +246,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1491477670455" expanded="true" signature="944:1055" ph="SELECT 1 FRO... tables" />
-            <marker date="1491477670455" expanded="true" signature="1950:2016" ph="CREATE TABLE... missing_value" />
+            <marker date="1491481269348" expanded="true" signature="944:1055" ph="SELECT 1 FRO... tables" />
+            <marker date="1491481269348" expanded="true" signature="1950:2016" ph="CREATE TABLE... missing_value" />
           </folding>
         </state>
       </provider>
@@ -291,19 +270,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/postgres.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="712">
-          <caret line="170" column="37" lean-forward="false" selection-start-line="170" selection-start-column="37" selection-end-line="170" selection-end-column="37" />
+        <state relative-caret-position="1680">
+          <caret line="85" column="0" lean-forward="true" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
           <folding>
-            <marker date="1491477670455" expanded="true" signature="944:1055" ph="SELECT 1 FRO... tables" />
-            <marker date="1491477670455" expanded="true" signature="1950:2016" ph="CREATE TABLE... missing_value" />
+            <marker date="1491481269348" expanded="true" signature="944:1055" ph="SELECT 1 FRO... tables" />
+            <marker date="1491481269348" expanded="true" signature="1950:2016" ph="CREATE TABLE... missing_value" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/consumer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="523">
-          <caret line="93" column="23" lean-forward="true" selection-start-line="93" selection-start-column="23" selection-end-line="93" selection-end-column="23" />
+        <state relative-caret-position="208">
+          <caret line="78" column="34" lean-forward="false" selection-start-line="78" selection-start-column="34" selection-end-line="78" selection-end-column="34" />
           <folding>
             <element signature="e#24#33#0" expanded="true" />
           </folding>

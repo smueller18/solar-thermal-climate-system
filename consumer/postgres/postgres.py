@@ -84,55 +84,12 @@ class Connector(object):
               );
               """ % (table_name, column_sql)
 
-        # todo remove
-        #print(sql)
-        #return
-
         try:
             cur.execute(sql)
             self.con.commit()
 
         except psycopg2.DatabaseError as de:
             logger.error(de.pgcode + " " + de.pgerror.replace("\n", " "))
-
-    """
-    def update_columns(self, table_name, data):
-
-        cur = self.con.cursor()
-        sql = cur.mogrify(""
-                          SELECT column_name
-                          FROM information_schema.columns
-                          WHERE table_name=%s;
-                          "", [table_name])
-        cur.execute(sql)
-
-        table_columns = cur.fetchall()[1:]
-
-        column_names_to_add = list()
-        for key in data:
-            # if key does not exist
-            if len([x[0] for x in table_columns if x[0] == key.lower()]) == 0:
-                column_names_to_add.append(key.lower())
-
-        for column_name in column_names_to_add:
-
-            try:
-                data_type = _data_types[type(data[column_name])]
-            except KeyError:
-                data_type = _data_types[str]
-
-            sql = "ALTER TABLE %s ADD COLUMN %s %s;" % (table_name, column_name, data_type)
-
-            try:
-                cur.execute(sql)
-
-            except psycopg2.DatabaseError as e:
-                logger.error(e.pgcode + " " + e.pgerror.replace("\n", " "))
-
-        self.con.commit()
-
-        return len(column_names_to_add)
-    """
 
     def insert_values(self, table_name, data):
 
@@ -167,7 +124,9 @@ class Connector(object):
             if e.pgcode == "23505":
                 logger.warning(e.pgcode + " " + e.pgerror.replace("\n", " "))
                 self.con.commit()
-            else:
+            elif e.pgcode is not None and e.pgerror is not None:
                 logger.error(e.pgcode + " " + e.pgerror.replace("\n", " "))
+            else:
+                logger.exception(e)
 
             raise e
