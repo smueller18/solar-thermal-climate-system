@@ -7,7 +7,7 @@ import threading
 from flask import Flask, render_template, Markup
 from flask_socketio import SocketIO, emit
 import mistune
-from kafka_connector.avro_loop_consumer as avro_loop_consumer
+import kafka_connector.avro_loop_consumer as avro_loop_consumer
 from kafka_connector.avro_loop_consumer import AvroLoopConsumer
 
 __author__ = u'Stephan Müller'
@@ -33,7 +33,7 @@ cache = dict()
 
 app = Flask(__name__, static_url_path='')
 app.config['SECRET_KEY'] = 'secret'
-socketio = SocketIO(app, logger=True, engineio_logger=True, ping_timeout=10, ping_interval=5)
+socketio = SocketIO(app, async_mode="eventlet", logger=True, engineio_logger=True, ping_timeout=10, ping_interval=5)
 
 renderer = mistune.Renderer(escape=False, hard_wrap=True, use_xhtml=True)
 markdown = mistune.Markdown(renderer=renderer)
@@ -95,7 +95,6 @@ def handle_message(msg):
                 "topic": msg.topic()
             }
             socketio.start_background_task(socketio.emit, 'sensor_values', message)
-            logger.warning("sensor_values: " + str(message))
 
 
 def run_kafka_consumer():
