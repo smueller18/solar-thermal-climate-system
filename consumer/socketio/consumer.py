@@ -98,16 +98,24 @@ def handle_message(msg):
 
 
 def run_kafka_consumer():
+    global socketio
 
-    # adjust config
     config = avro_loop_consumer.default_config
-
-    # todo add start with latest
+    config['enable.auto.commit'] = True
+    config['default.topic.config'] = dict()
+    config['default.topic.config']['auto.offset.reset'] = 'latest'
 
     consumer = AvroLoopConsumer(KAFKA_HOSTS, SCHEMA_REGISTRY_URL, CONSUMER_GROUP,
                                 ["^" + TOPIC_PREFIX.replace(".", r'\.') + ".*"])
     logger.info("Starting consumer thread...")
-    consumer.loop(lambda msg: handle_message(msg))
+
+    try:
+        consumer.loop(lambda msg: handle_message(msg))
+    except Exception as e:
+        logger.exception(e)
+        consumer.close()
+
+        return
 
 
 def run_socketio():
@@ -117,9 +125,11 @@ def run_socketio():
 
 if __name__ == '__main__':
 
-    socketio_thread = threading.Thread(target=run_socketio)
-    consumer_thread = threading.Thread(target=run_kafka_consumer)
+    socketio_thread = threading.Thread(name="SocketIO", target=run_socketio)
+    consumer_thread = threading.Thread(name="KafkaConsumer", target=run_kafka_consumer)
 
-    consumer_thread.start()
     socketio_thread.start()
-    
+    consumer_thread.start()
+
+    consumer_thread.join()
+    socketio_thread.join()
