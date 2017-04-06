@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 
 import os
-import logging.config
-import time
+import logging
 import datetime
 
-from pykafka_tools.kafka_consumer import KafkaConsumer
-from pykafka_tools.kafka_producer_pool import KafkaProducerPool
+import kafka_connector.avro_loop_consumer as avro_loop_consumer
+from kafka_connector.avro_loop_consumer import AvroLoopConsumer
+from kafka_connector.avro_loop_producer import AvroLoopProducer
 
 from pysolar.solar import get_altitude, get_azimuth
 from math import cos, sin, tan, radians
@@ -18,14 +18,17 @@ __license__ = u'MIT'
 
 __dirname__ = os.path.dirname(os.path.abspath(__file__))
 
-KAFKA_HOSTS_CONSUMER = os.getenv("KAFKA_HOSTS_CONSUMER", "kafka:9092")
-KAFKA_HOSTS_PRODUCER = os.getenv("KAFKA_HOSTS_PRODUCER", "kafka:9092")
-KAFKA_SCHEMA = os.getenv("KAFKA_SCHEMA", __dirname__ + "/kafka.timestamp-data.avsc")
+KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "kafka:9092")
+SCHEMA_REGISTRY_URL = os.getenv("SCHEMA_REGISTRY_URL", "http://schema-registry:8082")
 CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "solar_radiation")
-CONSUMER_TOPIC = os.getenv("CONSUMER_TOPIC", "solar_radiation")
-PRODUCER_TOPIC = os.getenv("PRODUCER_TOPIC", "solar_radiation_45_deg_angle")
+CONSUMER_TOPIC = os.getenv("CONSUMER_TOPIC", "prod.stcs.roof.solar_radiation")
+PRODUCER_TOPIC = os.getenv("PRODUCER_TOPIC", "prod.stcs.roof.solar_radiation_45_deg_angle")
+
 LOGGING_LEVEL = os.getenv("LOGGING_LEVEL", "INFO")
 logging_format = "%(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s"
+
+key_schema = __dirname__ + "/config/key.avsc"
+value_schema = __dirname__ + "/config/value.avsc"
 
 # Geographic coordinates of the K-building
 LATITUDE_DEG = 49.01305
@@ -39,10 +42,7 @@ ALPHA = 45
 BETA = 172
 
 logging.basicConfig(level=logging.getLevelName(LOGGING_LEVEL), format=logging_format)
-
-logger = logging.getLogger('solar-radiation')
-
-kafka_producer_pool = None
+logger = logging.getLogger('producer')
 
 
 def compute_radiation_at_45_deg_angle(timestamp, total_radiation, diffuse_radiation):
@@ -50,7 +50,6 @@ def compute_radiation_at_45_deg_angle(timestamp, total_radiation, diffuse_radiat
     direct_radiation = total_radiation - diffuse_radiation
 
     # Pysolar: south is zero degree, clockwise negative, e.g. south east = - 315 degree, south west = -45 degree
-
     azimuth = get_azimuth(when=datetime.datetime.fromtimestamp(timestamp),
                           latitude_deg=LATITUDE_DEG, longitude_deg=LONGITUDE_DEG, elevation=EVALUATION)
 
@@ -63,44 +62,26 @@ def compute_radiation_at_45_deg_angle(timestamp, total_radiation, diffuse_radiat
     altitude = get_altitude(when=datetime.datetime.fromtimestamp(timestamp),
                             latitude_deg=LATITUDE_DEG, longitude_deg=LONGITUDE_DEG, elevation=EVALUATION)
 
-    # Formula from Lehrbuch der Bauphysik, Fischer, 2008, Page 651
+    # Formula from "Lehrbuch der Bauphysik, Fischer, 2008, Page 651"
     radiation_at_45_deg_angle = diffuse_radiation + direct_radiation * (cos(radians(ALPHA)) + sin(radians(ALPHA)) *
                                 (cos(radians(azimuth - BETA)) / tan(radians(altitude))))
 
     return radiation_at_45_deg_angle
 
 
-def handle_radiation_message(sender, message):
-    radiation = compute_radiation_at_45_deg_angle(message["timestamp"],
-                                                  message["data"]["total_radiation"],
-                                                  message["data"]["diffuse_radiation"])
-
-    kafka_producer_pool.produce(PRODUCER_TOPIC, {
-        "timestamp": message["timestamp"],
-        "data": {
-            "solar_radiation_45_deg_angle": radiation
-        }
-    })
+def handle_message(msg):
+    radiation = compute_radiation_at_45_deg_angle(msg.key()["timestamp"],
+                                                  msg.value()["total_radiation"],
+                                                  msg.value()["diffuse_radiation"])
+    producer.produce(msg.key(), radiation)
 
 
-consumer_thread = None
-started = False
-while not started:
-    try:
-        # create producer
-        kafka_producer_pool = KafkaProducerPool(KAFKA_HOSTS_PRODUCER, [PRODUCER_TOPIC], KAFKA_SCHEMA)
+producer = AvroLoopProducer(KAFKA_HOSTS, SCHEMA_REGISTRY_URL, PRODUCER_TOPIC, key_schema, value_schema)
 
-        # create consumer
-        consumer_thread = KafkaConsumer(KAFKA_HOSTS_CONSUMER, CONSUMER_TOPIC, CONSUMER_GROUP, KAFKA_SCHEMA)
-        consumer_thread.new_message_event += handle_radiation_message
-        consumer_thread.start()
-        logger.info("Started consumer thread for topic " + CONSUMER_TOPIC)
+config = avro_loop_consumer.default_config
+config['enable.auto.commit'] = False
+config['default.topic.config'] = dict()
+config['default.topic.config']['auto.offset.reset'] = 'largest'
 
-        started = True
-
-    except Exception as e:
-        logger.exception(e)
-        time.sleep(30)
-
-while True:
-    time.sleep(100)
+consumer = AvroLoopConsumer(KAFKA_HOSTS, SCHEMA_REGISTRY_URL, CONSUMER_GROUP, [CONSUMER_TOPIC], config=config)
+consumer.loop(lambda msg: handle_message(msg))

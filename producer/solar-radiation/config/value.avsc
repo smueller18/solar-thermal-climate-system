@@ -1,0 +1,12 @@
+{
+  "namespace": "hska.stcs",
+  "name": "sensors_roof_collector_value",
+  "type": "record",
+  "doc": "Pyranometer at the roof of the K building",
+  "fields": [
+    {
+      "name": "solar_radiation_45_deg_angle",
+      "type": "float"
+    }
+  ]
+}
