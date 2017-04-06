@@ -25,7 +25,7 @@ RUN apk add --no-cache \
           cython \
           psycopg2 \
           numpy \
-          flask mistune flask_socketio \
+          flask mistune flask_socketio eventlet \
           beautifulsoup4 html5lib \
           pysolar \
           confluent-kafka confluent-kafka[avro] avro-python3 kafka_connector requests \
