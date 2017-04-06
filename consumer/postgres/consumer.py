@@ -44,10 +44,10 @@ topics = dict()
 def handle_message(msg):
     global postgres_connector
 
-    if msg.key() is None:
+    if msg.key() is None or type(msg.key()) is not dict:
         logger.warning("Key is none. Ignoring message.")
         return
-    elif msg.value() is None:
+    elif msg.value() is None or type(msg.value()) is not dict:
         logger.warning("Value is none. Ignoring message.")
         return
 
