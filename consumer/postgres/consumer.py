@@ -4,7 +4,6 @@ import os
 import logging.config
 
 import psycopg2
-from confluent_kafka.avro import CachedSchemaRegistryClient
 import kafka_connector.avro_loop_consumer as avro_loop_consumer
 from kafka_connector.avro_loop_consumer import AvroLoopConsumer
 import postgres
@@ -32,8 +31,6 @@ logging.basicConfig(level=logging.getLevelName(LOGGING_LEVEL), format=logging_fo
 
 logger = logging.getLogger('consumer')
 
-
-schema_registry = CachedSchemaRegistryClient(url=SCHEMA_REGISTRY_URL)
 
 postgres_connector = postgres.Connector(host=POSTGRES_HOST, port=POSTGRES_PORT, database=POSTGRES_DB,
                                         user=POSTGRES_USER, password=POSTGRES_PW)
