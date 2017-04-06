@@ -235,6 +235,8 @@ services:
         max-size: "1m"
         max-file: "1"
 
+
+# CHANGE ME HERE
   consumer-rest-api:
     container_name: consumer-rest-api
     image: smueller18/stcs:python3
@@ -325,7 +327,7 @@ services:
      USER_NAME: producer-solar-radiation
     command: ["python", "/opt/producer.py"]
     volumes:
-      - ./producer-solar-radiation:/opt
+      - ./producer/solar-radiation:/opt
     networks:
       default:
     logging:
@@ -334,6 +336,8 @@ services:
        max-size: "1m"
        max-file: "1"
 
+
+# CHANGE ME HERE
   producer-weather-forecast-web:
     container_name: producer-weather-forecast-web
     image: smueller18/stcs:python3
