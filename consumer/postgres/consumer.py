@@ -50,7 +50,7 @@ def handle_message(msg):
 
     topic = msg.topic()
 
-    topic_split = topic.split(".")
+    topic_split = topic.split(".", 2)
 
     if len(topic_split) < 3:
         logging.warning("Table name cannot be derived from topic %s. Topic name must have at least 3 parts seperated "
@@ -59,7 +59,7 @@ def handle_message(msg):
 
     if topic not in topics:
         topics[topic] = {
-            "table": topic_split[1] + ".public." + ".".join(topic_split[2:]),
+            "table": topic_split[1] + ".public." + topic_split[2]),
             "table_check": False
         }
 
