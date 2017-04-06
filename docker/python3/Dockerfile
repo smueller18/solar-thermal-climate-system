@@ -29,6 +29,7 @@ RUN apk add --no-cache \
           beautifulsoup4 html5lib \
           pysolar \
           confluent-kafka confluent-kafka[avro] avro-python3 kafka_connector requests \
+          pytz \
     && \
     apk del .build-deps && \
     rm -rf /var/cache/apk/*
