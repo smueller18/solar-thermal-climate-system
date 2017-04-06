@@ -97,7 +97,7 @@ def handle_message(msg):
 config = avro_loop_consumer.default_config
 config['enable.auto.commit'] = False
 config['default.topic.config'] = dict()
-config['default.topic.config']['auto.offset.reset'] = 'latest'
+config['default.topic.config']['auto.offset.reset'] = 'largest'
 
 
 topic_regex = '^' + TOPIC_PREFIX.replace('.', r'\.') + '.*'
