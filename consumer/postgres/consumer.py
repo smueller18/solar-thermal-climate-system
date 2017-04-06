@@ -59,7 +59,7 @@ def handle_message(msg):
 
     if topic not in topics:
         topics[topic] = {
-            "table": topic_split[1] + ".public." + topic_split[2].replace(".", "__")),
+            "table": topic_split[1] + ".public." + topic_split[2].replace(".", "__"),
             "table_check": False
         }
 
