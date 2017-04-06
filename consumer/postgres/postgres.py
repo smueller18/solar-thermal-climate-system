@@ -155,17 +155,11 @@ class Connector(object):
         sql = cur.mogrify("INSERT INTO " + table_name + " (" + ', '.join(keys) + ")"
                           " VALUES (" + ", ".join(value_placeholders) + ");", values)
 
-        # todo remove
-        print(sql)
-        # exit()
-
         try:
-            cur.execute("INSERT INTO " + table_name + " (" + ', '.join(keys) + ")"
-                        " VALUES (%s" + ', %s' * (len(values) - 1) + ");", values)
+            cur.execute(sql)
             self.con.commit()
 
         except psycopg2.OperationalError as e:
-            logger.error(e)
             raise e
 
         except psycopg2.DatabaseError as e:
@@ -175,3 +169,5 @@ class Connector(object):
                 self.con.commit()
             else:
                 logger.error(e.pgcode + " " + e.pgerror.replace("\n", " "))
+
+            raise e

@@ -72,26 +72,32 @@ def handle_message(msg):
                 raise ConnectionError("Postgres operational error.")
 
         if topics[topic]["table_check"]:
-            postgres_connector.insert_values(table_name=topics[topic]["table"], data={**msg.key(), **msg.value()})
 
-            logging.info("Inserted into table %s: %s" % (topics[topic]["table"], {**msg.key(), **msg.value()}))
+            try:
+                postgres_connector.insert_values(table_name=topics[topic]["table"], data={**msg.key(), **msg.value()})
 
-            # consumer.commit(msg, async=True)
+            except psycopg2.OperationalError as e:
+                consumer.stop()
+                return
+
+            except psycopg2.DatabaseError as e:
+                logger.error("Message with topic '%s' and offset % s was not inserted into database."
+                             % (topic, msg.offset()))
+
+            logging.info("Message with topic '%s' and offset %s was inserted into database."
+                         % (topic, msg.offset()))
+
+            consumer.commit(msg, async=True)
 
     except Exception as e:
         logger.exception(e)
-        exit(1)
+        consumer.stop()
 
-"""
-'default.topic.config': {
-     'auto.offset.reset': 'earliest'
-}
-"""
 
 config = avro_loop_consumer.default_config
 config['enable.auto.commit'] = False
 config['default.topic.config'] = dict()
-config['default.topic.config']['auto.offset.reset'] = 'earliest'
+config['default.topic.config']['auto.offset.reset'] = 'latest'
 
 
 topic_regex = '^' + TOPIC_PREFIX.replace('.', r'\.') + '.*'
