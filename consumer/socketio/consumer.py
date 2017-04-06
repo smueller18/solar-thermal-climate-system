@@ -33,7 +33,7 @@ cache = dict()
 
 app = Flask(__name__, static_url_path='')
 app.config['SECRET_KEY'] = 'secret'
-socketio = SocketIO(app, async_mode="eventlet", logger=True, engineio_logger=True, ping_timeout=10, ping_interval=5)
+socketio = SocketIO(app, async_mode="threading", logger=True, engineio_logger=True, ping_timeout=10, ping_interval=5)
 
 renderer = mistune.Renderer(escape=False, hard_wrap=True, use_xhtml=True)
 markdown = mistune.Markdown(renderer=renderer)
@@ -90,7 +90,7 @@ def handle_message(msg):
 
         if type(msg.key()) is dict and "timestamp" in msg.key():
             message = {
-                "timestamp": msg.key()["timestamp"],
+                "timestamp": msg.key()["timestamp"] / 1000,
                 "data": msg.value(),
                 "topic": msg.topic()
             }
@@ -106,8 +106,8 @@ def run_kafka_consumer():
 
     consumer = AvroLoopConsumer(KAFKA_HOSTS, SCHEMA_REGISTRY_URL, CONSUMER_GROUP,
                                 ["^" + TOPIC_PREFIX.replace(".", r'\.') + ".*"])
+    logger.info("Starting consumer thread...")
     consumer.loop(lambda msg: handle_message(msg))
-    logger.info("Started consumer thread")
 
 
 def run_socketio():
@@ -120,5 +120,6 @@ if __name__ == '__main__':
     socketio_thread = threading.Thread(target=run_socketio)
     consumer_thread = threading.Thread(target=run_kafka_consumer)
 
-    socketio_thread.start()
     consumer_thread.start()
+    socketio_thread.start()
+    
