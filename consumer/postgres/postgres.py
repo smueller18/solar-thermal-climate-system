@@ -113,7 +113,7 @@ class Connector(object):
         values = list()
         value_placeholders = list()
 
-        for column_name in keys:
+        for column_name in data:
             keys.append(column_name)
 
             if column_name.startswith("timestamp"):

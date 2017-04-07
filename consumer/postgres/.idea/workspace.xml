@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3c306a72-1593-4718-b872-89cd7ecbc89a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/consumer.py" afterPath="$PROJECT_DIR$/consumer.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/postgres.py" afterPath="$PROJECT_DIR$/postgres.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,10 +21,10 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="consumer.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="consumer.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/consumer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19">
+            <state relative-caret-position="586">
               <caret line="71" column="55" lean-forward="true" selection-start-line="71" selection-start-column="55" selection-end-line="71" selection-end-column="55" />
               <folding>
                 <element signature="e#24#33#0" expanded="true" />
@@ -34,14 +33,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="postgres.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="postgres.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/postgres.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="439">
-              <caret line="76" column="61" lean-forward="false" selection-start-line="76" selection-start-column="61" selection-end-line="76" selection-end-column="61" />
+            <state relative-caret-position="376">
+              <caret line="115" column="31" lean-forward="false" selection-start-line="115" selection-start-column="31" selection-end-line="115" selection-end-column="31" />
               <folding>
-                <marker date="1491563050793" expanded="true" signature="989:1100" ph="SELECT 1 FRO... tables" />
-                <marker date="1491563050793" expanded="true" signature="2434:2500" ph="CREATE TABLE... missing_value" />
+                <marker date="1491565853837" expanded="true" signature="989:1100" ph="SELECT 1 FRO... tables" />
+                <marker date="1491565853837" expanded="true" signature="2434:2500" ph="CREATE TABLE... missing_value" />
               </folding>
             </state>
           </provider>
@@ -352,7 +351,14 @@
       <option name="project" value="LOCAL" />
       <updated>1491481299884</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="update table creation">
+      <created>1491563099884</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1491563099884</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -393,7 +399,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="update consumer postgres" />
-    <option name="LAST_COMMIT_MESSAGE" value="update consumer postgres" />
+    <MESSAGE value="update table creation" />
+    <option name="LAST_COMMIT_MESSAGE" value="update table creation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -471,23 +478,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/postgres.py">
+    <entry file="file://$PROJECT_DIR$/consumer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="439">
-          <caret line="76" column="61" lean-forward="false" selection-start-line="76" selection-start-column="61" selection-end-line="76" selection-end-column="61" />
+        <state relative-caret-position="586">
+          <caret line="71" column="55" lean-forward="true" selection-start-line="71" selection-start-column="55" selection-end-line="71" selection-end-column="55" />
           <folding>
-            <marker date="1491563050793" expanded="true" signature="989:1100" ph="SELECT 1 FRO... tables" />
-            <marker date="1491563050793" expanded="true" signature="2434:2500" ph="CREATE TABLE... missing_value" />
+            <element signature="e#24#33#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/consumer.py">
+    <entry file="file://$PROJECT_DIR$/postgres.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="71" column="55" lean-forward="true" selection-start-line="71" selection-start-column="55" selection-end-line="71" selection-end-column="55" />
+        <state relative-caret-position="376">
+          <caret line="115" column="31" lean-forward="false" selection-start-line="115" selection-start-column="31" selection-end-line="115" selection-end-column="31" />
           <folding>
-            <element signature="e#24#33#0" expanded="true" />
+            <marker date="1491565853837" expanded="true" signature="989:1100" ph="SELECT 1 FRO... tables" />
+            <marker date="1491565853837" expanded="true" signature="2434:2500" ph="CREATE TABLE... missing_value" />
           </folding>
         </state>
       </provider>
