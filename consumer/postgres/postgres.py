@@ -21,7 +21,8 @@ _data_types = {
     float: "real",
     int: "bigint",
     bool: "bool",
-    str: "text"
+    str: "text",
+    "timestamp": "TIMESTAMP WITH TIME ZONE"
 }
 
 
@@ -61,20 +62,33 @@ class Connector(object):
         column_names = list()
         column_sql = ""
 
-        data = {**keys, **values}
-        for column_name in data:
+        for column_name in sorted(keys.keys()):
             column_names.append(column_name)
 
             if column_name.startswith("timestamp"):
-                data_type = "TIMESTAMP WITH TIME ZONE"
+                data_type = _data_types["timestamp"]
             else:
                 try:
-                    data_type = _data_types[type(data[column_name])]
+                    data_type = _data_types[type(keys[column_name])]
 
                 except KeyError:
                     data_type = _data_types[str]
 
-            column_sql += column_name + " " + data_type + ","
+            column_sql += column_name + " " + data_type + ", "
+
+        for column_name in sorted(values.keys()):
+            column_names.append(column_name)
+
+            if column_name.startswith("timestamp"):
+                data_type = _data_types["timestamp"]
+            else:
+                try:
+                    data_type = _data_types[type(values[column_name])]
+
+                except KeyError:
+                    data_type = _data_types[str]
+
+            column_sql += column_name + " " + data_type + ", "
 
         column_sql += " PRIMARY KEY (" + ", ".join(keys) + ")"
 
@@ -99,14 +113,14 @@ class Connector(object):
         values = list()
         value_placeholders = list()
 
-        for key in data:
-            keys.append(key)
+        for column_name in keys:
+            keys.append(column_name)
 
-            if key.startswith("timestamp"):
-                values.append(data[key] / 1000)
+            if column_name.startswith("timestamp"):
+                values.append(data[column_name] / 1000)
                 value_placeholders.append("to_timestamp(%s)")
             else:
-                values.append(data[key])
+                values.append(data[column_name])
                 value_placeholders.append("%s")
 
         sql = cur.mogrify("INSERT INTO " + table_name + " (" + ', '.join(keys) + ")"

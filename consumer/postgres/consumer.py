@@ -67,7 +67,8 @@ def handle_message(msg):
         if not topics[topic]["table_check"]:
             try:
                 if not postgres_connector.table_exists(topics[topic]["table"]):
-                    postgres_connector.create_table(table_name=topics[topic]["table"], keys=msg.key(), values=msg.value())
+                    postgres_connector.create_table(table_name=topics[topic]["table"],
+                                                    keys=msg.key(), values=msg.value())
                     topics[topic]["table_check"] = True
                     logger.info("Created table for topic '" + topic + "'")
 
