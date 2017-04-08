@@ -17,7 +17,7 @@ Returns most recent sensor data for all available topics. The structure of the r
 }
 ```
 
-###[`/topic/<topic>`](topic/<topic>)
+###[`/topics/<topic>`](topics/<topic>)
 Returns most recent sensor data for the selected topic. The structure of the responses is as follows:
 ```json
 {

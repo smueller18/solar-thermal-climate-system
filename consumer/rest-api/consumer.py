@@ -2,14 +2,12 @@
 # -*- coding: utf-8 -*-
 
 import os
-import logging.config
+import logging
 import threading
-import re
-import time
-from pykafka import KafkaClient
 from flask import Flask, jsonify, render_template, Markup
 import mistune
-from pykafka_tools.kafka_consumer import KafkaConsumer
+import kafka_connector.avro_loop_consumer as avro_loop_consumer
+from kafka_connector.avro_loop_consumer import AvroLoopConsumer
 
 __author__ = u'Stephan Müller'
 __copyright__ = u'2017, Stephan Müller'
@@ -19,49 +17,16 @@ __dirname__ = os.path.dirname(os.path.abspath(__file__))
 
 PORT = int(os.getenv("PORT", 5001))
 KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "kafka:9092")
-KAFKA_SCHEMA = os.getenv("KAFKA_SCHEMA", __dirname__ + "/kafka.timestamp-data.avsc")
-CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "cache-rest")
-ALLOWED_TOPICS_REGEX = os.getenv("ALLOWED_TOPIC_REGEX", ".*")
+SCHEMA_REGISTRY_URL = os.getenv("SCHEMA_REGISTRY_URL", "http://schema-registry:8082")
+CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "rest-api")
+TOPIC_PREFIX = os.getenv("TOPIC_PREFIX", "prod.stcs.")
 LOGGING_LEVEL = os.getenv("LOGGING_LEVEL", "INFO")
 logging_format = "%(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s"
 
 logging.basicConfig(level=logging.getLevelName(LOGGING_LEVEL), format=logging_format)
+logger = logging.getLogger('consumer')
 
-logger = logging.getLogger('consumer_cache_rest')
-
-topic_cache = dict()
-
-
-def handle_sensor_update(sender, sensor_values):
-    global topic_cache
-    topic_cache[sender.get_topic()].update(sensor_values)
-
-
-def kafka_consumers():
-    started = False
-    while not started:
-        started_threads = dict()
-        try:
-            client = KafkaClient(hosts=KAFKA_HOSTS)
-
-            for topic in client.topics:
-                if re.search(ALLOWED_TOPICS_REGEX, topic.decode()) is not None:
-                    topic_cache[topic.decode()] = dict()
-
-                    thread = KafkaConsumer(KAFKA_HOSTS, topic.decode(), CONSUMER_GROUP,
-                                           kafka_message_schema_file=KAFKA_SCHEMA)
-                    thread.new_message_event += handle_sensor_update
-                    thread.start()
-
-                    started_threads.update({
-                        topic.decode(): thread
-                    })
-                    logger.info("Started consumer thread for topic " + topic.decode())
-            started = True
-
-        except Exception as e:
-            logger.exception(e)
-            time.sleep(30)
+cache = dict()
 
 
 app = Flask(__name__, static_url_path='')
@@ -80,13 +45,13 @@ def api_description():
 
 @app.route('/topics')
 def route_topics():
-    if len(topic_cache) == 0:
+    if len(cache) == 0:
         return jsonify({'error': 'no topic available'})
 
     topics = dict()
-    for topic in topic_cache:
-        if 'timestamp' in topic_cache[topic] and 'data' in topic_cache[topic]:
-            topics[topic] = topic_cache[topic]
+    for topic in cache:
+        if 'timestamp' in cache[topic] and 'data' in cache[topic]:
+            topics[topic] = cache[topic]
 
         else:
             topics[topic] = {'error': 'no cached messages available'}
@@ -94,30 +59,67 @@ def route_topics():
     return jsonify(topics)
 
 
-@app.route('/topic/<topic>')
+@app.route('/topics/<topic>')
 def route_topic(topic):
 
-    if topic not in topic_cache:
+    if topic not in cache:
         return jsonify({'error': 'topic not available'})
 
-    if 'data' in topic_cache[topic]:
-        result = topic_cache[topic]
+    if 'data' in cache[topic]:
+        result = cache[topic]
         result.update({'topic': topic})
         return jsonify(result)
 
     return jsonify({'error': 'no cached message available'})
 
 
-def run():
-    logger.info("Starting cache-rest at port " + str(PORT))
+def run_rest_api():
+    logger.info("Starting TestAPI at port " + str(PORT))
     app.run(host="0.0.0.0", port=PORT)
 
 
-if __name__ == '__main__':
-    webapp_thread = threading.Thread(target=run)
-    consumer_thread = threading.Thread(target=kafka_consumers)
+def handle_message(msg):
+    global cache
 
-    webapp_thread.start()
+    if len(msg.value()) > 0:
+
+        if type(msg.key()) is dict and "timestamp" in msg.key():
+            message = {
+                "timestamp": msg.key()["timestamp"] / 1000,
+                "data": msg.value()
+            }
+
+            cache[msg.topic()] = message
+
+
+def run_kafka_consumer():
+    global cache
+
+    config = avro_loop_consumer.default_config
+    config['enable.auto.commit'] = True
+    config['default.topic.config'] = dict()
+    config['default.topic.config']['auto.offset.reset'] = 'latest'
+
+    consumer = AvroLoopConsumer(KAFKA_HOSTS, SCHEMA_REGISTRY_URL, CONSUMER_GROUP,
+                                ["^" + TOPIC_PREFIX.replace(".", r'\.') + ".*"])
+    logger.info("Starting consumer thread...")
+
+    try:
+        consumer.loop(lambda msg: handle_message(msg))
+    except Exception as e:
+        logger.exception(e)
+        consumer.close()
+
+        return
+
+
+if __name__ == '__main__':
+
+    rest_api_thread = threading.Thread(name="RestAPI", target=run_rest_api)
+    consumer_thread = threading.Thread(name="KafkaConsumer", target=run_kafka_consumer)
+
+    rest_api_thread.start()
     consumer_thread.start()
 
-    webapp_thread.join()
+    consumer_thread.join()
+    rest_api_thread.join()
