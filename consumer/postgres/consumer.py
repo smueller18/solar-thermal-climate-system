@@ -23,7 +23,7 @@ POSTGRES_PW = os.getenv("POSTGRES_PW", "postgres")
 KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "kafka:9092")
 SCHEMA_REGISTRY_URL = os.getenv("SCHEMA_REGISTRY_URL", "http://schema-registry:8082")
 CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "postgres")
-TOPIC_PREFIX = os.getenv("TOPIC_PREFIX", "prod.")
+TOPIC_PREFIX = os.getenv("TOPIC_PREFIX", "prod.stcs.")
 LOGGING_LEVEL = os.getenv("LOGGING_LEVEL", "INFO")
 logging_format = "%(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s"
 
