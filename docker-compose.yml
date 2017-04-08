@@ -194,7 +194,7 @@ services:
 
   jupyter-notebook:
     container_name: jupyter-notebook
-    image: smueller18/base:anaconda3
+    image: smueller18/stcs:anaconda3
     restart: always
     hostname: jupyter-notebook
     volumes:
