@@ -20,13 +20,15 @@ PORT = int(os.getenv("PORT", 5002))
 KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "kafka:9092")
 SCHEMA_REGISTRY_URL = os.getenv("SCHEMA_REGISTRY_URL", "http://schema-registry:8082")
 CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "socketio")
-TOPIC_PREFIX = os.getenv("TOPIC_PREFIX", "prod.")
+TOPIC_PREFIX = os.getenv("TOPIC_PREFIX", "prod.stcs.")
 LOGGING_LEVEL = os.getenv("LOGGING_LEVEL", "INFO")
 logging_format = "%(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s"
 
 logging.basicConfig(level=logging.getLevelName(LOGGING_LEVEL), format=logging_format)
 logger = logging.getLogger('consumer')
 
+# disable logging of all sent messages over socket
+logging.getLogger('engineio').setLevel(logging.WARNING)
 
 cache = dict()
 
@@ -83,17 +85,15 @@ def handle_message(msg):
 
     if len(msg.value()) > 0:
 
-        if msg.topic() not in cache:
-            cache[msg.topic()] = dict()
-
-        cache[msg.topic()].update(msg.value())
-
         if type(msg.key()) is dict and "timestamp" in msg.key():
             message = {
                 "timestamp": msg.key()["timestamp"] / 1000,
                 "data": msg.value(),
                 "topic": msg.topic()
             }
+
+            cache[msg.topic()] = message
+
             socketio.start_background_task(socketio.emit, 'sensor_values', message)
 
 
