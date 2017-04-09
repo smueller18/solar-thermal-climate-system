@@ -10,5 +10,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="tether" level="application" />
     <orderEntry type="library" name="jquery-3.1.1.slim" level="application" />
+    <orderEntry type="library" name="jQuery-2.0.0" level="application" />
   </component>
 </module>
