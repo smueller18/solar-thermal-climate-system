@@ -253,6 +253,7 @@ services:
     command: ["python", "/opt/consumer.py"]
     volumes:
       - ./static_html/css:/opt/static/css
+      - ./static_html/img:/opt/static/img
       - ./static_html/js:/opt/static/js
       - ./consumer/rest-api:/opt
     networks:
@@ -282,6 +283,7 @@ services:
     command: ["python", "/opt/consumer.py"]
     volumes:
       - ./static_html/css:/opt/static/css
+      - ./static_html/img:/opt/static/img
       - ./static_html/js:/opt/static/js
       - ./consumer/socketio:/opt
     networks:
