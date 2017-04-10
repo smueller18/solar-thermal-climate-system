@@ -43,11 +43,11 @@ function printHtml(){
 
     Object.keys(topics).sort().forEach(function (topic) {
 
-        $("#schemas").append($("<div>").addClass("card").html(
+        $("#schemas").append($("<div>").addClass("card").css("margin", "10px 0").html(
           $('#schema-template').html()
-            .replace("TOPIC", topic)
-            .replace("KEY_SCHEMA", library.json.prettyPrint($.parseJSON(topics[topic].key), null, 4))
-            .replace("VALUE_SCHEMA", library.json.prettyPrint($.parseJSON(topics[topic].value), null, 4))
+            .replace(/TOPIC/g, topic)
+            .replace(/KEY_SCHEMA/g, library.json.prettyPrint($.parseJSON(topics[topic].key), null, 4))
+            .replace(/VALUE_SCHEMA/g, library.json.prettyPrint($.parseJSON(topics[topic].value), null, 4))
         ));
     });
 
