@@ -32,17 +32,26 @@
                       	<div class="ball ball5"><div class="innerBall"></div></div>
                     </div>
 
+                    <div id="template-error" style="display: none;">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <strong>Error!</strong> ERROR_MESSAGE
+                        </div>
+                    </div>
+
                     <div id="schemas" role="tablist" aria-multiselectable="true">
 
-                        <div class="card" id="schema-template" style="margin: 10px 0; display: none;">
-                            <div class="card-header" role="tab" id="header_TOPIC">
+                        <div class="card" id="template-schema" style="margin: 10px 0; display: none;">
+                            <div class="card-header" role="tab" id="header_TOPICID">
                                 <h3 class="card-title" style="margin: 0;">
-                                    <a class="collapsed" data-toggle="collapse" data-parent="#schemas" href="#body_TOPIC" aria-controls="body_TOPIC">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#schemas" href="#body_TOPICID" aria-controls="body_TOPICID">
                                         TOPIC
                                     </a>
                                 </h3>
                             </div>
-                            <div id="body_TOPIC" class="collapse in" role="tabcard" aria-labelledby="header_TOPIC">
+                            <div id="body_TOPICID" class="collapse in" role="tabcard" aria-labelledby="header_TOPICID">
                                 <div class="card-block">
                                     <h3>Key</h3>
                                     <pre>KEY_SCHEMA</pre>
@@ -77,12 +86,9 @@
 
     <!-- Initialize Bootstrap functionality -->
     <script>
-    // Initialize tooltip component
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
-
-    // Initialize popover component
     $(function () {
         $('[data-toggle="popover"]').popover()
     })
