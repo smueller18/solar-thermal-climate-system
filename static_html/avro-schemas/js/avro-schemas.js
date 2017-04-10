@@ -42,11 +42,13 @@ $.get(SCHEMA_REGISTRY_URL + "/subjects", function (subjects) {
 function printHtml(){
 
     Object.keys(topics).sort().forEach(function (topic) {
-        $("#content").append($("<h2>").text(topic));
-        $("#content").append($("<h3>").text("Key"));
-        $("#content").append($("<pre>").html(library.json.prettyPrint($.parseJSON(topics[topic].key), null, 4)));
-        $("#content").append($("<h3>").text("Value"));
-        $("#content").append($("<pre>").html(library.json.prettyPrint($.parseJSON(topics[topic].value), null, 4)));
+
+        $("#schemas").append(
+          $('#schema-template').html()
+            .replace("TOPIC", topic)
+            .replace("KEY_SCHEMA", library.json.prettyPrint($.parseJSON(topics[topic].key), null, 4))
+            .replace("VALUE_SCHEMA", library.json.prettyPrint($.parseJSON(topics[topic].value), null, 4))
+        );
     });
 
     $(".loading").remove();

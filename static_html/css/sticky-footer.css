@@ -10,6 +10,7 @@ body {
 
 .content {
   flex: 1;
+  margin-bottom: 40px;
 }
 
 .footer {
