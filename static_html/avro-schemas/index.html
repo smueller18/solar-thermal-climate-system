@@ -31,6 +31,31 @@
                         <div class="ball ball4"><div class="innerBall"></div></div>
                       	<div class="ball ball5"><div class="innerBall"></div></div>
                     </div>
+
+                    <div id="schemas" role="tablist" aria-multiselectable="true">
+
+                        <div id="schema-template" style="display: none;">
+                            <div class="card">
+                                <div class="card-header" role="tab" id="header_TOPIC">
+                                    <h3 class="card-title" style="margin: 0;">
+                                        <a class="collapsed" data-toggle="collapse" data-parent="#schemas" href="#body_TOPIC" aria-controls="body_TOPIC">
+                                            TOPIC
+                                        </a>
+                                    </h3>
+                                </div>
+                                <div id="body_TOPIC" class="collapse in" role="tabcard" aria-labelledby="HEADER_ID">
+                                    <div class="card-block">
+                                        <h3>Key</h3>
+                                        <pre>KEY_SCHEMA</pre>
+                                        <h3>Value</h3>
+                                        <pre>VALUE_SCHEMA</pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -50,7 +75,20 @@
     <script src="../js/jquery.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/json-print.js"></script>
-    <script src="js/kafka-topics.js"></script>
+    <script src="js/avro-schemas.js"></script>
+
+    <!-- Initialize Bootstrap functionality -->
+    <script>
+    // Initialize tooltip component
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+
+    // Initialize popover component
+    $(function () {
+        $('[data-toggle="popover"]').popover()
+    })
+    </script>
 
 </body>
 </html>
