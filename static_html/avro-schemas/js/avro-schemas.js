@@ -48,4 +48,6 @@ function printHtml(){
         $("#content").append($("<h3>").text("Value"));
         $("#content").append($("<pre>").html(library.json.prettyPrint($.parseJSON(topics[topic].value), null, 4)));
     });
+
+    $(".loading").remove();
 }

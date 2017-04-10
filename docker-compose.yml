@@ -235,8 +235,6 @@ services:
         max-size: "1m"
         max-file: "1"
 
-
-# CHANGE ME HERE
   consumer-rest-api:
     container_name: consumer-rest-api
     image: smueller18/stcs:python3
@@ -254,6 +252,8 @@ services:
       USER_NAME: consumer-rest-api
     command: ["python", "/opt/consumer.py"]
     volumes:
+      - ./static_html/css:/opt/static/css
+      - ./static_html/js:/opt/static/js
       - ./consumer/rest-api:/opt
     networks:
       default:
@@ -281,6 +281,8 @@ services:
       USER_NAME: consumer-socktio
     command: ["python", "/opt/consumer.py"]
     volumes:
+      - ./static_html/css:/opt/static/css
+      - ./static_html/js:/opt/static/js
       - ./consumer/socketio:/opt
     networks:
       default:
@@ -336,8 +338,6 @@ services:
        max-size: "1m"
        max-file: "1"
 
-
-# CHANGE ME HERE
   producer-weather-forecast-web:
     container_name: producer-weather-forecast-web
     image: smueller18/stcs:python3

@@ -1,14 +1,15 @@
-html, body {
-    min-height: 100%;
+html {
+  height: 100%;
 }
 
 body {
-    display: flex;
-    flex-flow: column;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.content{
-    margin-bottom: 40px;
+.content {
+  flex: 1;
 }
 
 .footer {
@@ -23,4 +24,3 @@ body {
 dd {
     margin-bottom: 0;
 }
-
