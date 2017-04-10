@@ -43,12 +43,12 @@ function printHtml(){
 
     Object.keys(topics).sort().forEach(function (topic) {
 
-        $("#schemas").append(
+        $("#schemas").append($("<div>").addClass("card").html(
           $('#schema-template').html()
             .replace("TOPIC", topic)
             .replace("KEY_SCHEMA", library.json.prettyPrint($.parseJSON(topics[topic].key), null, 4))
             .replace("VALUE_SCHEMA", library.json.prettyPrint($.parseJSON(topics[topic].value), null, 4))
-        );
+        ));
     });
 
     $(".loading").remove();
