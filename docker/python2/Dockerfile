@@ -1,4 +1,4 @@
-FROM smueller18/python:3-alpine
+FROM smueller18/python:2-alpine
 
 MAINTAINER smueller18
 
@@ -11,9 +11,10 @@ RUN apk add --no-cache \
     # because of https://github.com/gliderlabs/docker-alpine/issues/205
     apk add --no-cache --virtual .build-deps-testing \
             --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
-            python3-dev \
+            python2-dev \
     && \
     apk add --no-cache --virtual .build-deps \
+        git \
         gcc \
         musl-dev \
         linux-headers \
@@ -33,8 +34,15 @@ RUN apk add --no-cache \
           flask mistune flask_socketio eventlet \
           beautifulsoup4 html5lib \
           pysolar \
-          confluent-kafka confluent-kafka[avro] avro-python3 kafka_connector requests \
+          confluent-kafka confluent-kafka[avro] avro requests \
           pytz \
+    && \
+    cd /opt && \
+    git clone https://github.com/smueller18/kafka-connector.git && \
+    cd kafka-connector && \
+    python setup.py install \
+    cd .. \
+    rm -r kafka-connector \
     && \
     apk del --no-cache .build-deps .build-deps-testing && \
     rm -rf /var/cache/apk/*
