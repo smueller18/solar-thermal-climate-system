@@ -1,5 +1,5 @@
 const NAMESPACE_SVG = "http://www.w3.org/2000/svg";
-const SENSOR_DESCRIPTION_URL = "sensor_description.json";
+const SENSOR_DESCRIPTION_URL = "../../config/sensor_description.json";
 // to be defined in config/config.js
 //const SOCKET_URL = "http://localhost:5002/";
 

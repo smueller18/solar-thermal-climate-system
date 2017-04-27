@@ -29,7 +29,7 @@ services:
       - ${STCS_CONFIG_FOLDER-./../config}/nginx/certs/server.key:/etc/nginx/certs/server.key
       # static_html
       - ./static_html:/var/www
-      - ${STCS_CONFIG_FOLDER-./../config}/monitor/technical/js/config.js:/var/www/monitor/technical/js/config.js
+      - ${STCS_CONFIG_FOLDER-./../config}/static_html/config/config.js:/var/www/config/config.js
     networks:
       default:
       jupyter-notebook:
