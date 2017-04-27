@@ -40,8 +40,8 @@ RUN apk add --no-cache \
     cd /opt && \
     git clone https://github.com/smueller18/kafka-connector.git && \
     cd kafka-connector && \
-    python setup.py install \
-    cd .. \
+    python setup.py install && \
+    cd .. && \
     rm -r kafka-connector \
     && \
     apk del --no-cache .build-deps .build-deps-testing && \
