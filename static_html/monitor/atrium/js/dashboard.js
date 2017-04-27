@@ -107,7 +107,7 @@ function initializeSensorValueNodes(sensorValues) {
 
         // due to unique id, only first iteration should exist
         var sensorIdNode = document.getElementById(svgElementId).contentDocument.evaluate(
-            '//x:text[text() = "' + sensorId + '"]',
+            '//x:text[text() = "' + sensorId.toLowerCase() + '"]',
             document.getElementById(svgElementId).contentDocument,
             myNamespaceResolver,
             XPathResult.FIRST_ORDERED_NODE_TYPE,
