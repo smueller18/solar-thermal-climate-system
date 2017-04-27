@@ -34,15 +34,8 @@ RUN apk add --no-cache \
           flask mistune flask_socketio eventlet \
           beautifulsoup4 html5lib \
           pysolar \
-          confluent-kafka confluent-kafka[avro] avro requests \
+          confluent-kafka confluent-kafka[avro] avro kafka-connector requests \
           pytz \
-    && \
-    cd /opt && \
-    git clone https://github.com/smueller18/kafka-connector.git && \
-    cd kafka-connector && \
-    python setup.py install && \
-    cd .. && \
-    rm -r kafka-connector \
     && \
     apk del --no-cache .build-deps .build-deps-testing && \
     rm -rf /var/cache/apk/*
