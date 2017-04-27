@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Stephan Müller">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="../../img/favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="../../img/apple-touch-icon.png" />
+
+    <title>Monitor Atrium</title>
+
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/sticky-footer.css" rel="stylesheet">
+    <link href="../../css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<section class="content">
+    <div class="container">
+
+            <form class="form-inline" style="margin: 15px 0;">
+
+                <button id="connection-status" type="button" class="btn btn-danger disabled" style="margin-right: 20px;"
+                        data-toggle="tooltip" data-placement="bottom" title="offline">
+                    <i class="fa fa-wifi"></i>
+                </button>
+
+                <div class="input-group" style="margin-right: 20px;">
+                    <div class="input-group-addon" data-toggle="tooltip" data-placement="bottom" title="latest sensor update">
+                        <i class="fa fa-clock-o"></i>
+                    </div>
+                    <input type="text" class="form-control" id="last-update-time" placeholder="00.00.0000 00:00:00"
+                           style="width: 175px;">
+                </div>
+
+                <div class="input-group" style="margin-right: 20px;">
+                    <div class="input-group-addon" data-toggle="tooltip" data-placement="bottom" title="latest offset">
+                        <i class="fa fa-hourglass-half"></i>
+                    </div>
+                    <input type="text" class="form-control" id="offset" placeholder="0" style="width: 70px">
+                    <span class="input-group-addon">ms</span>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-group-addon" data-toggle="tooltip" data-placement="bottom" title="connected clients">
+                        <i class="fa fa-users"></i>
+                    </div>
+                    <input type="text" class="form-control" id="connected-clients" placeholder="0"
+                           style="width: 50px;">
+                </div>
+
+            </form>
+
+    </div>
+
+    <div class="container-fluid" style="text-align: center;">
+        <object data="img/monitor-atrium.svg" type="image/svg+xml" id="monitor-atrium"></object>
+    </div>
+
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <p class="text-muted">Developed by Stephan Müller - Hochschule Karlsruhe</p>
+            </div>
+            <div class="col-lg-6 text-right">
+                <dl class="text-muted">
+                    <dt>Attributions</dt>
+                    <dd>monitor atrium - Daniel Beschütz</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="../../js/socket.io.js"></script>
+<script src="../../js/date-de-DE.js"></script>
+<script src="../../js/tether.min.js"></script>
+<script src="../../js/jquery.slim.min.js"></script>
+<script src="../../js/bootstrap.min.js"></script>
+
+<script src="../../config/config.js"></script>
+<script src="js/dashboard.js"></script>
+
+</body>
+</html>
