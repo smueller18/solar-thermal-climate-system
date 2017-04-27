@@ -530,5 +530,165 @@
   "solar_radiation_45_deg_angle": {
     "unit": "W/m²",
     "description": "Solare Einstrahlung auf 45 Grad geneigte Fläche"
+  },
+  "TNE_0": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TNE_1": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TNE_2": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TNE_3": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TNE_4": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TNE_5": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TNE_6": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TNE_7": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TNE_8": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TNE_9": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TNW_0": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TNW_1": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TNW_2": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TNW_3": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TNW_4": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TNW_5": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TNW_6": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TNW_7": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TNW_8": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TNW_9": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TSE_0": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TSE_1": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TSE_2": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TSE_3": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TSE_4": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TSE_5": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TSE_6": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TSE_7": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TSE_8": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TSE_9": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TSW_0": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TSW_1": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TSW_2": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TSW_3": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TSW_4": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TSW_5": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TSW_6": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TSW_7": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TSW_8": {
+    "unit": "°C",
+    "description": ""
+  },
+  "TSW_9": {
+    "unit": "°C",
+    "description": ""
   }
 }
