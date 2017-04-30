@@ -8,6 +8,7 @@ const SENSOR_DESCRIPTION_URL = "../../config/sensor_description.json";
 var sensorValueTextNodes = {};
 
 var svgElementId = "monitor-atrium";
+var topicFilter = "prod.stcs.atrium.temperatures";
 
 window.onload = function () {
 
@@ -37,6 +38,9 @@ window.onload = function () {
                 return;
             }
 
+            if (message["topic"] != topicFilter)
+                return;
+
             if ('timestamp' in message && 'data' in message) {
                 update(message['timestamp'], message['data']);
             }
@@ -50,6 +54,9 @@ window.onload = function () {
                 console.log(message.error);
                 return;
             }
+
+            if (message["topic"] != topicFilter)
+                return;
 
             if ('timestamp' in message && 'data' in message) {
                 update(message['timestamp'], message['data']);
@@ -107,7 +114,7 @@ function initializeSensorValueNodes(sensorValues) {
 
         // due to unique id, only first iteration should exist
         var sensorIdNode = document.getElementById(svgElementId).contentDocument.evaluate(
-            '//x:text[text() = "' + sensorId.toLowerCase() + '"]',
+            '//x:text[text() = "' + sensorId + '"]',
             document.getElementById(svgElementId).contentDocument,
             myNamespaceResolver,
             XPathResult.FIRST_ORDERED_NODE_TYPE,
@@ -116,15 +123,20 @@ function initializeSensorValueNodes(sensorValues) {
 
         if (sensorIdNode != null) {
 
-            bbox = sensorIdNode.getBBox();
-
             var sensorValueNode = document.createElementNS(NAMESPACE_SVG, "text");
-            var x = sensorIdNode.getAttribute("x");
-            var y = parseFloat(sensorIdNode.getAttribute("y")) + bbox.height + 2;
-            sensorValueNode.setAttribute("x", x);
+
+            // <text class="y" transform="translate(163.55 22.33)">TSE_6</text>
+            translate = sensorIdNode.transform.baseVal.getItem(0);
+            if (translate.type != SVGTransform.SVG_TRANSFORM_TRANSLATE)
+                return;
+
+            var x = translate.matrix.e - 5;
+            var y = translate.matrix.f;
+            sensorValueNode.setAttribute("x", x.toString());
             sensorValueNode.setAttribute("y", y.toString());
-            sensorValueNode.setAttribute("text-anchor", "left");
             sensorValueNode.setAttribute("fill", "red");
+			sensorValueNode.setAttribute("text-anchor", "end");
+			sensorValueNode.setAttribute("font-size", "10px");
             sensorValueNode.setAttribute("fonts-family", "Arial");
             sensorValueNode.textContent = "";
 
@@ -138,7 +150,7 @@ function initializeSensorValueNodes(sensorValues) {
             sensorValueNode.appendChild(sensorValue);
             sensorValueNode.appendChild(sensorUnitNode);
 
-            sensorIdNode.parentNode.appendChild(sensorValueNode);
+            document.getElementById(svgElementId).contentDocument.childNodes[0].appendChild(sensorValueNode);
 
             sensorValueTextNodes[sensorId] = sensorValue;
         }
@@ -164,28 +176,7 @@ function update(timestamp, sensorValues) {
 
     Object.keys(sensorValues).forEach(function (sensorId) {
         if (sensorValueTextNodes[sensorId] != undefined) {
-            var sensorValue = sensorValues[sensorId];
-            var newSensorValue;
-            switch (typeof(sensorValue)) {
-                case "number":
-                    // integer
-                    if (sensorValue % 1 === 0)
-                        newSensorValue = sensorValue.toString();
-                    // float
-                    else
-                        newSensorValue = sensorValue.toFixed(1).toString();
-                    break;
-                case "boolean":
-                    if (sensorValue)
-                        newSensorValue = "True";
-                    else
-                        newSensorValue = "False";
-                    break;
-                default:
-                    newSensorValue = sensorValue.toString();
-                    break;
-            }
-            sensorValueTextNodes[sensorId].textContent = newSensorValue;
+            sensorValueTextNodes[sensorId].textContent = sensorValues[sensorId].toFixed(1).toString();
         }
     });
 }
