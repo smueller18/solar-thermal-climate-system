@@ -24,6 +24,24 @@ window.onload = function () {
     var socket = io(SOCKET_URL);
     socket.on('connect', function () {
 
+        socket.on('sensor_values_cache', function (message) {
+
+            if (typeof(message) === "undefined")
+                return;
+
+            if ('error' in message) {
+                console.log(message.error);
+                return;
+            }
+
+            if (message["topic"] != topicFilter)
+                return;
+
+            if ('timestamp' in message && 'data' in message) {
+                update(message['timestamp'], message['data']);
+            }
+        });
+
         socket.on('sensor_values', function (message) {
             if (typeof(message) === "undefined")
                 return;
