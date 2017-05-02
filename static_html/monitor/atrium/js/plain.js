@@ -41,10 +41,6 @@ window.onload = function () {
             }
         });
 
-        socket.on('connected_clients', function (message) {
-            if (typeof(message) === "number")
-                document.getElementById("connected-clients").value = message;
-        });
     });
 
 };
