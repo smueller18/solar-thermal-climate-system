@@ -138,7 +138,7 @@ function update(timestamp, sensorValues) {
 
     if(latest_timestamp < datetime) {
         latest_timestamp = datetime;
-        document.getElementById("last-update-time").value = datetime.toString("dd.MM.yyyy HH:mm:ss");
+        document.getElementById("last-update-time").textContent = datetime.toString("dd.MM.yyyy HH:mm:ss");
     }
 
     Object.keys(sensorValues).forEach(function (sensorId) {
