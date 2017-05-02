@@ -12,44 +12,14 @@
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
     <link href="../../css/sticky-footer.css" rel="stylesheet">
     <link href="../../css/font-awesome.min.css" rel="stylesheet">
-    <link href="../css/form.css" rel="stylesheet">
+    <link href="../css/plain.css" rel="stylesheet">
 </head>
 
 <body>
 
 <section class="content">
     <div class="container">
-
-        <form class="form-inline">
-
-            <button id="connection-status" type="button" class="btn btn-danger disabled" data-toggle="tooltip" data-placement="bottom" title="offline">
-                <i class="fa fa-wifi"></i>
-            </button>
-
-            <div class="input-group">
-                <div class="input-group-addon" data-toggle="tooltip" data-placement="bottom" title="latest sensor update">
-                    <i class="fa fa-clock-o"></i>
-                </div>
-                <input type="text" class="form-control" id="last-update-time" placeholder="00.00.0000 00:00:00" style="width: 175px;">
-            </div>
-
-            <div class="input-group">
-                <div class="input-group-addon" data-toggle="tooltip" data-placement="bottom" title="latest offset">
-                    <i class="fa fa-hourglass-half"></i>
-                </div>
-                <input type="text" class="form-control" id="offset" placeholder="0" style="width: 70px">
-                <span class="input-group-addon">ms</span>
-            </div>
-
-            <div class="input-group">
-                <div class="input-group-addon" data-toggle="tooltip" data-placement="bottom" title="connected clients">
-                    <i class="fa fa-users"></i>
-                </div>
-                <input type="text" class="form-control" id="connected-clients" placeholder="0" style="width: 50px;">
-            </div>
-
-        </form>
-
+        <h4 class="text-center" style="margin: 10px 0;">Atrium Temperatures</h4>
     </div>
 
     <div class="container-fluid" style="text-align: center;">
@@ -62,7 +32,8 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
-                <p class="text-muted"><a href="plain.html">Switch to presentation mode</a></p>
+                <p class="text-muted">Most recent measurement timestamp: <span id="last-update-time"></span></p>
+                <p class="text-muted"><a href="index.html">Switch to extended mode</a></p>
                 <p class="text-muted">Developed by <a href="https://github.com/smueller18">Stephan Müller</a></p>
             </div>
             <div class="col-lg-6 text-right">
@@ -87,7 +58,7 @@
 <script src="../../js/bootstrap.min.js"></script>
 
 <script src="../../config/config.js"></script>
-<script src="js/dashboard.js"></script>
+<script src="js/plain.js"></script>
 
 </body>
 </html>

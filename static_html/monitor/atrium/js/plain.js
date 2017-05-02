@@ -24,28 +24,6 @@ window.onload = function () {
     var socket = io(SOCKET_URL);
     socket.on('connect', function () {
 
-        document.getElementById('connection-status').className =
-            document.getElementById('connection-status').className.replace("btn-danger", "btn-success");
-        document.getElementById('connection-status').title = "online";
-
-        socket.on('sensor_values_cache', function (message) {
-
-            if (typeof(message) === "undefined")
-                return;
-
-            if ('error' in message) {
-                console.log(message.error);
-                return;
-            }
-
-            if (message["topic"] != topicFilter)
-                return;
-
-            if ('timestamp' in message && 'data' in message) {
-                update(message['timestamp'], message['data']);
-            }
-        });
-
         socket.on('sensor_values', function (message) {
             if (typeof(message) === "undefined")
                 return;
@@ -69,11 +47,6 @@ window.onload = function () {
         });
     });
 
-    socket.on('disconnect', function () {
-        document.getElementById('connection-status').className =
-            document.getElementById('connection-status').className.replace("btn-success", "btn-danger");
-        document.getElementById('connection-status').title = "offline";
-    });
 };
 
 
@@ -166,12 +139,10 @@ function update(timestamp, sensorValues) {
         return;
 
     var datetime = new Date(timestamp * 1000);
-    var offset = new Date() - datetime;
 
     if(latest_timestamp < datetime) {
         latest_timestamp = datetime;
         document.getElementById("last-update-time").value = datetime.toString("dd.MM.yyyy HH:mm:ss");
-        document.getElementById("offset").value = offset;
     }
 
     Object.keys(sensorValues).forEach(function (sensorId) {
