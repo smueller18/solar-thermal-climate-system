@@ -20,7 +20,7 @@ Run `docker-compose up -d --build` in root folder to build all consumer and prod
 ## Kafka Topics
 
 The notation of a Kafka topic is devided in at least 3 parts: `<main_prefix>.<sub_prefix>.<source>`,
-where `main_prefix` is one of ``prod`` for production, ``dev`` for development and ``test`` for testing purposes. `sub_prefix` the related system, in this case always use ``stcs``. `source` can be devided in more parts, seperated by dots. If the sensors related to a topic are all at the same place, use the notation `<place>.<sensor_type>`.
+where `<main_prefix>` is one of `prod` for production, `dev` for development and `test` for testing purposes. `<sub_prefix>` refers to the related system, in this case always use `stcs`. `<source>` can be devided in more parts, seperated by dots. If the sensors related to a topic are all at the same place, use the notation `<place>.<sensor_type>`.
 
 An example:
 ```
