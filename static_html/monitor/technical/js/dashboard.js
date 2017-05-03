@@ -3,7 +3,7 @@ const SENSOR_DESCRIPTION_URL = "../../config/sensor_description.json";
 // to be defined in config/config.js
 //const SOCKET_URL = "http://localhost:5002/";
 
-const SVG_ELEMET_ID = "plant";
+const SVG_ELEMENT_ID = "plant";
 
 // required by function updateSensorValues()
 var sensorValueTextNodes = {};
