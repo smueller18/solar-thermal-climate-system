@@ -3,6 +3,7 @@ const SENSOR_DESCRIPTION_URL = "../../config/sensor_description.json";
 // to be defined in config/config.js
 //const SOCKET_URL = "http://localhost:5002/";
 
+const SVG_ELEMET_ID = "plant";
 
 // required by function updateSensorValues()
 var sensorValueTextNodes = {};
@@ -104,9 +105,9 @@ function initializeSensorValueNodes(sensorValues) {
         var sensorUnit = sensorValues[sensorId].unit;
 
         // due to unique id, only first iteration should exist
-        var sensorIdNode = document.getElementById("plant-visualization").contentDocument.evaluate(
+        var sensorIdNode = document.getElementById(SVG_ELEMENT_ID).contentDocument.evaluate(
             '//x:text[text() = "' + sensorId + '"]',
-            document.getElementById("plant-visualization").contentDocument,
+            document.getElementById(SVG_ELEMENT_ID).contentDocument,
             myNamespaceResolver,
             XPathResult.FIRST_ORDERED_NODE_TYPE,
             null

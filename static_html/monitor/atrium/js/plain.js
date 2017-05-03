@@ -1,14 +1,14 @@
 const NAMESPACE_SVG = "http://www.w3.org/2000/svg";
 const SENSOR_DESCRIPTION_URL = "../../config/sensor_description.json";
+
+const SVG_ELEMENT_ID = "monitor-atrium";
+const TOPIC_FILTER = "prod.stcs.atrium.temperatures";
+
 // to be defined in config/config.js
 //const SOCKET_URL = "http://localhost:5002/";
 
-
 // required by function updateSensorValues()
 var sensorValueTextNodes = {};
-
-var svgElementId = "monitor-atrium";
-var topicFilter = "prod.stcs.atrium.temperatures";
 
 window.onload = function () {
 
@@ -34,7 +34,7 @@ window.onload = function () {
                 return;
             }
 
-            if (message["topic"] != topicFilter)
+            if (message["topic"] != TOPIC_FILTER)
                 return;
 
             if ('timestamp' in message && 'data' in message) {
@@ -51,7 +51,7 @@ window.onload = function () {
                 return;
             }
 
-            if (message["topic"] != topicFilter)
+            if (message["topic"] != TOPIC_FILTER)
                 return;
 
             if ('timestamp' in message && 'data' in message) {
@@ -100,9 +100,9 @@ function initializeSensorValueNodes(sensorValues) {
         var sensorUnit = sensorValues[sensorId].unit;
 
         // due to unique id, only first iteration should exist
-        var sensorIdNode = document.getElementById(svgElementId).contentDocument.evaluate(
+        var sensorIdNode = document.getElementById(SVG_ELEMENT_ID).contentDocument.evaluate(
             '//x:text[text() = "' + sensorId + '"]',
-            document.getElementById(svgElementId).contentDocument,
+            document.getElementById(SVG_ELEMENT_ID).contentDocument,
             myNamespaceResolver,
             XPathResult.FIRST_ORDERED_NODE_TYPE,
             null
@@ -137,7 +137,7 @@ function initializeSensorValueNodes(sensorValues) {
             sensorValueNode.appendChild(sensorValue);
             sensorValueNode.appendChild(sensorUnitNode);
 
-            document.getElementById(svgElementId).contentDocument.childNodes[0].appendChild(sensorValueNode);
+            document.getElementById(SVG_ELEMENT_ID).contentDocument.childNodes[0].appendChild(sensorValueNode);
 
             sensorValueTextNodes[sensorId] = sensorValue;
         }
