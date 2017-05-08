@@ -3,7 +3,8 @@ FROM continuumio/anaconda3
 MAINTAINER smueller18
 
 RUN apt-get install -y gcc libpq-dev python3-dev \
-    && pip install psycopg2
+    && pip install psycopg2 \
+    && pip install tsfresh
 
 EXPOSE 8888
 
