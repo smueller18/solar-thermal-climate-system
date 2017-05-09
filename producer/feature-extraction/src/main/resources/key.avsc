@@ -1,0 +1,17 @@
+{
+  "namespace": "hska.stcs",
+  "name": "flink_test_key",
+  "type": "record",
+  "fields": [
+    {
+      "name": "timestamp_begin",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    },
+    {
+      "name": "timestamp_end",
+      "type": "long",
+      "logicalType": "timestamp-millis"
+    }
+  ]
+}
