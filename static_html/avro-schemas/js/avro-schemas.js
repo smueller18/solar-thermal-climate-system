@@ -75,7 +75,7 @@ function printSchemas(){
 				.replace(/KEY_SCHEMA/g, library.json.prettyPrint($.parseJSON(topics[topic].key), null, 4))
 				.replace(/VALUE_SCHEMA/g, library.json.prettyPrint($.parseJSON(topics[topic].value), null, 4))
 			));
-		} catch(SyntaxError e) {
+		} catch(e) {
 			Console.log(e);
 		}
         
