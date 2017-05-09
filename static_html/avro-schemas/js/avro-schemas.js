@@ -67,14 +67,18 @@ function printSchemas(){
     Object.keys(topics).sort().forEach(function (topic) {
 
         topicId = topic.replace(/\./g, "_");
-
-        $("#schemas").append($("<div>").addClass("card").css("margin", "10px 0").html(
-          $('#template-schema').html()
-            .replace(/TOPICID/g, topicId)
-            .replace(/TOPIC/g, topic)
-            .replace(/KEY_SCHEMA/g, library.json.prettyPrint($.parseJSON(topics[topic].key), null, 4))
-            .replace(/VALUE_SCHEMA/g, library.json.prettyPrint($.parseJSON(topics[topic].value), null, 4))
-        ));
+		try {
+			$("#schemas").append($("<div>").addClass("card").css("margin", "10px 0").html(
+			  $('#template-schema').html()
+				.replace(/TOPICID/g, topicId)
+				.replace(/TOPIC/g, topic)
+				.replace(/KEY_SCHEMA/g, library.json.prettyPrint($.parseJSON(topics[topic].key), null, 4))
+				.replace(/VALUE_SCHEMA/g, library.json.prettyPrint($.parseJSON(topics[topic].value), null, 4))
+			));
+		} catch(SyntaxError e) {
+			Console.log(e);
+		}
+        
     });
 
     $(".loading").remove();
