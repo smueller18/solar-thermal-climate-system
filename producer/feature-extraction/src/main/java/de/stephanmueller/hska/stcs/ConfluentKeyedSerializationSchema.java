@@ -14,6 +14,7 @@ import org.apache.flink.streaming.util.serialization.KeyedSerializationSchema;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.logging.Logger;
@@ -26,24 +27,19 @@ public class ConfluentKeyedSerializationSchema implements KeyedSerializationSche
     private static HashMap<String, Schema> schemaHash = new HashMap<>();
     private static HashMap<String, Encoder> encoderHash = new HashMap<>();
 
-    private String keySchemaFile;
-    private String valueSchemaFile;
-
     private String keySubject;
     private String valueSubject;
 
 
-    public ConfluentKeyedSerializationSchema(String schemaRegistryUrl, String keySchemaFile, String valueSchemaFile, String topic)
+    public ConfluentKeyedSerializationSchema(String schemaRegistryUrl, InputStream keySchemaStream, InputStream valueSchemaStream, String topic)
             throws IOException {
-        this.keySchemaFile = keySchemaFile;
-        this.valueSchemaFile = valueSchemaFile;
 
         this.keySubject = topic + "-key";
         this.valueSubject = topic + "-value";
 
         Schema.Parser parser = new Schema.Parser();
-        schemaHash.put(this.keySchemaFile, parser.parse(new File(this.keySchemaFile)));
-        schemaHash.put(this.valueSchemaFile, parser.parse(new File(this.valueSchemaFile)));
+        schemaHash.put(this.keySubject, parser.parse(keySchemaStream));
+        schemaHash.put(this.valueSubject, parser.parse(valueSchemaStream));
 
         Properties props = new Properties();
         props.put("schema.registry.url", schemaRegistryUrl);
@@ -59,7 +55,7 @@ public class ConfluentKeyedSerializationSchema implements KeyedSerializationSche
     @Override
     public byte[] serializeKey(KeyValuePair keyValuePair) {
 
-        GenericRecord record = new GenericData.Record(schemaHash.get(this.keySchemaFile));
+        GenericRecord record = new GenericData.Record(schemaHash.get(this.keySubject));
 
         for (String key : keyValuePair.getKeys().keySet()) {
             record.put(key, keyValuePair.getKey(key));
@@ -71,7 +67,7 @@ public class ConfluentKeyedSerializationSchema implements KeyedSerializationSche
     @Override
     public byte[] serializeValue(KeyValuePair keyValuePair) {
 
-        GenericRecord record = new GenericData.Record(schemaHash.get(this.valueSchemaFile));
+        GenericRecord record = new GenericData.Record(schemaHash.get(this.valueSubject));
 
         for (String key : keyValuePair.getValues().keySet()) {
             record.put(key, keyValuePair.getValue(key));
