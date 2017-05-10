@@ -12,7 +12,6 @@ import org.apache.avro.generic.GenericRecord;
 import kafka.serializer.Encoder;
 import org.apache.flink.streaming.util.serialization.KeyedSerializationSchema;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
