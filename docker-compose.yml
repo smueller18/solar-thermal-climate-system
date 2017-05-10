@@ -455,6 +455,8 @@ services:
     ports:
       - "6123:6123"
     command: docker-entrypoint.sh jobmanager
+    env_file:
+      - ${STCS_CONFIG_FOLDER-./../config}/global.env
     environment:
       JOB_MANAGER_RPC_ADDRESS: flink-jobmanager
       USER_NAME: flink
@@ -474,6 +476,8 @@ services:
     depends_on:
       - flink-jobmanager
     command: docker-entrypoint.sh taskmanager
+    env_file:
+      - ${STCS_CONFIG_FOLDER-./../config}/global.env
     environment:
       JOB_MANAGER_RPC_ADDRESS: flink-jobmanager
       USER_NAME: flink

@@ -5,16 +5,15 @@
 
 package de.stephanmueller.hska.stcs;
 
+import kafka.serializer.Encoder;
 import kafka.utils.VerifiableProperties;
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericRecord;
-import kafka.serializer.Encoder;
 import org.apache.flink.streaming.util.serialization.KeyedSerializationSchema;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -23,56 +22,81 @@ public class ConfluentKeyedSerializationSchema implements KeyedSerializationSche
 
     private static final Logger log = Logger.getLogger(ConfluentKeyedSerializationSchema.class.getName());
 
-    private static HashMap<String, Schema> schemaHash = new HashMap<>();
-    private static HashMap<String, Encoder> encoderHash = new HashMap<>();
+    private String schemaRegistryUrl;
+    private String keySchemaRessource;
+    private String valueSchemaRessource;
+    private String topic;
 
-    private String keySubject;
-    private String valueSubject;
+    private transient Schema keySchema;
+    private transient Schema valueSchema;
+    private transient Encoder keyEncoder;
+    private transient Encoder valueEncoder;
 
 
-    public ConfluentKeyedSerializationSchema(String schemaRegistryUrl, InputStream keySchemaStream, InputStream valueSchemaStream, String topic)
+    public ConfluentKeyedSerializationSchema(String schemaRegistryUrl, String keySchemaRessource, String valueSchemaRessource, String topic)
             throws IOException {
 
-        this.keySubject = topic + "-key";
-        this.valueSubject = topic + "-value";
+        this.schemaRegistryUrl = schemaRegistryUrl;
+        this.keySchemaRessource = keySchemaRessource;
+        this.valueSchemaRessource = valueSchemaRessource;
+        this.topic = topic;
 
-        Schema.Parser parser = new Schema.Parser();
-        schemaHash.put(this.keySubject, parser.parse(keySchemaStream));
-        schemaHash.put(this.valueSubject, parser.parse(valueSchemaStream));
-
-        Properties props = new Properties();
-        props.put("schema.registry.url", schemaRegistryUrl);
-        VerifiableProperties vProps = new VerifiableProperties(props);
-
-        if (!encoderHash.containsKey(this.keySubject))
-            encoderHash.put(this.keySubject, new KafkaAvroKeyEncoder(topic, vProps));
-
-        if (!encoderHash.containsKey(this.valueSubject))
-            encoderHash.put(this.valueSubject, new KafkaAvroValueEncoder(topic, vProps));
     }
 
     @Override
     public byte[] serializeKey(KeyValuePair keyValuePair) {
 
-        GenericRecord record = new GenericData.Record(schemaHash.get(this.keySubject));
+        if (this.keySchema == null) {
+
+            Schema.Parser parser = new Schema.Parser();
+            try {
+                this.keySchema = parser.parse(FeatureExtraction.class.getResourceAsStream(keySchemaRessource));
+            } catch (IOException e) {
+            }
+
+            Properties props = new Properties();
+            props.put("schema.registry.url", this.schemaRegistryUrl);
+            VerifiableProperties vProps = new VerifiableProperties(props);
+
+            this.keyEncoder = new KafkaAvroKeyEncoder(this.topic, vProps);
+        }
+
+        GenericRecord record = new GenericData.Record(this.keySchema);
 
         for (String key : keyValuePair.getKeys().keySet()) {
             record.put(key, keyValuePair.getKey(key));
         }
 
-        return ((KafkaAvroKeyEncoder) encoderHash.get(this.keySubject)).toBytes(record);
+        return ((KafkaAvroKeyEncoder) this.keyEncoder).toBytes(record);
+
     }
 
     @Override
     public byte[] serializeValue(KeyValuePair keyValuePair) {
 
-        GenericRecord record = new GenericData.Record(schemaHash.get(this.valueSubject));
+        if (this.valueSchema == null) {
+
+            Schema.Parser parser = new Schema.Parser();
+            try {
+                this.valueSchema = parser.parse(FeatureExtraction.class.getResourceAsStream(valueSchemaRessource));
+            } catch (IOException e) {
+            }
+
+            Properties props = new Properties();
+            props.put("schema.registry.url", this.schemaRegistryUrl);
+            VerifiableProperties vProps = new VerifiableProperties(props);
+
+            this.valueEncoder = new KafkaAvroValueEncoder(this.topic, vProps);
+        }
+
+        GenericRecord record = new GenericData.Record(this.valueSchema);
 
         for (String key : keyValuePair.getValues().keySet()) {
             record.put(key, keyValuePair.getValue(key));
         }
 
-        return ((KafkaAvroValueEncoder) encoderHash.get(this.valueSubject)).toBytes(record);
+        return ((KafkaAvroValueEncoder) this.valueEncoder).toBytes(record);
+
     }
 
     @Override

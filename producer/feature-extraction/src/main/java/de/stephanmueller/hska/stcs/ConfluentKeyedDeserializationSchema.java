@@ -18,10 +18,13 @@ import java.util.Properties;
 
 public class ConfluentKeyedDeserializationSchema implements KeyedDeserializationSchema<GenericKeyValueRecord> {
 
+    private String schemaRegistryUrl;
     private static KafkaAvroDecoder decoder;
 
 
     public ConfluentKeyedDeserializationSchema(String schemaRegistryUrl) {
+
+        this.schemaRegistryUrl = schemaRegistryUrl;
 
         if(decoder == null) {
             Properties props = new Properties();
@@ -35,6 +38,14 @@ public class ConfluentKeyedDeserializationSchema implements KeyedDeserialization
     @Override
     public GenericKeyValueRecord deserialize(byte[] messageKey, byte[] message, String topic, int partition, long offset)
             throws IOException {
+
+        if(decoder == null) {
+            Properties props = new Properties();
+            props.put("schema.registry.url", schemaRegistryUrl);
+            VerifiableProperties vProps = new VerifiableProperties(props);
+
+            decoder = new KafkaAvroDecoder(vProps);
+        }
 
         return new GenericKeyValueRecord(
                 (GenericRecord) decoder.fromBytes(messageKey),

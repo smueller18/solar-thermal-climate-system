@@ -14,6 +14,7 @@ import org.apache.commons.math3.stat.descriptive.rank.Max;
 import org.apache.commons.math3.stat.descriptive.rank.Min;
 import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.streaming.api.datastream.DataStream;
+import org.apache.flink.streaming.api.datastream.DataStreamSink;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.sink.PrintSinkFunction;
 import org.apache.flink.streaming.api.functions.windowing.AllWindowFunction;
@@ -24,6 +25,7 @@ import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer010;
 import org.apache.flink.types.NullFieldException;
 import org.apache.flink.util.Collector;
 
+import java.security.Key;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -38,51 +40,76 @@ public class FeatureExtraction {
             // prod.stcs.cellar.flows
             "TVFS_SOP", "FVFS_SOP", "TVFS_C_1", "FVFS_C_1", "TVFS_SOS", "FVFS_SOS"
     );
+    private static String schemaRegistryUrl = "http://schema-registry:8082";
+    private static String bootstrapServers = "kafka:9092";
+    private static String groupId = "machine_learning.aggregations";
+
+    private static String keySchemaRessource = "/key.avsc";
+    private static String valueSchemaRessource = "/value.avsc";
+
+    private static String chilliiTopic = "prod.stcs.chillii";
+    private static String solarRadiationTopic = "prod.stcs.roof.solar_radiation";
+    private static String flowsTopic = "prod.stcs.cellar.flows";
+
+    private static String producerTopicOneMin = "dev.machine_learning.aggregations.1min";
+    private static String producerTopicFiveMin = "dev.machine_learning.aggregations.5min";
 
     public static void main(String[] args) throws Exception {
 
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
-        String producerTopic = "dev.machine_learning.aggregations.1min";
-        String schemaRegistryUrl = "http://schema-registry:8082";
-
         Properties kafkaProps = new Properties();
-        kafkaProps.setProperty("bootstrap.servers", "kafka:9092");
-        //kafkaProps.setProperty("zookeeper.connect", "zookeeper:2021");
-        kafkaProps.setProperty("group.id", "machine_learning.aggregations");
+        kafkaProps.setProperty("bootstrap.servers", bootstrapServers);
+        kafkaProps.setProperty("group.id", groupId);
 
         ConfluentKeyedDeserializationSchema deserializationSchema = new ConfluentKeyedDeserializationSchema(
                 schemaRegistryUrl
         );
 
-        ConfluentKeyedSerializationSchema serializationSchema = new ConfluentKeyedSerializationSchema(
+        ConfluentKeyedSerializationSchema serializationSchemaOneMin = new ConfluentKeyedSerializationSchema(
                 schemaRegistryUrl,
-                FeatureExtraction.class.getResourceAsStream("/key.avsc"),
-                FeatureExtraction.class.getResourceAsStream("/value.avsc"),
-                producerTopic
+                keySchemaRessource,
+                valueSchemaRessource,
+                producerTopicOneMin
+        );
+
+        ConfluentKeyedSerializationSchema serializationSchemaFiveMin = new ConfluentKeyedSerializationSchema(
+                schemaRegistryUrl,
+                keySchemaRessource,
+                valueSchemaRessource,
+                producerTopicFiveMin
         );
 
         DataStream<GenericKeyValueRecord> chilliiStream =
-                env.addSource(new FlinkKafkaConsumer010<>("prod.stcs.chillii", deserializationSchema, kafkaProps));
+                env.addSource(new FlinkKafkaConsumer010<>(chilliiTopic, deserializationSchema, kafkaProps), chilliiTopic);
 
         DataStream<GenericKeyValueRecord> solarRadiationStream =
-                env.addSource(new FlinkKafkaConsumer010<>("prod.stcs.roof.solar_radiation", deserializationSchema, kafkaProps));
+                env.addSource(new FlinkKafkaConsumer010<>(solarRadiationTopic, deserializationSchema, kafkaProps), solarRadiationTopic);
 
         DataStream<GenericKeyValueRecord> flowsStream =
-                env.addSource(new FlinkKafkaConsumer010<>("prod.stcs.cellar.flows", deserializationSchema, kafkaProps));
+                env.addSource(new FlinkKafkaConsumer010<>(flowsTopic, deserializationSchema, kafkaProps), flowsTopic);
 
-        DataStream<KeyValuePair> stream = chilliiStream.union(solarRadiationStream, flowsStream)
-                .flatMap(new Splitter())
+        DataStream<KeyValuePair> unionStream = chilliiStream.union(solarRadiationStream, flowsStream).flatMap(new Splitter());
+
+        DataStream<KeyValuePair> streamOneMin = unionStream
                 .timeWindowAll(Time.minutes(1), Time.seconds(30))
                 .apply(new CalcAggregations());
 
-        stream.addSink(new PrintSinkFunction<>());
+        DataStream<KeyValuePair> streamFiveMin = unionStream
+                .timeWindowAll(Time.minutes(5), Time.seconds(150))
+                .apply(new CalcAggregations());
 
-        stream.addSink(new FlinkKafkaProducer010<>(
-                producerTopic,
-                serializationSchema,
+        streamOneMin.addSink(new FlinkKafkaProducer010<>(
+                producerTopicOneMin,
+                serializationSchemaOneMin,
                 kafkaProps
-        ));
+        )).name(producerTopicOneMin);
+
+        streamFiveMin.addSink(new FlinkKafkaProducer010<>(
+                producerTopicFiveMin,
+                serializationSchemaFiveMin,
+                kafkaProps
+        )).name(producerTopicFiveMin);
 
         env.execute("Extract features for machine state prediction");
     }
