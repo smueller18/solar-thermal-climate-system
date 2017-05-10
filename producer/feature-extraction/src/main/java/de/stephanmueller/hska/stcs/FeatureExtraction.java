@@ -13,10 +13,10 @@ import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 import org.apache.commons.math3.stat.descriptive.rank.Max;
 import org.apache.commons.math3.stat.descriptive.rank.Min;
 import org.apache.flink.api.common.functions.FlatMapFunction;
+import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
-import org.apache.flink.streaming.api.datastream.DataStreamSink;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.functions.sink.PrintSinkFunction;
+import org.apache.flink.streaming.api.functions.timestamps.AscendingTimestampExtractor;
 import org.apache.flink.streaming.api.functions.windowing.AllWindowFunction;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
@@ -25,7 +25,6 @@ import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer010;
 import org.apache.flink.types.NullFieldException;
 import org.apache.flink.util.Collector;
 
-import java.security.Key;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -57,6 +56,7 @@ public class FeatureExtraction {
     public static void main(String[] args) throws Exception {
 
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
 
         Properties kafkaProps = new Properties();
         kafkaProps.setProperty("bootstrap.servers", bootstrapServers);
@@ -89,7 +89,10 @@ public class FeatureExtraction {
         DataStream<GenericKeyValueRecord> flowsStream =
                 env.addSource(new FlinkKafkaConsumer010<>(flowsTopic, deserializationSchema, kafkaProps), flowsTopic);
 
-        DataStream<KeyValuePair> unionStream = chilliiStream.union(solarRadiationStream, flowsStream).flatMap(new Splitter());
+        DataStream<KeyValuePair> unionStream = chilliiStream
+                .union(solarRadiationStream, flowsStream)
+                .assignTimestampsAndWatermarks(new TimeStampExtractor())
+                .flatMap(new GenericKeyValueRecordMap());
 
         DataStream<KeyValuePair> streamOneMin = unionStream
                 .timeWindowAll(Time.minutes(1), Time.seconds(30))
@@ -114,7 +117,14 @@ public class FeatureExtraction {
         env.execute("Extract features for machine state prediction");
     }
 
-    private static class Splitter implements FlatMapFunction<GenericKeyValueRecord, KeyValuePair> {
+    private static class TimeStampExtractor extends AscendingTimestampExtractor<GenericKeyValueRecord> {
+        @Override
+        public long extractAscendingTimestamp(GenericKeyValueRecord genericKeyValueRecord) {
+            return (Long) genericKeyValueRecord.getKey("timestamp");
+        }
+    }
+
+    private static class GenericKeyValueRecordMap implements FlatMapFunction<GenericKeyValueRecord, KeyValuePair> {
         @Override
         public void flatMap(GenericKeyValueRecord genericKeyValueRecord, Collector<KeyValuePair> collector)
                 throws Exception {
@@ -170,13 +180,17 @@ public class FeatureExtraction {
                         value = Double.parseDouble(kvp.getValue(key).toString());
                     }
 
-                    if(value != null)
+                    if (value != null)
                         rawValues.get(key).add(value);
 
                 }
             }
 
+            int aggregationSetMaxLength = 0;
             for (String key : rawValues.keySet()) {
+
+                if (rawValues.get(key).size() > aggregationSetMaxLength)
+                    aggregationSetMaxLength = rawValues.get(key).size();
 
                 aggregatedValues.put("min_" + key, (float) new Min().evaluate(
                         ArrayUtils.toPrimitive(rawValues.get(key).toArray(new Double[rawValues.get(key).size()]))
@@ -207,6 +221,8 @@ public class FeatureExtraction {
             HashMap<String, Object> keys = new HashMap<>();
             keys.put("timestamp_begin", timestamp_begin);
             keys.put("timestamp_end", timestamp_end);
+
+            keys.put("aggregation_set_max_length", aggregationSetMaxLength);
 
             out.collect(new KeyValuePair(keys, aggregatedValues));
         }

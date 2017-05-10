@@ -12,6 +12,11 @@
       "name": "timestamp_end",
       "type": "long",
       "logicalType": "timestamp-millis"
+    },
+    {
+      "name": "aggregation_set_max_length",
+      "type": "int",
+      "doc": "length of largest set of sensor values used for calculating aggregations"
     }
   ]
 }

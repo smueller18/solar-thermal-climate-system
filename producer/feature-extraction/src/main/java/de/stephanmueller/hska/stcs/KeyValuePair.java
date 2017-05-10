@@ -9,6 +9,8 @@ import java.util.HashMap;
 
 public class KeyValuePair {
 
+    public static boolean printValues = true;
+
     private HashMap<String, Object> keys;
     private HashMap<String, Object> values;
 
@@ -42,11 +44,15 @@ public class KeyValuePair {
         for (String key : this.keys.keySet()) {
             sb.append(String.format("%s: '%s', ", key, this.keys.get(key).toString()));
         }
-        sb.append(" }, Values: { ");
-        for (String key : this.values.keySet()) {
-            sb.append(String.format("%s: '%s', ", key, this.values.get(key).toString()));
-        }
         sb.append(" }");
+
+        if (printValues) {
+            sb.append(", Values: { ");
+            for (String key : this.values.keySet()) {
+                sb.append(String.format("%s: '%s', ", key, this.values.get(key).toString()));
+            }
+            sb.append(" }");
+        }
 
         return sb.toString();
     }
