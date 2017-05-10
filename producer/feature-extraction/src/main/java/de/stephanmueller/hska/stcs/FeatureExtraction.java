@@ -13,7 +13,6 @@ import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 import org.apache.commons.math3.stat.descriptive.rank.Max;
 import org.apache.commons.math3.stat.descriptive.rank.Min;
 import org.apache.flink.api.common.functions.FlatMapFunction;
-import org.apache.flink.shaded.com.google.common.io.Resources;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.sink.PrintSinkFunction;
@@ -58,8 +57,8 @@ public class FeatureExtraction {
 
         ConfluentKeyedSerializationSchema serializationSchema = new ConfluentKeyedSerializationSchema(
                 schemaRegistryUrl,
-                Resources.getResource("key.avsc").getFile(),
-                Resources.getResource("value.avsc").getFile(),
+                FeatureExtraction.class.getResourceAsStream("/key.avsc"),
+                FeatureExtraction.class.getResourceAsStream("/value.avsc"),
                 producerTopic
         );
 

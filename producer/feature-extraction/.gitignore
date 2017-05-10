@@ -1,3 +1,6 @@
+# target ressource files
+target/classes/*
+
 # Compiled class file
 *.class
 
