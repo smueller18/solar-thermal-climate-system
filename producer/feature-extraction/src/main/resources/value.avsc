@@ -2,7 +2,7 @@
   "namespace": "hska.stcs",
   "name": "flink_test_value",
   "type": "record",
-  "fields": ["
+  "fields": [
     {
       "name": "PSOP__min",
       "type": ["float", "null"]
