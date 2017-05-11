@@ -12,6 +12,7 @@ import org.apache.commons.math3.stat.descriptive.moment.Skewness;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 import org.apache.commons.math3.stat.descriptive.rank.Max;
 import org.apache.commons.math3.stat.descriptive.rank.Min;
+import org.apache.commons.math3.stat.descriptive.rank.Percentile;
 import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
@@ -192,29 +193,23 @@ public class FeatureExtraction {
                 if (rawValues.get(key).size() > aggregationSetMaxLength)
                     aggregationSetMaxLength = rawValues.get(key).size();
 
-                aggregatedValues.put("min_" + key, (float) new Min().evaluate(
-                        ArrayUtils.toPrimitive(rawValues.get(key).toArray(new Double[rawValues.get(key).size()]))
-                ));
+                double[] rawArray = ArrayUtils.toPrimitive(rawValues.get(key).toArray(new Double[rawValues.get(key).size()]));
 
-                aggregatedValues.put("max_" + key, (float) new Max().evaluate(
-                        ArrayUtils.toPrimitive(rawValues.get(key).toArray(new Double[rawValues.get(key).size()]))
-                ));
+                aggregatedValues.put(key + "__min", (float) new Min().evaluate(rawArray));
 
-                aggregatedValues.put("kurtosis_" + key, (float) new Kurtosis().evaluate(
-                        ArrayUtils.toPrimitive(rawValues.get(key).toArray(new Double[rawValues.get(key).size()]))
-                ));
+                aggregatedValues.put(key + "__max", (float) new Max().evaluate(rawArray));
 
-                aggregatedValues.put("stddev_" + key, (float) new StandardDeviation().evaluate(
-                        ArrayUtils.toPrimitive(rawValues.get(key).toArray(new Double[rawValues.get(key).size()]))
-                ));
+                aggregatedValues.put(key + "__kurtosis", (float) new Kurtosis().evaluate(rawArray));
 
-                aggregatedValues.put("mean_" + key, (float) new Mean().evaluate(
-                        ArrayUtils.toPrimitive(rawValues.get(key).toArray(new Double[rawValues.get(key).size()]))
-                ));
+                aggregatedValues.put(key + "__stddev", (float) new StandardDeviation().evaluate(rawArray));
 
-                aggregatedValues.put("skewness_" + key, (float) new Skewness().evaluate(
-                        ArrayUtils.toPrimitive(rawValues.get(key).toArray(new Double[rawValues.get(key).size()]))
-                ));
+                aggregatedValues.put(key + "__mean", (float) new Mean().evaluate(rawArray));
+
+                aggregatedValues.put(key + "__skewness", (float) new Skewness().evaluate(rawArray));
+
+                for (int percentile = 10; percentile < 100; percentile += 10) {
+                    aggregatedValues.put(key + "__quantile_" + percentile, (float) new Percentile(percentile).evaluate(rawArray));
+                }
 
             }
 
