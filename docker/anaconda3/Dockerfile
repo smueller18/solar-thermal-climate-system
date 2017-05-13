@@ -4,7 +4,7 @@ MAINTAINER smueller18
 
 RUN apt-get install -y gcc libpq-dev python3-dev \
     && pip install psycopg2 \
-    && pip install tsfresh tabulate
+    && pip install tsfresh tabulate pydotplus
 
 EXPOSE 8888
 
