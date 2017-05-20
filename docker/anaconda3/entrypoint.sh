@@ -9,4 +9,6 @@ else
 	echo "Container timezone not modified"
 fi
 
-/usr/bin/tini --
+echo "Starting jyputer notebook ..."
+
+jupyter notebook --notebook-dir=/opt/notebooks --NotebookApp.allow_origin='*' --ip='*' --port=8888 --no-browser --NotebookApp.token=''
