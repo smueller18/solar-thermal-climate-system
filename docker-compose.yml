@@ -198,6 +198,8 @@ services:
     image: smueller18/stcs:anaconda3
     restart: always
     hostname: jupyter-notebook
+    env_file:
+      - ${STCS_CONFIG_FOLDER-./../config}/global.env
     volumes:
       - jupyter-notebook-data:/opt/notebooks
     networks:
