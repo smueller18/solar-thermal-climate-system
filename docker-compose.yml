@@ -113,7 +113,7 @@ services:
     environment:
       APPLICATION_SECRET: letmein
       ZK_HOSTS: "zookeeper:2181"
-      KM_VERSION: 1.3.3.4
+      KM_VERSION: 1.3.3.6
     env_file:
       - ${STCS_CONFIG_FOLDER-./../config}/global.env
     networks:
