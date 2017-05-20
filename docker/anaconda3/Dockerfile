@@ -2,7 +2,6 @@ FROM continuumio/anaconda3
 
 MAINTAINER smueller18
 
-RUN apk add tzdata
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
