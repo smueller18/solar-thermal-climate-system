@@ -175,7 +175,7 @@ services:
 
   pgadmin:
     container_name: pgadmin
-    image: fenglc/pgadmin4:1.3
+    image: fenglc/pgadmin4:1.4
     restart: always
     hostname: pgadmin4
     env_file:
