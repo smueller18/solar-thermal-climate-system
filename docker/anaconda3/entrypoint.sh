@@ -8,3 +8,5 @@ if [ -n "$TIMEZONE" ]; then
 else
 	echo "Container timezone not modified"
 fi
+
+/usr/bin/tini --
