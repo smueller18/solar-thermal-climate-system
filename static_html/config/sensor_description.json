@@ -531,6 +531,10 @@
     "unit": "W/m²",
     "description": "Solare Einstrahlung auf 45 Grad geneigte Fläche"
   },
+  "RCS_percentage": {
+    "unit": "%",
+    "description": "Anforderung prozentuale Rotorgeschwindigkeit Rückkühler"
+  },
   "TNE_0": {
     "unit": "°C",
     "description": ""
