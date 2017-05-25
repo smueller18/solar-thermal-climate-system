@@ -1,0 +1,12 @@
+{
+  "namespace": "hska.stcs",
+  "name": "???",
+  "type": "record",
+  "doc": "???",
+  "fields": [
+    {
+      "name": "example_value",
+      "type": "float"
+    }
+  ]
+}

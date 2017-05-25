@@ -1,0 +1,13 @@
+{
+  "namespace": "hska.stcs",
+  "name": "???",
+  "type": "record",
+  "doc": "???",
+  "fields": [
+      {
+        "name": "timestamp",
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+  ]
+}

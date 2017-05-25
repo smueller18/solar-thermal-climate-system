@@ -343,6 +343,31 @@ services:
        max-size: "1m"
        max-file: "1"
 
+#  producer-mqtt-kafka-bridge:
+#    container_name: producer-mqtt-kafka-bridge
+#    image: smueller18/stcs:python3
+#    restart: always
+#    hostname: producer-mqtt-kafka-bridge
+#    depends_on:
+#      kafka:
+#        condition: service_healthy
+#      schema-registry:
+#        condition: service_healthy
+#    env_file:
+#     - ${STCS_CONFIG_FOLDER-./../config}/global.env
+#    environment:
+#     USER_NAME: producer-mqtt-kafka-bridge
+#    command: ["python", "/opt/producer.py"]
+#    volumes:
+#      - ./producer/mqtt-kafka-bridge:/opt
+#    networks:
+#      default:
+#    logging:
+#     driver: "json-file"
+#     options:
+#       max-size: "1m"
+#       max-file: "1"
+
   producer-weather-forecast-web:
     container_name: producer-weather-forecast-web
     image: smueller18/stcs:python3
