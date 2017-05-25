@@ -492,6 +492,26 @@ services:
         max-size: "1m"
         max-file: "1"
 
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto:1.4.10
+    restart: always
+    hostname: mosquitto
+    ports:
+      - "1883:1883"
+    env_file:
+      - ${STCS_CONFIG_FOLDER-./../config}/global.env
+    volumes:
+      - mosquitto-data:/mosquitto/data
+      - ${STCS_CONFIG_FOLDER-./../config}/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+    networks:
+      default:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
 
 networks:
   default:
@@ -514,3 +534,4 @@ volumes:
   pgadmin-data:
   jupyter-notebook-data:
   portainer-data:
+  mosquitto-data:
