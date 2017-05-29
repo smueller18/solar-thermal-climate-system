@@ -66,6 +66,11 @@ def compute_radiation_at_45_deg_angle(timestamp, total_radiation, diffuse_radiat
     radiation_at_45_deg_angle = diffuse_radiation + direct_radiation * (cos(radians(ALPHA)) + sin(radians(ALPHA)) *
                                 (cos(radians(azimuth - BETA)) / tan(radians(altitude))))
 
+    if radiation_at_45_deg_angle < 0.0:
+
+        radiation_at_45_deg_angle = 0.0
+        
+
     return radiation_at_45_deg_angle
 
 
