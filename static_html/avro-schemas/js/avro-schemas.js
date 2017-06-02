@@ -23,14 +23,20 @@ $.get(SCHEMA_REGISTRY_URL + "/subjects", function (subjects) {
 
             if (schema.subject.endsWith("-key") || schema.subject.endsWith("_key")) {
                 topic_name = schema.subject.slice(0, -4);
+		if (schema.subject.endsWith("_key")) 
+		    topic_name = schema.subject.slice(0, -4);
+		
                 if (typeof(topics[topic_name]) === "undefined")
                     topics[topic_name] = {};
 
                 topics[topic_name].key = schema.schema;
             }
 
-            else if (schema.subject.endsWith("-value") || schema.subject.endsWith("_value")) {
+            else if (schema.subject.endsWith("-value")) {
                 topic_name = schema.subject.slice(0, -6);
+		if (schema.subject.endsWith("_value")) 
+		    topic_name = schema.subject.slice(0, -6);
+		
                 if (typeof(topics[topic_name]) === "undefined")
                     topics[topic_name] = {};
 
