@@ -21,7 +21,7 @@ $.get(SCHEMA_REGISTRY_URL + "/subjects", function (subjects) {
 
             var identifier = "";
 
-            if (schema.subject.endsWith("-key")) {
+            if (schema.subject.endsWith("-key") || schema.subject.endsWith("_key")) {
                 topic_name = schema.subject.slice(0, -4);
                 if (typeof(topics[topic_name]) === "undefined")
                     topics[topic_name] = {};
@@ -29,7 +29,7 @@ $.get(SCHEMA_REGISTRY_URL + "/subjects", function (subjects) {
                 topics[topic_name].key = schema.schema;
             }
 
-            else if (schema.subject.endsWith("-value")) {
+            else if (schema.subject.endsWith("-value") || schema.subject.endsWith("_value")) {
                 topic_name = schema.subject.slice(0, -6);
                 if (typeof(topics[topic_name]) === "undefined")
                     topics[topic_name] = {};
