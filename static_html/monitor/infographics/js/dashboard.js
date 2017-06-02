@@ -313,7 +313,7 @@ function nightOff(textArr){
 
 function fanOn(){
     var fans = ["Fan1", "Fan2", "Fan3"];
-    fans.forEach(function(fans) {
+    fans.forEach(function(fan) {
         var fanObj = getElement(fan);
         x = fanObj.node.getBBox().x + fanObj.node.getBBox().width / 2
         y = fanObj.node.getBBox().y + fanObj.node.getBBox().height / 2
