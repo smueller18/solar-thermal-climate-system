@@ -312,15 +312,12 @@ function nightOff(textArr){
 }
 
 function fanOn(){
-    var fan1 = getElement("Fan1");
-    fan1.animate(1000).rotate(360, 468.17, 132.63).loop();
-    //fan1.animate(1000).rotate(360,fan1.cx()-0.1,fan1.cy()+0.4).loop();
-    var fan2 = getElement("Fan2");
-    fan2.animate(1000).rotate(360,496.77,132.63).loop();
-    //fan2.animate(1000).rotate(360,fan2.cx()-0.1,fan2.cy()+0.4).loop();
-    var fan3 = getElement("Fan3");
-    fan3.animate(1000).rotate(360,439.42,132.81).loop();
-    //fan3.animate(1000).rotate(360,fan3.cx()-0.1,fan3.cy()+0.4).loop();
+    for (var fan in ["Fan1", "Fan2", "Fan3"]) {
+        var fanObj = getElement(fan);
+        x = fanObj.node.getBBox().x + fanObj.node.getBBox().width / 2
+        y = fanObj.node.getBBox().y + fanObj.node.getBBox().height / 2
+        fanObj.animate(1000).rotate(360, x-0.1, y+0.4).loop();
+    }
 }
 
 function fanOff (){
