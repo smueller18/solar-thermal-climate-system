@@ -30,14 +30,17 @@ window.onload = function() {
         linejoin: 'round'
     });
 
+    var img_location = window.location.origin + '/monitor/infographics/img/';
+
     var lab_solar_power = text(svg, "aktueller Solarertrag", anzeige.x() + 22, anzeige.y() + 17, true);
     var val_solar_power = text(svg,"0.0 " + unit_power ,lab_solar_power.x()+55,lab_solar_power.y()+23,false);
-    var icon_solar_power = svg.image(window.location.origin + '/monitor/infographics/img/solar-energy.svg', 24, 24).move(lab_solar_power.x() + 10, lab_solar_power.y() + 20);
+
+    var icon_solar_power = svg.image(img_location + 'solar-energy.svg', 24, 24).move(lab_solar_power.x() + 10, lab_solar_power.y() + 20);
 
     var lab_heat_power = text(svg, "aktuelle Heizleistung", anzeige.x() + 22, anzeige.y() + 75, true);
     var val_heat_power = text(svg,"0.0 " + unit_power ,lab_heat_power.x()+55,lab_heat_power.y()+23,false);
-    var icon_heat_power = svg.image(window.location.origin + '/monitor/infographics/img/heating.svg', 23, 23).move(lab_heat_power.x() + 10, lab_heat_power.y() + 20).opacity(0);
-    var icon_cool_power = svg.image(window.location.origin + '/monitor/infographics/img/air-conditioner.svg',25,25).move(lab_heat_power.x()+10,lab_heat_power.y()+20).opacity(0);
+    var icon_heat_power = svg.image(img_location + 'heating.svg', 23, 23).move(lab_heat_power.x() + 10, lab_heat_power.y() + 20).opacity(0);
+    var icon_cool_power = svg.image(img_location + 'air-conditioner.svg',25,25).move(lab_heat_power.x()+10,lab_heat_power.y()+20).opacity(0);
 
     // Warmwassertank
     var w_x = 270;
@@ -97,7 +100,7 @@ window.onload = function() {
     //Variablen für Bedingungen
     var clouds = true;
     var night = false;
-    var val_night = 0.5; //Grenze zur Nacht
+    var val_night = 5; //Grenze zur Nacht
     var t1 = new Date();
     var t2 = new Date(t1.getTime()-65000);
 
