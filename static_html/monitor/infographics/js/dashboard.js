@@ -30,10 +30,11 @@ window.onload = function() {
         linejoin: 'round'
     });
 
-    var img_location = window.location.origin + '/static_html/monitor/infographics/img/';
+    var img_location = window.location.origin + '/monitor/infographics/img/';
 
     var lab_solar_power = text(svg, "aktueller Solarertrag", anzeige.x() + 22, anzeige.y() + 17, true);
     var val_solar_power = text(svg,"0.0 " + unit_power ,lab_solar_power.x()+55,lab_solar_power.y()+23,false);
+
     var icon_solar_power = svg.image(img_location + 'solar-energy.svg', 24, 24).move(lab_solar_power.x() + 10, lab_solar_power.y() + 20);
 
     var lab_heat_power = text(svg, "aktuelle Heizleistung", anzeige.x() + 22, anzeige.y() + 75, true);
@@ -314,15 +315,13 @@ function nightOff(textArr){
 }
 
 function fanOn(){
-    var fan1 = getElement("Fan1");
-    fan1.animate(1000).rotate(360, 468.17, 132.63).loop();
-    //fan1.animate(1000).rotate(360,fan1.cx()-0.1,fan1.cy()+0.4).loop();
-    var fan2 = getElement("Fan2");
-    fan2.animate(1000).rotate(360,496.77,132.63).loop();
-    //fan2.animate(1000).rotate(360,fan2.cx()-0.1,fan2.cy()+0.4).loop();
-    var fan3 = getElement("Fan3");
-    fan3.animate(1000).rotate(360,439.42,132.81).loop();
-    //fan3.animate(1000).rotate(360,fan3.cx()-0.1,fan3.cy()+0.4).loop();
+    var fans = ["Fan1", "Fan2", "Fan3"];
+    fans.forEach(function(fan) {
+        var fanObj = getElement(fan);
+        x = fanObj.node.getBBox().x + fanObj.node.getBBox().width / 2
+        y = fanObj.node.getBBox().y + fanObj.node.getBBox().height / 2
+        fanObj.animate(1000).rotate(360, x-0.1, y+0.4).loop();
+    });
 }
 
 function fanOff (){
