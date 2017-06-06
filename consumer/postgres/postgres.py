@@ -7,6 +7,7 @@ import datetime
 
 import psycopg2
 import psycopg2.extras
+import psycopg2.extensions
 
 __author__ = u'Stephan Müller'
 __copyright__ = u'2017, Stephan Müller'
@@ -24,6 +25,15 @@ _data_types = {
     str: "text",
     "timestamp": "TIMESTAMP WITH TIME ZONE"
 }
+
+
+def nan_to_null(f):
+    if f is np.NaN or f is float("NaN"):
+        return psycopg2.extensions.AsIs('NULL')
+    else:
+        return psycopg2.extensions.Float(f)
+
+psycopg2.extensions.register_adapter(float, nan_to_null)
 
 
 class Connector(object):
