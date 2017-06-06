@@ -1,15 +1,20 @@
 # producer-solar-radiation
-This app consumes all messages for elected Kafka topics calculates rolling median and produce them under a new topic.
+
+Within the application, the current effective solar irradiance on the inclined surface of a solar collectors is calculated using the measured solar irradiance at normal incidence and the solar azimuth and altitude angles. In our case, the surface of the observed solar collectors is tilted by 45 degrees and rotated counter-clockwise from south by 8 degrees.
 
 ## How to prepare
 Required libraries:
 
 - python3
+- librdkafka
 
 Required non-standard python packages:
 - avro-python3
-- pykafka
-- pykafka-tools
+- confluent_kafka
+- kafka_connector
+- json
+- jsonschema
+- pysolar
 
 Install all required libraries and python packages.
 
