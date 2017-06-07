@@ -9,6 +9,8 @@ import psycopg2
 import psycopg2.extras
 import psycopg2.extensions
 
+from numpy import nan
+
 __author__ = u'Stephan Müller'
 __copyright__ = u'2017, Stephan Müller'
 __license__ = u'MIT'
@@ -27,11 +29,13 @@ _data_types = {
 }
 
 
-def nan_to_null(f):
-    if f is np.NaN or f is float("NaN"):
-        return psycopg2.extensions.AsIs('NULL')
-    else:
-        return psycopg2.extensions.Float(f)
+def nan_to_null(f,
+        _NULL=psycopg2.extensions.AsIs('NULL'),
+        _numpy_NaN=nan,
+        _Float=psycopg2.extensions.Float):
+    if f is not _NaN:
+        return _Float(f)
+    return _NULL
 
 psycopg2.extensions.register_adapter(float, nan_to_null)
 
@@ -39,6 +43,7 @@ psycopg2.extensions.register_adapter(float, nan_to_null)
 class Connector(object):
 
     def __init__(self, host, port, database, user, password):
+        
         self._host = host
         self._port = port
         self._database = database
