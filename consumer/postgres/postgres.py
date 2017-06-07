@@ -31,7 +31,7 @@ _data_types = {
 
 def nan_to_null(f,
         _NULL=psycopg2.extensions.AsIs('NULL'),
-        _numpy_NaN=nan,
+        _NaN=nan,
         _Float=psycopg2.extensions.Float):
     if f is not _NaN:
         return _Float(f)
