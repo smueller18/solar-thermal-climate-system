@@ -474,7 +474,7 @@ services:
 
   flink-jobmanager:
     container_name: flink-jobmanager
-    image: biggis/flink:1.2.0
+    image: biggis/flink:1.3.0
     restart: always
     hostname: flink-jobmanager
     depends_on:
@@ -498,7 +498,7 @@ services:
 
   flink-taskmanager:
     container_name: flink-taskmanager
-    image: biggis/flink:1.2.0
+    image: biggis/flink:1.3.0
     restart: always
     hostname: flink-taskmanager
     depends_on:
