@@ -11,4 +11,4 @@ fi
 
 echo "Starting jyputer notebook ..."
 
-jupyter notebook --notebook-dir=/opt/notebooks --NotebookApp.allow_origin='*' --ip='*' --port=8888 --no-browser --NotebookApp.token=''
+jupyter notebook --notebook-dir=/opt/notebooks --NotebookApp.allow_origin='*' --ip='*' --port=8888 --no-browser --NotebookApp.token='' --allow-root
