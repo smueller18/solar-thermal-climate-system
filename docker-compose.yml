@@ -107,6 +107,7 @@ services:
     container_name: kafka-manager
     image: sheepkiller/kafka-manager
     hostname: kafka-manager
+    restart: always
     depends_on:
       kafka:
         condition: service_healthy
@@ -128,6 +129,7 @@ services:
     container_name: schema-registry
     image: confluentinc/cp-schema-registry:latest
     hostname: schema-registry
+    restart: always
     ports:
       - "8082:8082"
     environment:
