@@ -30,6 +30,8 @@ RUN apk add --no-cache \
           cython \
           psycopg2 \
           numpy \
+    && \
+    pip install \
           flask mistune flask_socketio eventlet \
           beautifulsoup4 html5lib \
           pysolar \
