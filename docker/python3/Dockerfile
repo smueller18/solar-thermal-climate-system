@@ -38,6 +38,7 @@ RUN apk add --no-cache \
           confluent-kafka confluent-kafka[avro] avro-python3 kafka_connector requests \
           pytz \
           pandas sklearn tsfresh \
+          python-telegram-bot \
     && \
     apk del --no-cache .build-deps .build-deps-testing && \
     rm -rf /var/cache/apk/*
