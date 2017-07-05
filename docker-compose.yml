@@ -299,6 +299,32 @@ services:
         max-size: "1m"
         max-file: "1"
 
+  consumer-telegram-bot:
+    container_name: consumer-telegram-bot
+    image: smueller18/stcs:python3
+    restart: always
+    hostname: consumer-telegram-bot
+    depends_on:
+      kafka:
+        condition: service_healthy
+#      schema-registry:
+#        condition: service_healthy
+    env_file:
+      - ${STCS_CONFIG_FOLDER-./../config}/global.env
+      - ${STCS_CONFIG_FOLDER-./../config}/consumer/telegram-bot/config.env
+    environment:
+      USER_NAME: consumer-telegram-bot
+    command: ["python", "/opt/harrybotter.py"]
+    volumes:
+      - ./consumer/telegram-bot:/opt
+    networks:
+      default:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
 #  producer-rolling-median:
 #    container_name: producer-rolling-median
 #    build: ./producer/rolling-median
