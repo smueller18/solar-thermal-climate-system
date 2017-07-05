@@ -4,6 +4,7 @@
 import os
 import logging
 import telegram
+import datetime
 import kafka_connector.avro_loop_consumer as avro_loop_consumer
 from kafka_connector.avro_loop_consumer import AvroLoopConsumer
 
@@ -11,12 +12,12 @@ __author__ = u'Patrick Wiener, Adrian Bürger'
 __copyright__ = u'2017, Patrick Wiener'
 __license__ = u'MIT'
 
-KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "kafka:9092")
-SCHEMA_REGISTRY_URL = os.getenv("SCHEMA_REGISTRY_URL", "http://schema-registry:8082")
+KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "w-stcs-services:9092")
+SCHEMA_REGISTRY_URL = os.getenv("SCHEMA_REGISTRY_URL", "http://w-stcs-services:8082")
 CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "telegram-bot")
 TOPIC_PREFIX = os.getenv("TOPIC_PREFIX", "dev.stcs.cep.")
 LOGGING_LEVEL = os.getenv("LOGGING_LEVEL", "INFO")
-TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
 logging_format = "%(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s"
@@ -24,26 +25,23 @@ logging_format = "%(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s -
 logging.basicConfig(level=logging.getLevelName(LOGGING_LEVEL), format=logging_format)
 logger = logging.getLogger('telegram-cep-bot')
 
-global bot
-bot = telegram.Bot(token=TELEGRAM_TOKEN)
 
+def cep_info_to_broadcast_message(msg):
 
-def cep_info_to_broadcast_message(cep_info):
+    cep_key = msg.key()
+    cep_info = msg.value()
 
     try:
-        broadcast = str(cep_info["notificationType"]) + " at " + str(cep_info["startTime"]) + ": \n\n"
 
-        if str(cep_info["isWarning"]) == "true":
-            broadcast += "Warning: "
-        else:
-            broadcast += "All-clear: "
+        broadcast = str(datetime.datetime.fromtimestamp(cep_key["startTime"] / 1000).replace(microsecond=0)) + ": *" \
+                    + cep_info["notificationType"] + "*\n"
 
-        broadcast += str(cep_info["notification"]) + "\n\n"
-        broadcast += "Additional info provided for the event: \n\n"
+        broadcast += str(cep_info["notification"]) + "\n"
 
         for key in cep_info.keys():
-            if str(key) not in ["notificationType", "startTime", "isWarning", "notification"]:
-                broadcast += str(key) + ": " + str(cep_info[key]) + "\n"
+            if str(key) not in ["isWarning", "notificationType", "notification"]:
+                broadcast += "- " + str(key) + ": " + str(round(cep_info[key], 2)) + "\n"
+
 
     except KeyError:
         logger.warning("Cannot parse CEP info dictionary, returning raw dictionary instead.")
@@ -52,32 +50,36 @@ def cep_info_to_broadcast_message(cep_info):
     return broadcast
 
 
-def broadcast_event_to_telegram(msg):
+def broadcast_cep_info_to_telegram(msg):
+
+    bot = telegram.Bot(token=TELEGRAM_BOT_TOKEN)
 
     if len(msg.value()) > 0:
-        if type(msg.key()) is dict and "timestamp" in msg.key():
+        if type(msg.key()) is dict and "startTime" in msg.key():
 
-            timestamp = msg.key()["timestamp"] / 1000
-            cep_info = msg.value()
-
-            broadcast = cep_info_to_broadcast_message(cep_info)
+            broadcast = cep_info_to_broadcast_message(msg)
             logger.info("Broadcasting message to telegram ...")
 
-            bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=broadcast)
+            bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=broadcast, parse_mode=telegram.ParseMode.MARKDOWN)
+            consumer.commit(msg, async=True)
             logger.info("Message sent.")
 
 
-config = avro_loop_consumer.default_config
-config['enable.auto.commit'] = True
-config['default.topic.config'] = dict()
-config['default.topic.config']['auto.offset.reset'] = 'latest'
+if ((TELEGRAM_BOT_TOKEN is not None) and (TELEGRAM_CHAT_ID is not None)):
 
-consumer = AvroLoopConsumer(KAFKA_HOSTS, SCHEMA_REGISTRY_URL, CONSUMER_GROUP,
-                            ["^" + TOPIC_PREFIX.replace(".", r'\.') + ".*"])
-logger.info("Starting consumer thread ...")
+    config = avro_loop_consumer.default_config
+    config['enable.auto.commit'] = False
+    config['default.topic.config'] = dict()
+    config['default.topic.config']['auto.offset.reset'] = 'largest'
 
-try:
-    consumer.loop(lambda msg: broadcast_event_to_telegram(msg))
-except Exception as e:
-    consumer.stop()
-    raise e
+    consumer = AvroLoopConsumer(KAFKA_HOSTS, SCHEMA_REGISTRY_URL, CONSUMER_GROUP,
+                                ["^" + TOPIC_PREFIX.replace(".", r'\.') + ".*"])
+    logger.info("Starting consumer thread ...")
+
+    try:
+        consumer.loop(lambda msg: broadcast_cep_info_to_telegram(msg))
+    except Exception as e:
+        consumer.close()
+else:
+    logger.info("Set environment variables TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID.")
+    exit()

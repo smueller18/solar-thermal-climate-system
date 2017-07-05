@@ -28,5 +28,5 @@ Here is a list of all variables which can be set by environment variables.
 | CONSUMER_GROUP | telegram-bot | string |   |
 | TOPIC_PREFIX | dev.stcs.cep.* | string | .* means handle all cep topics |
 | LOGGING_LEVEL | INFO | string | one of CRITICAL, ERROR, WARNING, INFO, DEBUG |
-| **TELEGRAM_TOKEN** | -  | string  | **MANDATORY** to be set |
+| **TELEGRAM_BOT_TOKEN** | -  | string  | **MANDATORY** to be set |
 | **TELEGRAM_CHAT_ID** | -  | string  | **MANDATORY** to be set |
