@@ -17,13 +17,15 @@ SCHEMA_REGISTRY_URL = os.getenv("SCHEMA_REGISTRY_URL", "http://w-stcs-services:8
 CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "telegram-bot")
 TOPIC_PREFIX = os.getenv("TOPIC_PREFIX", "dev.stcs.cep.")
 LOGGING_LEVEL = os.getenv("LOGGING_LEVEL", "INFO")
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "370699713:AAF97jE7ruBPV9W-vgM1B9NVowVTL7aJvoM")
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "-172083578")
 
 logging_format = "%(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s"
 
 logging.basicConfig(level=logging.getLevelName(LOGGING_LEVEL), format=logging_format)
 logger = logging.getLogger('telegram-cep-bot')
+
+bot = telegram.Bot(token=TELEGRAM_BOT_TOKEN)
 
 
 def cep_info_to_broadcast_message(msg):
@@ -42,7 +44,6 @@ def cep_info_to_broadcast_message(msg):
             if str(key) not in ["isWarning", "notificationType", "notification"]:
                 broadcast += "- " + str(key) + ": " + str(round(cep_info[key], 2)) + "\n"
 
-
     except KeyError:
         logger.warning("Cannot parse CEP info dictionary, returning raw dictionary instead.")
         broadcast = str(cep_info)
@@ -51,8 +52,6 @@ def cep_info_to_broadcast_message(msg):
 
 
 def broadcast_cep_info_to_telegram(msg):
-
-    bot = telegram.Bot(token=TELEGRAM_BOT_TOKEN)
 
     if len(msg.value()) > 0:
         if type(msg.key()) is dict and "startTime" in msg.key():
@@ -65,7 +64,7 @@ def broadcast_cep_info_to_telegram(msg):
             logger.info("Message sent.")
 
 
-if ((TELEGRAM_BOT_TOKEN is not None) and (TELEGRAM_CHAT_ID is not None)):
+if (TELEGRAM_BOT_TOKEN is not None) and (TELEGRAM_CHAT_ID is not None):
 
     config = avro_loop_consumer.default_config
     config['enable.auto.commit'] = False
