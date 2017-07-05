@@ -12,13 +12,13 @@ __author__ = u'Patrick Wiener, Adrian Bürger'
 __copyright__ = u'2017, Patrick Wiener'
 __license__ = u'MIT'
 
-KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "w-stcs-services:9092")
-SCHEMA_REGISTRY_URL = os.getenv("SCHEMA_REGISTRY_URL", "http://w-stcs-services:8082")
+KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "kafka:9092")
+SCHEMA_REGISTRY_URL = os.getenv("SCHEMA_REGISTRY_URL", "http://schema-registry:8082")
 CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "telegram-bot")
-TOPIC_PREFIX = os.getenv("TOPIC_PREFIX", "dev.stcs.cep.")
+TOPIC_PREFIX = os.getenv("TOPIC_PREFIX", "prod.stcs.atrium")
 LOGGING_LEVEL = os.getenv("LOGGING_LEVEL", "INFO")
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "370699713:AAF97jE7ruBPV9W-vgM1B9NVowVTL7aJvoM")
-TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "-172083578")
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
 logging_format = "%(levelname)8s %(asctime)s %(name)s [%(filename)s:%(lineno)s - %(funcName)s() ] %(message)s"
 
@@ -54,8 +54,7 @@ def cep_info_to_broadcast_message(msg):
 def broadcast_cep_info_to_telegram(msg):
 
     if len(msg.value()) > 0:
-        if type(msg.key()) is dict and "startTime" in msg.key():
-
+        if type(msg.key()) is dict: #and "startTime" in msg.key():
             broadcast = cep_info_to_broadcast_message(msg)
             logger.info("Broadcasting message to telegram ...")
 
@@ -79,6 +78,7 @@ if (TELEGRAM_BOT_TOKEN is not None) and (TELEGRAM_CHAT_ID is not None):
         consumer.loop(lambda msg: broadcast_cep_info_to_telegram(msg))
     except Exception as e:
         consumer.close()
+        raise e
 else:
     logger.info("Set environment variables TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID.")
     exit()
