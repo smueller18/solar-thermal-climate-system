@@ -5,15 +5,10 @@
 
 package de.stephanmueller.hska.stcs;
 
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.math3.stat.descriptive.moment.Kurtosis;
-import org.apache.commons.math3.stat.descriptive.moment.Mean;
-import org.apache.commons.math3.stat.descriptive.moment.Skewness;
-import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
-import org.apache.commons.math3.stat.descriptive.rank.Max;
-import org.apache.commons.math3.stat.descriptive.rank.Min;
-import org.apache.commons.math3.stat.descriptive.rank.Percentile;
-import org.apache.flink.api.common.functions.FlatMapFunction;
+import com.github.smueller18.avro.builder.AvroBuilder;
+import com.github.smueller18.flink.serialization.AvroBuilderKeyedSerializationSchema;
+import com.github.smueller18.flink.serialization.GenericKeyValueRecord;
+import com.github.smueller18.flink.serialization.SchemaRegistryKeyedDeserializationSchema;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
@@ -23,7 +18,6 @@ import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer010;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer010;
-import org.apache.flink.types.NullFieldException;
 import org.apache.flink.util.Collector;
 
 import java.util.*;
@@ -34,25 +28,20 @@ public class FeatureExtraction {
     private static final Logger log = Logger.getLogger(FeatureExtraction.class.getName());
     private static List<String> sensorIds = Arrays.asList(
             // prod.stcs.chillii
-            "PSOP", "PSOS", "TSOC_1", "TSOC_2", "TSOPO", "TSOPI", "TSOS", "TSH0", "TSH1", "TSH2", "TSH3", "TOU",
+            "PSOP", "PSOS", "TSOS", "TSH0", "TSH1", "TSH2", "TSH3", "TOU",
             // prod.stcs.roof.solar_radiation
-            "total_radiation", "diffuse_radiation",
+            "total_radiation",
             // prod.stcs.cellar.flows
-            "TVFS_SOP", "FVFS_SOP", "TVFS_C_1", "FVFS_C_1", "TVFS_SOS", "FVFS_SOS"
+            "FVFS_SOP", "FVFS_SOS"
     );
     private static String schemaRegistryUrl = "http://schema-registry:8082";
     private static String bootstrapServers = "kafka:9092";
     private static String groupId = "machine_learning.aggregations";
 
-    private static String keySchemaRessource = "/key.avsc";
-    private static String valueSchemaRessource = "/value.avsc";
-
     private static String chilliiTopic = "prod.stcs.chillii";
     private static String solarRadiationTopic = "prod.stcs.roof.solar_radiation";
     private static String flowsTopic = "prod.stcs.cellar.flows";
 
-    private static String producerTopicOneMin = "dev.machine_learning.aggregations.1min";
-    private static String producerTopicFiveMin = "dev.machine_learning.aggregations.5min";
 
     public static void main(String[] args) throws Exception {
 
@@ -63,22 +52,11 @@ public class FeatureExtraction {
         kafkaProps.setProperty("bootstrap.servers", bootstrapServers);
         kafkaProps.setProperty("group.id", groupId);
 
-        ConfluentKeyedDeserializationSchema deserializationSchema = new ConfluentKeyedDeserializationSchema(
-                schemaRegistryUrl
-        );
+        Properties schemaRegistryProps = new Properties();
+        schemaRegistryProps.setProperty("schema.registry.url", schemaRegistryUrl);
 
-        ConfluentKeyedSerializationSchema serializationSchemaOneMin = new ConfluentKeyedSerializationSchema(
-                schemaRegistryUrl,
-                keySchemaRessource,
-                valueSchemaRessource,
-                producerTopicOneMin
-        );
-
-        ConfluentKeyedSerializationSchema serializationSchemaFiveMin = new ConfluentKeyedSerializationSchema(
-                schemaRegistryUrl,
-                keySchemaRessource,
-                valueSchemaRessource,
-                producerTopicFiveMin
+        SchemaRegistryKeyedDeserializationSchema deserializationSchema = new SchemaRegistryKeyedDeserializationSchema(
+                schemaRegistryProps
         );
 
         DataStream<GenericKeyValueRecord> chilliiStream =
@@ -90,30 +68,26 @@ public class FeatureExtraction {
         DataStream<GenericKeyValueRecord> flowsStream =
                 env.addSource(new FlinkKafkaConsumer010<>(flowsTopic, deserializationSchema, kafkaProps), flowsTopic);
 
-        DataStream<KeyValuePair> unionStream = chilliiStream
+        DataStream<GenericKeyValueRecord> unionStream = chilliiStream
                 .union(solarRadiationStream, flowsStream)
-                .assignTimestampsAndWatermarks(new TimeStampExtractor())
-                .flatMap(new GenericKeyValueRecordMap());
+                .assignTimestampsAndWatermarks(new TimeStampExtractor());
 
-        DataStream<KeyValuePair> streamOneMin = unionStream
-                .timeWindowAll(Time.minutes(1), Time.seconds(30))
-                .apply(new CalcAggregations());
-
-        DataStream<KeyValuePair> streamFiveMin = unionStream
+        /*DataStream<Aggregations> streamFiveMin = unionStream
                 .timeWindowAll(Time.minutes(5), Time.seconds(150))
-                .apply(new CalcAggregations());
+                .apply(new PackValues());
+*/
+        DataStream<Aggregations> streamFiveMin = unionStream
+                .timeWindowAll(Time.seconds(10))
+                .apply(new PackValues());
 
-        streamOneMin.addSink(new FlinkKafkaProducer010<>(
-                producerTopicOneMin,
-                serializationSchemaOneMin,
-                kafkaProps
-        )).name(producerTopicOneMin);
 
         streamFiveMin.addSink(new FlinkKafkaProducer010<>(
-                producerTopicFiveMin,
-                serializationSchemaFiveMin,
+                AvroBuilder.getTopicName(Aggregations.class),
+                new AvroBuilderKeyedSerializationSchema<>(schemaRegistryProps),
                 kafkaProps
-        )).name(producerTopicFiveMin);
+        )).name(AvroBuilder.getTopicName(Aggregations.class));
+
+        streamFiveMin.print();
 
         env.execute("Extract features for machine state prediction");
     }
@@ -125,60 +99,43 @@ public class FeatureExtraction {
         }
     }
 
-    private static class GenericKeyValueRecordMap implements FlatMapFunction<GenericKeyValueRecord, KeyValuePair> {
-        @Override
-        public void flatMap(GenericKeyValueRecord genericKeyValueRecord, Collector<KeyValuePair> collector)
-                throws Exception {
-            try {
-                HashMap<String, Object> keys = new HashMap<>();
-                HashMap<String, Object> values = new HashMap<>();
-
-                keys.put("timestamp", genericKeyValueRecord.getKey("timestamp"));
-
-                for (String key : FeatureExtraction.sensorIds) {
-                    try {
-                        values.put(key, genericKeyValueRecord.getValue(key));
-                    } catch (NullFieldException e) {
-                        continue;
-                    }
-                }
-
-                collector.collect(new KeyValuePair(keys, values));
-
-            } catch (RuntimeException e) {
-                log.warning(e.getMessage());
-            }
-        }
-    }
-
-    private static class CalcAggregations implements AllWindowFunction<KeyValuePair, KeyValuePair, TimeWindow> {
+   private static class PackValues implements AllWindowFunction<GenericKeyValueRecord, Aggregations, TimeWindow> {
 
         @Override
-        public void apply(TimeWindow window, Iterable<KeyValuePair> keyValuePairs, Collector<KeyValuePair> out)
+        public void apply(TimeWindow window, Iterable<GenericKeyValueRecord> genericKeyValueRecords, Collector<Aggregations> out)
                 throws Exception {
 
             HashMap<String, ArrayList<Double>> rawValues = new HashMap<>();
-            HashMap<String, Object> aggregatedValues = new HashMap<>();
-            long timestamp_begin = Long.MAX_VALUE;
-            long timestamp_end = Long.MIN_VALUE;
+            long timestampBegin = Long.MAX_VALUE;
+            long timestampEnd = Long.MIN_VALUE;
 
             for (String key : FeatureExtraction.sensorIds) {
                 rawValues.put(key, new ArrayList<>());
             }
 
-            for (KeyValuePair kvp : keyValuePairs) {
+            for (GenericKeyValueRecord genericKeyValueRecord : genericKeyValueRecords) {
 
-                timestamp_begin = Math.min((long) kvp.getKey("timestamp"), timestamp_begin);
-                timestamp_end = Math.max((long) kvp.getKey("timestamp"), timestamp_end);
+                timestampBegin = Math.min((long) genericKeyValueRecord.getKey("timestamp"), timestampBegin);
+                timestampEnd = Math.max((long) genericKeyValueRecord.getKey("timestamp"), timestampEnd);
 
                 for (String key : FeatureExtraction.sensorIds) {
 
                     Double value;
                     try {
-                        value = (Double) kvp.getValue(key);
+                        try {
+                            value = (Double) genericKeyValueRecord.getValue(key);
+                        }
+                        catch (NullPointerException e) {
+                            value = null;
+                        }
 
                     } catch (ClassCastException e) {
-                        value = Double.parseDouble(kvp.getValue(key).toString());
+                        try {
+                            value = Double.parseDouble(genericKeyValueRecord.getValue(key).toString());
+                        }
+                        catch (NullPointerException e2) {
+                            value = null;
+                        }
                     }
 
                     if (value != null)
@@ -187,39 +144,17 @@ public class FeatureExtraction {
                 }
             }
 
-            int aggregationSetMaxLength = 0;
-            for (String key : rawValues.keySet()) {
-
-                if (rawValues.get(key).size() > aggregationSetMaxLength)
-                    aggregationSetMaxLength = rawValues.get(key).size();
-
-                double[] rawArray = ArrayUtils.toPrimitive(rawValues.get(key).toArray(new Double[rawValues.get(key).size()]));
-
-                aggregatedValues.put(key + "__min", (float) new Min().evaluate(rawArray));
-
-                aggregatedValues.put(key + "__max", (float) new Max().evaluate(rawArray));
-
-                aggregatedValues.put(key + "__kurtosis", (float) new Kurtosis().evaluate(rawArray));
-
-                aggregatedValues.put(key + "__stddev", (float) new StandardDeviation().evaluate(rawArray));
-
-                aggregatedValues.put(key + "__mean", (float) new Mean().evaluate(rawArray));
-
-                aggregatedValues.put(key + "__skewness", (float) new Skewness().evaluate(rawArray));
-
-                for (int percentile = 10; percentile < 100; percentile += 10) {
-                    aggregatedValues.put(key + "__quantile_" + percentile, (float) new Percentile(percentile).evaluate(rawArray));
-                }
-
+            try {
+                out.collect(new Aggregations(
+                        timestampBegin,
+                        timestampEnd,
+                        rawValues
+                ));
+            }
+            catch(Exception e) {
+                log.warning("Set of values could not be determined");
             }
 
-            HashMap<String, Object> keys = new HashMap<>();
-            keys.put("timestamp_begin", timestamp_begin);
-            keys.put("timestamp_end", timestamp_end);
-
-            keys.put("aggregation_set_max_length", aggregationSetMaxLength);
-
-            out.collect(new KeyValuePair(keys, aggregatedValues));
         }
     }
 }

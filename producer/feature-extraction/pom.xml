@@ -22,12 +22,18 @@
         <kafka.version>0.10.2.1</kafka.version>
         <scala.version>2.11</scala.version>
         <confluent.version>3.2.1</confluent.version>
-        <avro.version>1.7.7</avro.version>
+        <avro.version>1.8.1</avro.version>
+        <avro.builder.version>0.7</avro.builder.version>
+        <flink.serialization.version>0.8</flink.serialization.version>
         <confluent.maven.repo>http://packages.confluent.io/maven/</confluent.maven.repo>
         <exec-maven-plugin.version>1.2.1</exec-maven-plugin.version>
     </properties>
 
     <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
         <repository>
             <id>confluent</id>
             <name>Confluent</name>
@@ -37,6 +43,16 @@
 
 
     <dependencies>
+        <dependency>
+            <groupId>com.github.smueller18</groupId>
+            <artifactId>avro-builder</artifactId>
+            <version>${avro.builder.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.smueller18</groupId>
+            <artifactId>flink-serialization</artifactId>
+            <version>${flink.serialization.version}</version>
+        </dependency>
         <dependency>
             <groupId>io.confluent</groupId>
             <artifactId>kafka-avro-serializer</artifactId>
