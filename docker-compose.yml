@@ -271,7 +271,6 @@ services:
 
   consumer-socketio:
     container_name: consumer-socketio
-    build: ./consumer/socketio
     image: smueller18/stcs:python3
     restart: always
     hostname: consumer-socketio
@@ -298,6 +297,33 @@ services:
       options:
         max-size: "1m"
         max-file: "1"
+
+  consumer-machine-state-prediction:
+    container_name: consumer-machine-state-prediction
+    image: smueller18/stcs:python3
+    restart: always
+    hostname: consumer-machine-state-prediction
+    depends_on:
+      kafka:
+        condition: service_healthy
+#      schema-registry:
+#        condition: service_healthy
+    env_file:
+      - ${STCS_CONFIG_FOLDER-./../config}/global.env
+      - ${STCS_CONFIG_FOLDER-./../config}/consumer/machine-state-prediction/config.env
+    environment:
+      USER_NAME: consumer-machine-state-prediction
+    command: ["python", "/opt/consumer.py"]
+    volumes:
+      - ${STCS_CONFIG_FOLDER-./../config}/consumer/machine-state-prediction/data:/opt/data
+    networks:
+      default:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
 
 #  producer-rolling-median:
 #    container_name: producer-rolling-median
