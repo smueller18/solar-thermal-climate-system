@@ -75,7 +75,7 @@ def handle_message(msg):
         X = extract_features(timeseries, column_id='group_id', column_kind="variable", column_value="value",
                              kind_to_fc_parameters=settings.from_columns(fc_parameters), disable_progressbar=False)
 
-        if X.isnull().sum().sum() > 0:
+        sif X.isnull().sum().sum() > 0:
             logger.warning("at least one field of extracted features is null")
             return
 
