@@ -72,22 +72,15 @@ public class FeatureExtraction {
                 .union(solarRadiationStream, flowsStream)
                 .assignTimestampsAndWatermarks(new TimeStampExtractor());
 
-        /*DataStream<Aggregations> streamFiveMin = unionStream
-                .timeWindowAll(Time.minutes(5), Time.seconds(150))
-                .apply(new PackValues());
-*/
         DataStream<Aggregations> streamFiveMin = unionStream
-                .timeWindowAll(Time.seconds(10))
+                .timeWindowAll(Time.minutes(5), Time.seconds(10))
                 .apply(new PackValues());
-
 
         streamFiveMin.addSink(new FlinkKafkaProducer010<>(
                 AvroBuilder.getTopicName(Aggregations.class),
                 new AvroBuilderKeyedSerializationSchema<>(schemaRegistryProps),
                 kafkaProps
         )).name(AvroBuilder.getTopicName(Aggregations.class));
-
-        streamFiveMin.print();
 
         env.execute("Extract features for machine state prediction");
     }

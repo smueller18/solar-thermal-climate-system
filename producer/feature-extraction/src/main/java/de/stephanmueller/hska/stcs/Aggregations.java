@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-@KafkaTopic(namespace = "dev.machine_learning", name = "aggregations_5minutes")
+@KafkaTopic(namespace = "prod.machine_learning", name = "aggregations_5minutes")
 class Aggregations extends AvroBuilder {
     @Key
     @TimestampMillisType
