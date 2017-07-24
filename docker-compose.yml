@@ -315,6 +315,7 @@ services:
       USER_NAME: consumer-machine-state-prediction
     command: ["python", "/opt/consumer.py"]
     volumes:
+      - ./consumer/socketio:/opt
       - ${STCS_CONFIG_FOLDER-./../config}/consumer/machine-state-prediction/data:/opt/data
     networks:
       default:
