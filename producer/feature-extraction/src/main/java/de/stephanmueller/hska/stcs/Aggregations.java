@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-@KafkaTopic(namespace = "dev.machine_learning", name = "aggregations_5min")
+@KafkaTopic(namespace = "dev.machine_learning", name = "aggregations_5minutes")
 class Aggregations extends AvroBuilder {
     @Key
     @TimestampMillisType
@@ -41,9 +41,6 @@ class Aggregations extends AvroBuilder {
     @Value
     public ArrayList<Double> fvfs_sos;
 
-    public Aggregations() {
-
-    }
 
     public Aggregations(long timestamp_begin, long timestamp_end, HashMap<String, ArrayList<Double>> rawValues) throws RuntimeException {
 
