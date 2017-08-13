@@ -85,6 +85,8 @@
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/commons-cli/commons-cli/1.3.1/commons-cli-1.3.1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/slf4j/slf4j-log4j12/1.7.7/slf4j-log4j12-1.7.7.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/codehaus/jackson/jackson-core-asl/1.9.13/jackson-core-asl-1.9.13.jar" path-in-jar="/" />
+      <element id="library" level="project" name="Maven: com.github.smueller18:flink-serialization:0.8" />
+      <element id="library" level="project" name="Maven: com.github.smueller18:avro-builder:0.7" />
     </root>
   </artifact>
 </component>

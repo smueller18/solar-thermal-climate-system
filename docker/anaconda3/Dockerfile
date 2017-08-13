@@ -7,7 +7,7 @@ RUN apt update && apt upgrade -y
 
 RUN apt install -y gcc libpq-dev python3-dev graphviz \
     && pip install psycopg2 \
-    && pip install tsfresh tabulate pydotplus
+    && pip install tsfresh tabulate pydotplus kafka_connector
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
