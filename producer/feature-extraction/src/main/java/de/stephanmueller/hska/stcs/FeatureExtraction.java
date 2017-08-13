@@ -73,7 +73,7 @@ public class FeatureExtraction {
                 .assignTimestampsAndWatermarks(new TimeStampExtractor());
 
         DataStream<Aggregations> streamFiveMin = unionStream
-                .timeWindowAll(Time.minutes(1), Time.seconds(10))
+                .timeWindowAll(Time.minutes(10), Time.seconds(10))
                 .apply(new PackValues());
 
         streamFiveMin.addSink(new FlinkKafkaProducer010<>(
