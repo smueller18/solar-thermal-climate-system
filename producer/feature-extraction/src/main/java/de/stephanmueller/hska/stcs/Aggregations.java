@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-@KafkaTopic(namespace = "prod.machine_learning", name = "aggregations_5minutes")
+@KafkaTopic(namespace = "prod.machine_learning", name = "aggregations_10minutes")
 class Aggregations extends AvroBuilder {
     @Key
     @TimestampMillisType
@@ -19,27 +19,50 @@ class Aggregations extends AvroBuilder {
     public long timestamp_end;
 
     @Value
-    public ArrayList<Double> psop;
+    public ArrayList<Double> psop_t1;
     @Value
-    public ArrayList<Double> psos;
+    public ArrayList<Double> psos_t1;
     @Value
-    public ArrayList<Double> tsos;
+    public ArrayList<Double> tsos_t1;
     @Value
-    public ArrayList<Double> tsh0;
+    public ArrayList<Double> tsh0_t1;
     @Value
-    public ArrayList<Double> tsh1;
+    public ArrayList<Double> tsh1_t1;
     @Value
-    public ArrayList<Double> tsh2;
+    public ArrayList<Double> tsh2_t1;
     @Value
-    public ArrayList<Double> tsh3;
+    public ArrayList<Double> tsh3_t1;
     @Value
-    public ArrayList<Double> tou;
+    public ArrayList<Double> tou_t1;
     @Value
-    public ArrayList<Double> glob;
+    public ArrayList<Double> glob_t1;
     @Value
-    public ArrayList<Double> fvfs_sop;
+    public ArrayList<Double> fvfs_sop_t1;
     @Value
-    public ArrayList<Double> fvfs_sos;
+    public ArrayList<Double> fvfs_sos_t1;
+
+    @Value
+    public ArrayList<Double> psop_t2;
+    @Value
+    public ArrayList<Double> psos_t2;
+    @Value
+    public ArrayList<Double> tsos_t2;
+    @Value
+    public ArrayList<Double> tsh0_t2;
+    @Value
+    public ArrayList<Double> tsh1_t2;
+    @Value
+    public ArrayList<Double> tsh2_t2;
+    @Value
+    public ArrayList<Double> tsh3_t2;
+    @Value
+    public ArrayList<Double> tou_t2;
+    @Value
+    public ArrayList<Double> glob_t2;
+    @Value
+    public ArrayList<Double> fvfs_sop_t2;
+    @Value
+    public ArrayList<Double> fvfs_sos_t2;
 
 
     public Aggregations(long timestamp_begin, long timestamp_end, HashMap<String, ArrayList<Double>> rawValues) throws RuntimeException {
@@ -54,41 +77,65 @@ class Aggregations extends AvroBuilder {
         );
 
         for (String id : sensorIds) {
-            if (!rawValues.containsKey(id))
+            if (!(rawValues.containsKey(id + "_t1") && rawValues.containsKey(id + "_t2")))
                 throw new RuntimeException("aggregations does not contain all sensor ids");
 
-            else if (rawValues.get(id).isEmpty())
+            else if (rawValues.get(id + "_t1").isEmpty() || rawValues.get(id + "_t2").isEmpty())
                 throw new RuntimeException("at least one of the aggregations is empty");
         }
 
         this.timestamp_begin = timestamp_begin;
         this.timestamp_end = timestamp_end;
-        this.psop = rawValues.get("PSOP");
-        this.psos = rawValues.get("PSOS");
-        this.tsos = rawValues.get("TSOS");
-        this.tsh0 = rawValues.get("TSH0");
-        this.tsh1 = rawValues.get("TSH1");
-        this.tsh2 = rawValues.get("TSH2");
-        this.tsh3 = rawValues.get("TSH3");
-        this.tou = rawValues.get("TOU");
-        this.glob = rawValues.get("total_radiation");
-        this.fvfs_sop = rawValues.get("FVFS_SOP");
-        this.fvfs_sos = rawValues.get("FVFS_SOS");
+        this.psop_t1 = rawValues.get("PSOP_t1");
+        this.psos_t1 = rawValues.get("PSOS_t1");
+        this.tsos_t1 = rawValues.get("TSOS_t1");
+        this.tsh0_t1 = rawValues.get("TSH0_t1");
+        this.tsh1_t1 = rawValues.get("TSH1_t1");
+        this.tsh2_t1 = rawValues.get("TSH2_t1");
+        this.tsh3_t1 = rawValues.get("TSH3_t1");
+        this.tou_t1 = rawValues.get("TOU_t1");
+        this.glob_t1 = rawValues.get("total_radiation_t1");
+        this.fvfs_sop_t1 = rawValues.get("FVFS_SOP_t1");
+        this.fvfs_sos_t1 = rawValues.get("FVFS_SOS_t1");
+
+        this.psop_t2 = rawValues.get("PSOP_t2");
+        this.psos_t2 = rawValues.get("PSOS_t2");
+        this.tsos_t2 = rawValues.get("TSOS_t2");
+        this.tsh0_t2 = rawValues.get("TSH0_t2");
+        this.tsh1_t2 = rawValues.get("TSH1_t2");
+        this.tsh2_t2 = rawValues.get("TSH2_t2");
+        this.tsh3_t2 = rawValues.get("TSH3_t2");
+        this.tou_t2 = rawValues.get("TOU_t2");
+        this.glob_t2 = rawValues.get("total_radiation_t2");
+        this.fvfs_sop_t2 = rawValues.get("FVFS_SOP_t2");
+        this.fvfs_sos_t2 = rawValues.get("FVFS_SOS_t2");
     }
 
     @Override
     public String toString() {
         return "begin " + this.timestamp_begin + " end " + timestamp_end + "\n"
-                + "psop: " + this.psop + "\n"
-                + "psos: " + this.psos + "\n"
-                + "tsos: " + this.tsos + "\n"
-                + "tsh0: " + this.tsh0 + "\n"
-                + "tsh1: " + this.tsh1 + "\n"
-                + "tsh2: " + this.tsh2 + "\n"
-                + "tsh3: " + this.tsh3 + "\n"
-                + "tou: " + this.tou + "\n"
-                + "glob: " + this.glob + "\n"
-                + "FVFS_SOP: " + this.fvfs_sop + "\n"
-                + "FVFS_SOS: " + this.fvfs_sos + "\n";
+                + "psop_t1: " + this.psop_t1 + "\n"
+                + "psos_t1: " + this.psos_t1 + "\n"
+                + "tsos_t1: " + this.tsos_t1 + "\n"
+                + "tsh0_t1: " + this.tsh0_t1 + "\n"
+                + "tsh1_t1: " + this.tsh1_t1 + "\n"
+                + "tsh2_t1: " + this.tsh2_t1 + "\n"
+                + "tsh3_t1: " + this.tsh3_t1 + "\n"
+                + "tou_t1: " + this.tou_t1 + "\n"
+                + "glob_t1: " + this.glob_t1 + "\n"
+                + "FVFS_SOP_t1: " + this.fvfs_sop_t1 + "\n"
+                + "FVFS_SOS_t1: " + this.fvfs_sos_t1 + "\n"
+
+                + "psop_t2: " + this.psop_t2 + "\n"
+                + "psos_t2: " + this.psos_t2 + "\n"
+                + "tsos_t2: " + this.tsos_t2 + "\n"
+                + "tsh0_t2: " + this.tsh0_t2 + "\n"
+                + "tsh1_t2: " + this.tsh1_t2 + "\n"
+                + "tsh2_t2: " + this.tsh2_t2 + "\n"
+                + "tsh3_t2: " + this.tsh3_t2 + "\n"
+                + "tou_t2: " + this.tou_t2 + "\n"
+                + "glob_t2: " + this.glob_t2 + "\n"
+                + "FVFS_SOP_t2: " + this.fvfs_sop_t2 + "\n"
+                + "FVFS_SOS_t2: " + this.fvfs_sos_t2 + "\n";
     }
 }

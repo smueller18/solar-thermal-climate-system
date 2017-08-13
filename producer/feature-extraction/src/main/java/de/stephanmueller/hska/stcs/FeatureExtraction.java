@@ -73,7 +73,7 @@ public class FeatureExtraction {
                 .assignTimestampsAndWatermarks(new TimeStampExtractor());
 
         DataStream<Aggregations> streamFiveMin = unionStream
-                .timeWindowAll(Time.minutes(5), Time.seconds(10))
+                .timeWindowAll(Time.minutes(1), Time.seconds(10))
                 .apply(new PackValues());
 
         streamFiveMin.addSink(new FlinkKafkaProducer010<>(
@@ -81,6 +81,8 @@ public class FeatureExtraction {
                 new AvroBuilderKeyedSerializationSchema<>(schemaRegistryProps),
                 kafkaProps
         )).name(AvroBuilder.getTopicName(Aggregations.class));
+
+        // streamFiveMin.print();
 
         env.execute("Extract features for machine state prediction");
     }
@@ -91,6 +93,8 @@ public class FeatureExtraction {
             return (Long) genericKeyValueRecord.getKey("timestamp");
         }
     }
+
+    //private static class PairValues
 
    private static class PackValues implements AllWindowFunction<GenericKeyValueRecord, Aggregations, TimeWindow> {
 
@@ -103,13 +107,18 @@ public class FeatureExtraction {
             long timestampEnd = Long.MIN_VALUE;
 
             for (String key : FeatureExtraction.sensorIds) {
-                rawValues.put(key, new ArrayList<>());
+                rawValues.put(key + "_t1", new ArrayList<>());
+                rawValues.put(key + "_t2", new ArrayList<>());
             }
 
             for (GenericKeyValueRecord genericKeyValueRecord : genericKeyValueRecords) {
-
                 timestampBegin = Math.min((long) genericKeyValueRecord.getKey("timestamp"), timestampBegin);
                 timestampEnd = Math.max((long) genericKeyValueRecord.getKey("timestamp"), timestampEnd);
+            }
+
+            long timestampSplit = timestampBegin + (timestampEnd - timestampBegin) / 2;
+
+            for (GenericKeyValueRecord genericKeyValueRecord : genericKeyValueRecords) {
 
                 for (String key : FeatureExtraction.sensorIds) {
 
@@ -131,8 +140,12 @@ public class FeatureExtraction {
                         }
                     }
 
-                    if (value != null)
-                        rawValues.get(key).add(value);
+                    if (value != null) {
+                        if ((long) genericKeyValueRecord.getKey("timestamp") < timestampSplit)
+                            rawValues.get(key + "_t1").add(value);
+                        else
+                            rawValues.get(key + "_t2").add(value);
+                    }
 
                 }
             }
