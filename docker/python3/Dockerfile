@@ -16,7 +16,10 @@ RUN apk add --no-cache \
         linux-headers \
         g++ \
         python3-dev \
-        postgresql-dev && \
+        postgresql-dev \
+        # for scipy
+        build-base openblas-dev freetype-dev pkgconfig gfortran \
+    && \
     ## preperations for installations
     # numpy
     ln -s /usr/include/locale.h /usr/include/xlocale.h && \
@@ -35,7 +38,7 @@ RUN apk add --no-cache \
           pysolar \
           confluent-kafka confluent-kafka[avro] avro-python3 kafka_connector requests \
           pytz \
-          pandas sklearn tsfresh \
+          pandas scipy sklearn tsfresh \
     && \
     apk del --no-cache .build-deps && \
     rm -rf /var/cache/apk/*
