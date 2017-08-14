@@ -3,7 +3,7 @@ FROM continuumio/anaconda3
 MAINTAINER smueller18
 
 #RUN apt install -y aptitude
-#RUN apt update && apt upgrade -y
+RUN apt update && apt upgrade -y
 
 RUN apt install -y gcc libpq-dev python3-dev graphviz \
     && pip install psycopg2 \
