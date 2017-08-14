@@ -18,13 +18,14 @@ __author__ = u'Stephan Müller'
 __copyright__ = u'2017, Stephan Müller'
 __license__ = u'MIT'
 
-__dirname__ = os.path.dirname(os.path.abspath(__file__))
+__dirname__ = "/develop/stcs/solar-thermal-climate-system/config-localhost/consumer/machine-state-prediction"
+    #os.path.dirname(os.path.abspath(__file__))
 
 
 KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "kafka:9092")
 SCHEMA_REGISTRY_URL = os.getenv("SCHEMA_REGISTRY_URL", "http://schema-registry:8082")
 CONSUMER_GROUP = os.getenv("CONSUMER_GROUP", "postgres")
-TOPIC_NAME = os.getenv("TOPIC_NAME", "dev.machine_learning.aggregations_5minutes")
+TOPIC_NAME = os.getenv("TOPIC_NAME", "prod.machine_learning.aggregations_10minutes")
 
 
 SHOW_CALCULATION_TIME = int(os.getenv("SHOW_CALCULATION_TIME", 0))
@@ -84,7 +85,7 @@ def handle_message(msg):
         time_end = time.time()
 
         start_prediction_interval = time.localtime(msg.key()['timestamp_end'] / 1000)
-        end_prediction_interval = time.localtime((2 * msg.key()['timestamp_end'] - msg.key()['timestamp_begin']) / 1000)
+        end_prediction_interval = time.localtime(msg.key()['timestamp_end'] / 1000 + 60*5)
 
         print("Prediction for interval",
               time.strftime("%H:%M:%S", start_prediction_interval),
@@ -94,7 +95,7 @@ def handle_message(msg):
               "kritisch" if kritisch else "unkritisch"
               )
 
-        if SHOW_CALCULATION_TIME:
+        if SHOW_CALCULATION_TIME == 1:
             print("time for calculation", round(time_end - time_begin, 5), "seconds")
 
     except Exception as e:

@@ -73,7 +73,7 @@ public class FeatureExtraction {
                 .assignTimestampsAndWatermarks(new TimeStampExtractor());
 
         DataStream<Aggregations> streamFiveMin = unionStream
-                .timeWindowAll(Time.minutes(10), Time.seconds(10))
+                .timeWindowAll(Time.minutes(10), Time.seconds(20))
                 .apply(new PackValues());
 
         streamFiveMin.addSink(new FlinkKafkaProducer010<>(
@@ -82,7 +82,7 @@ public class FeatureExtraction {
                 kafkaProps
         )).name(AvroBuilder.getTopicName(Aggregations.class));
 
-        // streamFiveMin.print();
+        streamFiveMin.print();
 
         env.execute("Extract features for machine state prediction");
     }
