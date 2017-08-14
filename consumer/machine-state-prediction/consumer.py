@@ -18,8 +18,7 @@ __author__ = u'Stephan Müller'
 __copyright__ = u'2017, Stephan Müller'
 __license__ = u'MIT'
 
-__dirname__ = "/develop/stcs/solar-thermal-climate-system/config-localhost/consumer/machine-state-prediction"
-    #os.path.dirname(os.path.abspath(__file__))
+__dirname__ = os.path.dirname(os.path.abspath(__file__))
 
 
 KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "kafka:9092")
