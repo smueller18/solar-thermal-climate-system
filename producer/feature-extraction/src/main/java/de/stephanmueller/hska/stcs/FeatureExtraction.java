@@ -107,8 +107,8 @@ public class FeatureExtraction {
             long timestampEnd = Long.MIN_VALUE;
 
             for (String key : FeatureExtraction.sensorIds) {
-                rawValues.put(key + "_t1", new ArrayList<>());
                 rawValues.put(key + "_t2", new ArrayList<>());
+                rawValues.put(key + "_t1", new ArrayList<>());
             }
 
             for (GenericKeyValueRecord genericKeyValueRecord : genericKeyValueRecords) {
@@ -142,9 +142,9 @@ public class FeatureExtraction {
 
                     if (value != null) {
                         if ((long) genericKeyValueRecord.getKey("timestamp") < timestampSplit)
-                            rawValues.get(key + "_t1").add(value);
-                        else
                             rawValues.get(key + "_t2").add(value);
+                        else
+                            rawValues.get(key + "_t1").add(value);
                     }
 
                 }
