@@ -2,6 +2,8 @@ FROM smueller18/python:2-alpine
 
 MAINTAINER smueller18
 
+RUN apk upgrade --no-cache
+
 RUN apk add --no-cache \
         libressl2.5-libcrypto \
         libressl2.5-libssl \
@@ -15,9 +17,10 @@ RUN apk add --no-cache \
         linux-headers \
         g++ \
         python2-dev \
-        postgresql-dev && \
+        postgresql-dev \
         # for scipy
         build-base openblas-dev freetype-dev pkgconfig gfortran \
+    && \
     ## preperations for installations
     # numpy
     ln -s /usr/include/locale.h /usr/include/xlocale.h && \
