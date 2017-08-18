@@ -9,16 +9,18 @@ import paho.mqtt.client as mqtt
 
 from kafka_connector.avro_loop_producer import AvroLoopProducer
 
+
 __author__ = u'Stephan Müller, Adrian Bürger'
 __copyright__ = u'2017, Stephan Müller, Adrian Bürger'
 __license__ = u'MIT'
 
 __dirname__ = os.path.dirname(os.path.abspath(__file__))
 
-# KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "kafka:9092")
-# SCHEMA_REGISTRY_URL = os.getenv("SCHEMA_REGISTRY_URL", "http://schema-registry:8082")
+KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "kafka:9092")
+SCHEMA_REGISTRY_URL = os.getenv("SCHEMA_REGISTRY_URL", "http://schema-registry:8082")
 
 KAFKA_TOPICS_PREFIX = "dev.stcs."
+MQTT_TOPICS_PREFIX = "prod/stcs/"
 
 MQTT_SERVER_ADDRESS = os.getenv("MQTT_SERVER_ADDRESS", "mosquitto")
 MQTT_SERVER_PORT = int(os.getenv("MQTT_SERVER_PORT", "1883"))
@@ -49,7 +51,7 @@ for kafka_subtopic in kafka_subtopics:
 
     kafka_producer_topic = KAFKA_TOPICS_PREFIX + kafka_subtopic
 
-    mqtt_topic = kafka_producer_topic.replace(".", "/")
+    mqtt_topic = MQTT_TOPICS_PREFIX + kafka_subtopic.replace(".", "/")
 
     key_schema = os.path.join(__dirname__, "config", kafka_subtopic, "key.avsc")
     value_schema = os.path.join(__dirname__, "config", kafka_subtopic, "value.avsc")
@@ -58,10 +60,8 @@ for kafka_subtopic in kafka_subtopics:
     value_schema_entries = [value_schema_entry["name"] for value_schema_entry \
         in json.load(value_schema_file)["fields"]]
 
-    # kafka_producer = AvroLoopProducer(KAFKA_HOSTS, SCHEMA_REGISTRY_URL, \
-        # kafka_producer_topic, key_schema, value_schema)
-
-    kafka_producer = "producer for the topic " + kafka_subtopic # <- remove dummy
+    kafka_producer = AvroLoopProducer(KAFKA_HOSTS, SCHEMA_REGISTRY_URL, \
+        kafka_producer_topic, key_schema, value_schema)
 
     mqtt_kafka_bridge[mqtt_topic] = {
         
@@ -85,17 +85,17 @@ def on_connect(client, userdata, flags, rc):
 
 def convert_mqtt_message_to_kafka_data(msg):
 
-    kafka_data = {"timestamp": None, "data": {}}
+    kafka_data = {"key": None, "value": {}}
 
     try:
 
         mqtt_message_data = msg.payload.split(b";")
 
-        kafka_data["timestamp"] = int(mqtt_message_data[0]) * 1000.0
+        kafka_data["key"] = {"timestamp": int(mqtt_message_data[0]) * 1000}
 
         for k, value_schema_entry in enumerate(mqtt_kafka_bridge[msg.topic]["value_schema_entries"]):
 
-            kafka_data["data"][value_schema_entry] = int(mqtt_message_data[k+1]) / 100.0
+            kafka_data["value"][value_schema_entry] = int(mqtt_message_data[k+1]) / 100.0
 
         return kafka_data
 
@@ -110,9 +110,8 @@ def publish_data_to_kafka(data, msg):
 
     if data:
 
-        # mqtt_kafka_bridge[msg.topic]["kafka_producer"].produce(...)
-
-        print(mqtt_kafka_bridge[msg.topic]["kafka_producer"] + str(data)) # <- remove dummy
+        mqtt_kafka_bridge[msg.topic]["kafka_producer"].produce( \
+            key = data["key"], value = data["value"])
 
 
 def on_message(client, userdata, msg):

@@ -2,7 +2,7 @@
   "namespace": "hska.stcs",
   "name": "sensors_roof_solar_mixing_valve_collector_key",
   "type": "record",
-  "doc": "Sensors at the solar mixing valve at the roof of the K building",
+  "doc": "Sensors at the solar mixing valve inside the K building",
   "fields": [
       {
         "name": "timestamp",

@@ -2,22 +2,26 @@
   "namespace": "hska.stcs",
   "name": "sensors_roof_solar_mixing_valve_collector_value",
   "type": "record",
-  "doc": "Sensors at the solar mixing valve at the roof of the K building",
+  "doc": "Sensors at the solar mixing valve inside the K building",
   "fields": [
     {
-      "name": "tsoc2_1_smv",
+      "name": "tsopi_1_smv",
       "type": "float"
     },
     {
-      "name": "tsoc2_2_smv",
+      "name": "tsopi_2_smv",
       "type": "float"
     },
     {
-      "name": "tsoc1_1_smv",
+      "name": "tsopo_1_smv",
       "type": "float"
     },
     {
-      "name": "tsoc1_2_smv",
+      "name": "tsopo_2_smv",
+      "type": "float"
+    },
+        {
+      "name": "pos_smv",
       "type": "float"
     }
   ]
