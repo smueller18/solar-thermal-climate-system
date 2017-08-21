@@ -1,0 +1,13 @@
+{
+  "namespace": "hska.stcs",
+  "name": "sensors_roof_solar_mixing_valve_collector_key",
+  "type": "record",
+  "doc": "Sensors at the solar mixing valve inside the K building",
+  "fields": [
+      {
+        "name": "timestamp",
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+  ]
+}
