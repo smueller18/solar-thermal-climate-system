@@ -19,7 +19,7 @@ __dirname__ = os.path.dirname(os.path.abspath(__file__))
 KAFKA_HOSTS = os.getenv("KAFKA_HOSTS", "kafka:9092")
 SCHEMA_REGISTRY_URL = os.getenv("SCHEMA_REGISTRY_URL", "http://schema-registry:8082")
 
-KAFKA_TOPICS_PREFIX = "dev.stcs."
+KAFKA_TOPICS_PREFIX = "prod.stcs."
 MQTT_TOPICS_PREFIX = "prod/stcs/"
 
 MQTT_SERVER_ADDRESS = os.getenv("MQTT_SERVER_ADDRESS", "mosquitto")
