@@ -1,0 +1,13 @@
+{
+  "namespace": "hska.stcs",
+  "name": "sensors_cellar_collector_key",
+  "type": "record",
+  "doc": "VFS flow sensors in the cellar of the K building",
+  "fields": [
+      {
+        "name": "timestamp",
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+  ]
+}
