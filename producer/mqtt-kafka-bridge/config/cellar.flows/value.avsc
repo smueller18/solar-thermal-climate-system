@@ -1,0 +1,32 @@
+{
+  "namespace": "hska.stcs",
+  "name": "sensors_cellar_collector_value",
+  "type": "record",
+  "doc": "VFS flow sensors in the cellar of the K building",
+  "fields": [
+    {
+      "name": "TVFS_SOS",
+      "type": "float"
+    },
+    {
+      "name": "FVFS_SOS",
+      "type": "float"
+    },
+    {
+      "name": "TVFS_C_1",
+      "type": "float"
+    },
+    {
+      "name": "FVFS_C_1",
+      "type": "float"
+    },
+    {
+      "name": "TVFS_SOP",
+      "type": "float"
+    },
+    {
+      "name": "FVFS_SOP",
+      "type": "float"
+    }
+  ]
+}
