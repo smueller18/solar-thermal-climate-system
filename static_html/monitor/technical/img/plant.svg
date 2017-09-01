@@ -3457,10 +3457,10 @@
 		</g>
 		<g id="shape250-709" v:mID="250" v:groupContext="shape" transform="translate(467.717,-440.504)">
 			<title>TSOPO_1_SMV</title>
-			<desc>POS_SMV</desc>
+			<desc>TSOPO_1_SMV</desc>
 			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
 			<v:textRect cx="29.7638" cy="602.212" width="59.53" height="7.37008"/>
 			<rect x="0" y="598.527" width="59.5276" height="7.37008" class="st10"/>
-			<text x="9.67" y="605.21" class="st5" v:langID="1031"><v:paragraph v:horizAlign="1"/><v:tabList/>POS_SMV</text>		</g>
+			<text x="9.67" y="605.21" class="st5" v:langID="1031"><v:paragraph v:horizAlign="1"/><v:tabList/>TSOPO_1_SMV</text>		</g>
 	</g>
 </svg>
